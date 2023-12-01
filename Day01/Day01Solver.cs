@@ -1,4 +1,5 @@
 using AdventOfCode.Abstractions;
+using AdventOfCode.Year2023.Day01.Puzzle;
 
 namespace AdventOfCode.Year2023.Day01;
 
@@ -8,11 +9,11 @@ public sealed class Day01Solver : DaySolver
 	public override int Day => 1;
 	public override string Title => "Trebuchet?!";
 
+	private readonly CalibrationRetriever _calibrationRetriever;
+
 	public Day01Solver(Day01SolverOptions options) : base(options)
 	{
-		// Initialize Day01 solver here.
-		// Property `Input` contains the raw input text.
-		// Property `InputLines` enumerates lines in the input text.
+		_calibrationRetriever = new(InputLines);
 	}
 
 	public Day01Solver(Action<Day01SolverOptions> configure)
@@ -26,7 +27,8 @@ public sealed class Day01Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		return "UNSOLVED";
+		int sum = _calibrationRetriever.SumAllCalibrationValues();
+		return sum.ToString();
 	}
 
 	public override string SolvePart2()
