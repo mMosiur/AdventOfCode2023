@@ -9,11 +9,8 @@ public sealed class Day01Solver : DaySolver
 	public override int Day => 1;
 	public override string Title => "Trebuchet?!";
 
-	private readonly CalibrationRetriever _calibrationRetriever;
-
 	public Day01Solver(Day01SolverOptions options) : base(options)
 	{
-		_calibrationRetriever = new(InputLines);
 	}
 
 	public Day01Solver(Action<Day01SolverOptions> configure)
@@ -25,14 +22,22 @@ public sealed class Day01Solver : DaySolver
 	{
 	}
 
+	private int SumCalibrationValues(ICalibrationRetriever calibrationRetriever)
+		=> InputLines
+			.Select(l => calibrationRetriever.RetrieveCalibrationValue(l))
+			.Sum();
+
 	public override string SolvePart1()
 	{
-		int sum = _calibrationRetriever.SumAllCalibrationValues();
+		var calibrationRetriever = new DigitCalibrationRetriever();
+		int sum = SumCalibrationValues(calibrationRetriever);
 		return sum.ToString();
 	}
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var calibrationRetriever = new SpellingDigitCalibrationRetriever();
+		int sum = SumCalibrationValues(calibrationRetriever);
+		return sum.ToString();
 	}
 }

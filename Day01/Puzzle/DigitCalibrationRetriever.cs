@@ -2,21 +2,9 @@
 
 namespace AdventOfCode.Year2023.Day01.Puzzle;
 
-internal sealed class CalibrationRetriever
+internal sealed class DigitCalibrationRetriever : ICalibrationRetriever
 {
 	private static readonly SearchValues<char> Digits = SearchValues.Create(new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-
-	public IReadOnlyCollection<string> DocumentLines { get; }
-
-	public CalibrationRetriever(IEnumerable<string> documentLines)
-	{
-		DocumentLines = documentLines.ToArray();
-	}
-
-	public int SumAllCalibrationValues()
-		=> DocumentLines
-			.Select(l => RetrieveCalibrationValue(l))
-			.Sum();
 
 	public int RetrieveCalibrationValue(ReadOnlySpan<char> documentLine)
 	{
