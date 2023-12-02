@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode.Year2023.Day02.Puzzle;
 
-internal struct Game
+internal readonly struct Game
 {
 	public required int Id { get; init; }
 	public required IReadOnlyList<CubeSet> Cubes { get; init; }

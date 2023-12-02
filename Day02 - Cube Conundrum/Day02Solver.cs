@@ -9,15 +9,15 @@ public sealed class Day02Solver : DaySolver
 	public override int Day => 2;
 	public override string Title => "Cube Conundrum";
 
+	private readonly Day02SolverOptions _options;
 	private readonly IReadOnlyList<Game> _games;
-	private readonly GameValidator _gameValidator;
 
 	public Day02Solver(Day02SolverOptions options) : base(options)
 	{
+		_options = options;
 		_games = InputLines
 			.Select(InputReader.ParseGame)
 			.ToList();
-		_gameValidator = new(options.Part1RedCubeCount, options.Part1GreenCubeCount, options.Part1BlueCubeCount);
 	}
 
 	public Day02Solver(Action<Day02SolverOptions> configure)
@@ -31,12 +31,17 @@ public sealed class Day02Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		int gameIdSum = _games.Where(g => _gameValidator.IsValid(g)).Sum(g => g.Id);
+		var gameValidator = new GameValidator(_options.Part1RedCubeCount, _options.Part1GreenCubeCount, _options.Part1BlueCubeCount);
+		int gameIdSum = _games.Where(g => gameValidator.IsValid(g)).Sum(g => g.Id);
 		return gameIdSum.ToString();
 	}
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var smallestSetCalculator = new SmallestSetCalculator();
+		int sumOfSmallestSetPowers = _games
+			.Select(g => smallestSetCalculator.CalculateSmallestCubeSet(g))
+			.Sum(cs => cs.Power);
+		return sumOfSmallestSetPowers.ToString();
 	}
 }
