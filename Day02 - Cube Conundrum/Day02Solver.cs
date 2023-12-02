@@ -1,4 +1,5 @@
 using AdventOfCode.Abstractions;
+using AdventOfCode.Year2023.Day02.Puzzle;
 
 namespace AdventOfCode.Year2023.Day02;
 
@@ -8,11 +9,15 @@ public sealed class Day02Solver : DaySolver
 	public override int Day => 2;
 	public override string Title => "Cube Conundrum";
 
+	private readonly IReadOnlyList<Game> _games;
+	private readonly GameValidator _gameValidator;
+
 	public Day02Solver(Day02SolverOptions options) : base(options)
 	{
-		// Initialize Day02 solver here.
-		// Property `Input` contains the raw input text.
-		// Property `InputLines` enumerates lines in the input text.
+		_games = InputLines
+			.Select(InputReader.ParseGame)
+			.ToList();
+		_gameValidator = new(options.Part1RedCubeCount, options.Part1GreenCubeCount, options.Part1BlueCubeCount);
 	}
 
 	public Day02Solver(Action<Day02SolverOptions> configure)
@@ -26,7 +31,8 @@ public sealed class Day02Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		return "UNSOLVED";
+		int gameIdSum = _games.Where(g => _gameValidator.IsValid(g)).Sum(g => g.Id);
+		return gameIdSum.ToString();
 	}
 
 	public override string SolvePart2()
