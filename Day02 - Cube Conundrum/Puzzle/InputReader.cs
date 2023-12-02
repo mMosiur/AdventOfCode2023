@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2023.Day02.Puzzle;
 

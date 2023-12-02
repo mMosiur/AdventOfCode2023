@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day02.Puzzle;
+namespace AdventOfCode.Year2023.Day02.Puzzle;
 
 internal sealed class SmallestSetCalculator
 {
