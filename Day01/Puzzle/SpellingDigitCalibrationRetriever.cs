@@ -15,8 +15,8 @@ internal sealed class SpellingDigitCalibrationRetriever : ICalibrationRetriever
 			char digitChar = Digits[digit];
 			string digitSpelling = DigitSpellings[digit];
 
-			(int firstSpellingIndex, int lastSpellingIndex) = FindFirstAndLastOccurrences(documentLine, digitSpelling);
-			(int firstDigitIndex, int lastDigitIndex) = FindFirstAndLastOccurrences(documentLine, digitChar);
+			(int firstSpellingIndex, int lastSpellingIndex) = FindFirstAndLastIndex(documentLine, digitSpelling);
+			(int firstDigitIndex, int lastDigitIndex) = FindFirstAndLastIndex(documentLine, digitChar);
 			firstIndexes[digit] = (firstSpellingIndex, firstDigitIndex) switch
 			{
 				(-1, -1) => -1,
@@ -33,18 +33,18 @@ internal sealed class SpellingDigitCalibrationRetriever : ICalibrationRetriever
 			};
 		}
 
-		int firstDigit = firstIndexes.GetIndexOfLowestValueInRange(0, 9);
+		int firstDigit = firstIndexes.GetIndexOfLowestNonNegativeValue();
 		if (firstDigit < 0) throw new DaySolverException($"Document line '{documentLine}' does not contain any digits nor spellings.");
 
-		int lastDigit = lastIndexes.GetIndexOfHighestValueInRange(0, 9);
+		int lastDigit = lastIndexes.GetIndexOfHighestNonNegativeValue();
 		if (lastDigit < 0) throw new DaySolverException($"Document line '{documentLine}' does not contain any digits nor spellings.");
 
 		return firstDigit * 10 + lastDigit;
 	}
 
-	private static (int, int) FindFirstAndLastOccurrences(ReadOnlySpan<char> documentLine, ReadOnlySpan<char> sequence)
+	private static (int FirstIndex, int LastIndex) FindFirstAndLastIndex(ReadOnlySpan<char> documentLine, ReadOnlySpan<char> sequence)
 		=> (documentLine.IndexOf(sequence), documentLine.LastIndexOf(sequence));
 
-	private static (int, int) FindFirstAndLastOccurrences(ReadOnlySpan<char> documentLine, char character)
+	private static (int FirstIndex, int LastIndex) FindFirstAndLastIndex(ReadOnlySpan<char> documentLine, char character)
 		=> (documentLine.IndexOf(character), documentLine.LastIndexOf(character));
 }
