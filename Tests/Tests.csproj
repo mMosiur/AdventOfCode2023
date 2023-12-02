@@ -34,4 +34,10 @@
     <ProjectReference Include="..\Day02 - Cube Conundrum\Day02.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Inputs\Day02\example-input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

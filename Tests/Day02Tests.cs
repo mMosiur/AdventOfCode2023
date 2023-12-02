@@ -12,10 +12,14 @@ public class Day02Tests : BaseDayTests<Day02Solver, Day02SolverOptions>
 	protected override Day02Solver CreateSolver(Day02SolverOptions options) => new(options);
 
 	[Theory]
+	[InlineData("example-input.txt", "8")]
+	// [InlineData("my-input.txt", "UNSOLVED")]
 	public override void TestPart1(string inputFilename, string expectedResult, Day02SolverOptions? options = null)
 		=> base.TestPart1(inputFilename, expectedResult, options);
 
-	[Theory]
-	public override void TestPart2(string inputFilename, string expectedResult, Day02SolverOptions? options = null)
-		=> base.TestPart2(inputFilename, expectedResult, options);
+	// [Theory]
+	// [InlineData("example-input.txt", "UNSOLVED")]
+	// // [InlineData("my-input.txt", "UNSOLVED")]
+	// public override void TestPart2(string inputFilename, string expectedResult, Day02SolverOptions? options = null)
+	// 	=> base.TestPart2(inputFilename, expectedResult, options);
 }
