@@ -1,4 +1,4 @@
-﻿using AdventOfCode.Abstractions;
+using AdventOfCode.Abstractions;
 
 namespace AdventOfCode.Year2023.Tests;
 

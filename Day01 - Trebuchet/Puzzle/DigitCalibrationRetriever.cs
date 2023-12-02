@@ -1,4 +1,4 @@
-﻿using System.Buffers;
+using System.Buffers;
 
 namespace AdventOfCode.Year2023.Day01.Puzzle;
 
