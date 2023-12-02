@@ -9,6 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day01", "Day01 - Trebuchet\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{6BB8A7B3-FF43-4305-9A2B-96E4A1163063}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Repository", ".Repository", "{E4C41D19-7DFF-4779-B972-C971EF38D62D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		global.json = global.json
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +36,8 @@ Global
 		{6BB8A7B3-FF43-4305-9A2B-96E4A1163063}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BB8A7B3-FF43-4305-9A2B-96E4A1163063}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BB8A7B3-FF43-4305-9A2B-96E4A1163063}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CE8086B8-A3E4-40E0-859F-607F95D25514} = {F6C05A63-6269-425F-B877-9E9F0BC1FC26}
 	EndGlobalSection
 EndGlobal
