@@ -32,12 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Day01 - Trebuchet\Day01.csproj" />
     <ProjectReference Include="..\Day02 - Cube Conundrum\Day02.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Inputs\Day02\example-input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\Day03 - Gear Ratios\Day03.csproj" />
   </ItemGroup>
 
 </Project>

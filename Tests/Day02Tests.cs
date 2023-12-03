@@ -4,7 +4,7 @@ namespace AdventOfCode.Year2023.Tests;
 
 [Trait("Year", "2023")]
 [Trait("Day", "02")]
-[Trait("Day", "1")]
+[Trait("Day", "2")]
 public class Day02Tests : BaseDayTests<Day02Solver, Day02SolverOptions>
 {
 	protected override string DayInputsDirectory => "Day02";
