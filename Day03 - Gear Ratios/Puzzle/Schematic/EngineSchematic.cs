@@ -1,16 +1,9 @@
 ﻿namespace AdventOfCode.Year2023.Day03.Puzzle.Schematic;
 
-internal sealed class EngineSchematic
+internal sealed class EngineSchematic(
+	IReadOnlyCollection<SchematicNumber> partNumbers,
+	IReadOnlyCollection<SchematicSymbol> symbols)
 {
-	private readonly HashSet<Point> _symbolPositions;
-	private readonly List<SchematicNumber> _numbers;
-
-	public IReadOnlySet<Point> SymbolPositions => _symbolPositions;
-	public IReadOnlyList<SchematicNumber> Numbers => _numbers;
-
-	public EngineSchematic(HashSet<Point> symbolPositions, List<SchematicNumber> numbers)
-	{
-		_symbolPositions = symbolPositions;
-		_numbers = numbers;
-	}
+	public IReadOnlyCollection<SchematicNumber> PartNumbers { get; } = partNumbers;
+	public IReadOnlyCollection<SchematicSymbol> Symbols { get; } = symbols;
 }

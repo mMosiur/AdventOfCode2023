@@ -2,6 +2,6 @@
 
 internal sealed class SchematicNumber(Line position, int value)
 {
-	public Line Position { get; } = position;
+	public Line PositionSpan { get; } = position;
 	public int Value { get; } = value;
 }
