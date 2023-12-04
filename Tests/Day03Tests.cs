@@ -17,8 +17,8 @@ public class Day03Tests : BaseDayTests<Day03Solver, Day03SolverOptions>
 	public override void TestPart1(string inputFilename, string expectedResult, Day03SolverOptions? options = null)
 		=> base.TestPart1(inputFilename, expectedResult, options);
 
-	// [Theory]
-	// [InlineData("example-input.txt", "UNSOLVED")]
+	[Theory]
+	[InlineData("example-input.txt", "467835")]
 	// [InlineData("my-input.txt", "UNSOLVED")]
 	public override void TestPart2(string inputFilename, string expectedResult, Day03SolverOptions? options = null)
 		=> base.TestPart2(inputFilename, expectedResult, options);
