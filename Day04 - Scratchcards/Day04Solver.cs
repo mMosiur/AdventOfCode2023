@@ -7,7 +7,7 @@ public sealed class Day04Solver : DaySolver
 {
 	public override int Year => 2023;
 	public override int Day => 4;
-	public override string Title => "UNKNOWN";
+	public override string Title => "Scratchcards";
 
 	private readonly InputReader _inputReader;
 	private IReadOnlyList<Scratchcard>? _scratchcards;
