@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day03.Puzzle.Schematic;
+namespace AdventOfCode.Year2023.Day03.Puzzle.Schematic;
 
 internal sealed class EngineSchematic(
 	IReadOnlyCollection<SchematicNumber> partNumbers,

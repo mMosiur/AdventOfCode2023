@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using AdventOfCode.Year2023.Day03.Puzzle.Schematic;
 
 namespace AdventOfCode.Year2023.Day03.Puzzle;
