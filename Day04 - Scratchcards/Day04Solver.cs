@@ -1,4 +1,5 @@
 using AdventOfCode.Abstractions;
+using AdventOfCode.Common.EnumerableExtensions;
 using AdventOfCode.Year2023.Day04.Puzzle;
 
 namespace AdventOfCode.Year2023.Day04;
@@ -28,11 +29,16 @@ public sealed class Day04Solver : DaySolver
 	{
 	}
 
-	private static int CalculateCardPoints(Scratchcard scratchcard)
+	private static int CountMyWinningNumbers(Scratchcard scratchcard)
 	{
 		HashSet<int> winningNumbers = new(scratchcard.WinningNumbers);
 		winningNumbers.IntersectWith(scratchcard.MyNumbers);
-		int count = winningNumbers.Count;
+		return winningNumbers.Count;
+	}
+
+	private static int CalculateCardPoints(Scratchcard scratchcard)
+	{
+		int count = CountMyWinningNumbers(scratchcard);
 		if (count == 0)
 		{
 			return 0;
@@ -49,6 +55,15 @@ public sealed class Day04Solver : DaySolver
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		foreach ((Scratchcard scratchcard, int index) in Scratchcards.WithIndex())
+		{
+			int count = CountMyWinningNumbers(scratchcard);
+			for (int i = 0; i < count; i++)
+			{
+				Scratchcards[index + i + 1].Copies += scratchcard.Copies;
+			}
+		}
+		int sum = Scratchcards.Sum(sc => sc.Copies);
+		return sum.ToString();
 	}
 }
