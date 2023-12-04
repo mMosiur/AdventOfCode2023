@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Day01 - Trebuchet\Day01.csproj" />
     <ProjectReference Include="..\Day02 - Cube Conundrum\Day02.csproj" />
     <ProjectReference Include="..\Day03 - Gear Ratios\Day03.csproj" />
+    <ProjectReference Include="..\Day04 - Scratchcards\Day04.csproj" />
   </ItemGroup>
 
 </Project>
