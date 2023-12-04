@@ -1,4 +1,5 @@
 using AdventOfCode.Abstractions;
+using AdventOfCode.Year2023.Day04.Puzzle;
 
 namespace AdventOfCode.Year2023.Day04;
 
@@ -8,11 +9,14 @@ public sealed class Day04Solver : DaySolver
 	public override int Day => 4;
 	public override string Title => "UNKNOWN";
 
+	private readonly InputReader _inputReader;
+	private IReadOnlyList<Scratchcard>? _scratchcards;
+
+	private IReadOnlyList<Scratchcard> Scratchcards => _scratchcards ??= _inputReader.ReadInput(InputLines);
+
 	public Day04Solver(Day04SolverOptions options) : base(options)
 	{
-		// Initialize Day04 solver here.
-		// Property `Input` contains the raw input text.
-		// Property `InputLines` enumerates lines in the input text.
+		_inputReader = new InputReader();
 	}
 
 	public Day04Solver(Action<Day04SolverOptions> configure)
@@ -24,9 +28,23 @@ public sealed class Day04Solver : DaySolver
 	{
 	}
 
+	private static int CalculateCardPoints(Scratchcard scratchcard)
+	{
+		HashSet<int> winningNumbers = new(scratchcard.WinningNumbers);
+		winningNumbers.IntersectWith(scratchcard.MyNumbers);
+		int count = winningNumbers.Count;
+		if (count == 0)
+		{
+			return 0;
+		}
+
+		return 1 << count - 1;
+	}
+
 	public override string SolvePart1()
 	{
-		return "UNSOLVED";
+		int sum = Scratchcards.Sum(CalculateCardPoints);
+		return sum.ToString();
 	}
 
 	public override string SolvePart2()
