@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day04.Puzzle;
+namespace AdventOfCode.Year2023.Day04.Puzzle;
 
 internal sealed class Scratchcard
 {
