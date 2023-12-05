@@ -9,11 +9,13 @@ public sealed class Day05Solver : DaySolver
 	public override int Day => 5;
 	public override string Title => "If You Give A Seed A Fertilizer";
 
-	private readonly InputReader _inputReader;
+	private readonly InputReaderWithCaching _inputReader;
+	private readonly SeedNumberCategoryCalculator _calculator;
 
 	public Day05Solver(Day05SolverOptions options) : base(options)
 	{
-		_inputReader = new InputReader();
+		_inputReader = new(Input);
+		_calculator = new(NumberCategory.Seed, NumberCategory.Location);
 	}
 
 	public Day05Solver(Action<Day05SolverOptions> configure)
@@ -27,23 +29,17 @@ public sealed class Day05Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		var almanac = _inputReader.ReadInput(Input);
-		uint[] numbers = almanac.SeedNumbers.ToArray();
-		var currentNumberCategory = NumberCategory.Seed;
-		while (currentNumberCategory is not NumberCategory.Location)
-		{
-			var numberMap = almanac[currentNumberCategory];
-			for (int i = 0; i < numbers.Length; i++)
-			{
-				numbers[i] = numberMap.ConvertNumber(numbers[i]);
-			}
-			currentNumberCategory = numberMap.DestinationCategory;
-		}
-		return numbers.Min().ToString();
+		var almanac = _inputReader.ReadInputSingleSeeds();
+		var locationNumbers = _calculator.CalculateTargetCategoryNumbers(almanac);
+		uint minLocationNumber = locationNumbers.Min();
+		return minLocationNumber.ToString();
 	}
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var almanac = _inputReader.ReadInputSeedRanges();
+		var locationNumbers = _calculator.CalculateTargetCategoryNumbers(almanac);
+		uint minLocationNumber = locationNumbers.Select(r => r.Start).Min();
+		return minLocationNumber.ToString();
 	}
 }

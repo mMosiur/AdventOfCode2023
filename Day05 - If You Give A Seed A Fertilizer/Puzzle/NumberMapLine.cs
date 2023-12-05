@@ -8,7 +8,7 @@ internal readonly record struct NumberMapLine
 	public NumberMapLine(uint destinationRangeStart, uint sourceRangeStart, uint rangeLength)
 	{
 		SourceRange = new(sourceRangeStart, sourceRangeStart + rangeLength - 1);
-		checked
+		checked // TODO: remove checked section after testing
 		{
 			DestinationOffset = (long)destinationRangeStart - sourceRangeStart;
 		}

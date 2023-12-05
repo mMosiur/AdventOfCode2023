@@ -1,15 +1,14 @@
 ﻿namespace AdventOfCode.Year2023.Day05.Puzzle;
 
-internal sealed class Almanac
+internal abstract class Almanac<TSeedNumbersType>
 {
 	private readonly Dictionary<NumberCategory, NumberMap> _numberMapsBySourceCategory;
 
-	public IReadOnlyList<uint> SeedNumbers { get; }
+	public abstract TSeedNumbersType SeedNumbers { get; }
 	public IReadOnlyCollection<NumberMap> NumberMaps { get; }
 
-	public Almanac(IReadOnlyList<uint> seedNumbers, IReadOnlyCollection<NumberMap> numberMaps)
+	protected Almanac(IReadOnlyCollection<NumberMap> numberMaps)
 	{
-		SeedNumbers = seedNumbers;
 		NumberMaps = numberMaps;
 		_numberMapsBySourceCategory = NumberMaps.ToDictionary(nm => nm.SourceCategory);
 	}

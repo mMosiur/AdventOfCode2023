@@ -1,14 +1,27 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using AdventOfCode.Common.SpanExtensions;
 
 namespace AdventOfCode.Year2023.Day05.Puzzle;
 
-internal sealed class InputReader
+internal sealed class InputReaderWithCaching
 {
 	private static readonly string[] NewLines = { "\r\n", "\r", "\n" };
 	private static readonly string[] DoubleNewLines = NewLines.Select(nl => $"{nl}{nl}").ToArray();
 	private static readonly Regex SeedNumbersRegex = new(@"^seeds: ([\d ]+)$", RegexOptions.Compiled);
 	private static readonly Regex NumberMapHeaderRegex = new(@"^(?<SourceNumberCategory>\w+)-to-(?<DestinationNumberCategory>\w+) map:$", RegexOptions.Compiled);
+
+	private readonly string _input;
+
+	private IReadOnlyList<uint>? _almanacSeedNumbers;
+	private IReadOnlyList<NumberMap>? _almanacNumberMaps;
+	private AlmanacSingleSeeds? _almanacSingleSeeds;
+	private AlmanacSeedRanges? _almanacSeedRanges;
+
+	public InputReaderWithCaching(string input)
+	{
+		_input = input;
+	}
 
 	private static IReadOnlyList<uint> ReadSeedNumbers(string input)
 	{
@@ -81,11 +94,19 @@ internal sealed class InputReader
 		return new NumberMap(sourceCategory, destinationCategory, numberMapLines);
 	}
 
-	public Almanac ReadInput(string input)
+	[MemberNotNull(nameof(_almanacSeedNumbers))]
+	[MemberNotNull(nameof(_almanacNumberMaps))]
+	private void InternalReadInput()
 	{
-		string[] result = input.Split(DoubleNewLines, StringSplitOptions.TrimEntries);
+		if (_almanacSeedNumbers is not null && _almanacNumberMaps is not null)
+		{
+			return;
+		}
+
+		string[] result = _input.Split(DoubleNewLines, StringSplitOptions.TrimEntries);
 		string seedNumbersRow = result[0];
-		var seedNumbers = ReadSeedNumbers(seedNumbersRow);
+		_almanacSeedNumbers = ReadSeedNumbers(seedNumbersRow);
+
 		var numberMaps = new List<NumberMap>(result.Length - 1);
 		for (int i = 1; i < result.Length; i++)
 		{
@@ -94,6 +115,44 @@ internal sealed class InputReader
 			numberMaps.Add(mapSection);
 		}
 
-		return new Almanac(seedNumbers, numberMaps);
+		_almanacNumberMaps = numberMaps;
+	}
+
+	private AlmanacSingleSeeds BuildAlmanacSingleSeeds()
+	{
+		InternalReadInput();
+		return new(_almanacSeedNumbers, _almanacNumberMaps);
+	}
+
+	private AlmanacSeedRanges BuildAlmanacSeedRanges()
+	{
+		InternalReadInput();
+		if (_almanacSeedNumbers.Count % 2 != 0)
+		{
+			throw new InputException("Seed number count must be even to interpret them as ranges.");
+		}
+
+		var seedNumberRanges = new List<Range>(_almanacSeedNumbers.Count / 2);
+		for (int i = 0; i < _almanacSeedNumbers.Count; i += 2)
+		{
+			uint rangeStart = _almanacSeedNumbers[i];
+			uint rangeLength = _almanacSeedNumbers[i + 1];
+			var range = new Range(rangeStart, rangeStart + rangeLength - 1);
+			seedNumberRanges.Add(range);
+		}
+
+		return new(seedNumberRanges, _almanacNumberMaps);
+	}
+
+	[MemberNotNull(nameof(_almanacSingleSeeds))]
+	public AlmanacSingleSeeds ReadInputSingleSeeds()
+	{
+		return _almanacSingleSeeds ??= BuildAlmanacSingleSeeds();
+	}
+
+	[MemberNotNull(nameof(_almanacSeedRanges))]
+	public AlmanacSeedRanges ReadInputSeedRanges()
+	{
+		return _almanacSeedRanges ??= BuildAlmanacSeedRanges();
 	}
 }

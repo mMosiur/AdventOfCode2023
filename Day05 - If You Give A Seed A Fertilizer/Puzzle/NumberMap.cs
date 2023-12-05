@@ -13,7 +13,7 @@ internal sealed class NumberMap(NumberCategory sourceCategory, NumberCategory de
 		{
 			return sourceNumber;
 		}
-		checked
+		checked // TODO: remove checked section after testing
 		{
 			return (uint)(sourceNumber + line.DestinationOffset);
 		}
