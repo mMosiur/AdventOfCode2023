@@ -34,6 +34,7 @@
     <ProjectReference Include="..\Day02 - Cube Conundrum\Day02.csproj" />
     <ProjectReference Include="..\Day03 - Gear Ratios\Day03.csproj" />
     <ProjectReference Include="..\Day04 - Scratchcards\Day04.csproj" />
+    <ProjectReference Include="..\Day05 - If You Give A Seed A Fertilizer\Day05.csproj" />
   </ItemGroup>
 
 </Project>
