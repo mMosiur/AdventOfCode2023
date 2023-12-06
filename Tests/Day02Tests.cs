@@ -5,7 +5,7 @@ namespace AdventOfCode.Year2023.Tests;
 [Trait("Year", "2023")]
 [Trait("Day", "02")]
 [Trait("Day", "2")]
-public class Day02Tests : BaseDayTests<Day02Solver, Day02SolverOptions>
+public sealed class Day02Tests : BaseDayTests<Day02Solver, Day02SolverOptions>
 {
 	protected override string DayInputsDirectory => "Day02";
 
@@ -14,12 +14,12 @@ public class Day02Tests : BaseDayTests<Day02Solver, Day02SolverOptions>
 	[Theory]
 	[InlineData("example-input.txt", "8")]
 	[InlineData("my-input.txt", "2164")]
-	public override void TestPart1(string inputFilename, string expectedResult, Day02SolverOptions? options = null)
-		=> base.TestPart1(inputFilename, expectedResult, options);
+	public void TestPart1(string inputFilename, string expectedResult, Day02SolverOptions? options = null)
+		=> BaseTestPart1(inputFilename, expectedResult, options);
 
 	[Theory]
 	[InlineData("example-input.txt", "2286")]
 	[InlineData("my-input.txt", "69929")]
-	public override void TestPart2(string inputFilename, string expectedResult, Day02SolverOptions? options = null)
-		=> base.TestPart2(inputFilename, expectedResult, options);
+	public void TestPart2(string inputFilename, string expectedResult, Day02SolverOptions? options = null)
+		=> BaseTestPart2(inputFilename, expectedResult, options);
 }
