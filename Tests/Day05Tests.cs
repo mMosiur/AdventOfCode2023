@@ -7,7 +7,7 @@ namespace AdventOfCode.Year2023.Tests;
 [Trait("Year", "2023")]
 [Trait("Day", "05")]
 [Trait("Day", "5")]
-public class Day05Tests : BaseDayTests<Day05Solver, Day05SolverOptions>
+public sealed class Day05Tests : BaseDayTests<Day05Solver, Day05SolverOptions>
 {
 	protected override string DayInputsDirectory => "Day05";
 
@@ -16,14 +16,14 @@ public class Day05Tests : BaseDayTests<Day05Solver, Day05SolverOptions>
 	[Theory]
 	[InlineData("example-input.txt", "35")]
 	[InlineData("my-input.txt", "650599855")]
-	public override void TestPart1(string inputFilename, string expectedResult, Day05SolverOptions? options = null)
-		=> base.TestPart1(inputFilename, expectedResult, options);
+	public void TestPart1(string inputFilename, string expectedResult, Day05SolverOptions? options = null)
+		=> BaseTestPart1(inputFilename, expectedResult, options);
 
 	[Theory]
 	[InlineData("example-input.txt", "46")]
 	// [InlineData("my-input.txt", "UNSOLVED")]
-	public override void TestPart2(string inputFilename, string expectedResult, Day05SolverOptions? options = null)
-		=> base.TestPart2(inputFilename, expectedResult, options);
+	public void TestPart2(string inputFilename, string expectedResult, Day05SolverOptions? options = null)
+		=> BaseTestPart2(inputFilename, expectedResult, options);
 
 	#region MultiRange Add
 
@@ -136,28 +136,14 @@ public class Day05Tests : BaseDayTests<Day05Solver, Day05SolverOptions>
 		},
 	};
 
-	private static bool IsAscending(string s)
-	{
-		for (int i = 1; i < s.Length; i++)
-		{
-			if (s[i - 1] > s[i])
-			{
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	[Theory]
 	[MemberData(nameof(RemoveTestData))]
 	public void Remove_ShouldHandleRangesCorrectly(Range[] initialRanges, Range rangeToRemove, Range[] expectedRange, bool expectedReturn)
 	{
 		MultiRange multiRange = new(initialRanges);
 
-		bool removed = multiRange.Remove(rangeToRemove, out string s);
+		bool removed = multiRange.Remove(rangeToRemove);
 
-		// Assert.True(IsAscending(s), s);
 		Assert.True(multiRange.SequenceEqual(expectedRange), $"Initial: ({string.Join(", ", initialRanges)}); Removed: {rangeToRemove} Expected: ({string.Join(", ", expectedRange)}); Actual: ({string.Join(", ", multiRange)})");
 		Assert.Equal(expectedReturn, removed);
 	}
