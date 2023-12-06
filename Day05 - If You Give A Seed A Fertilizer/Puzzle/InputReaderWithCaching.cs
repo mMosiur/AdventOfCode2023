@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using AdventOfCode.Common.SpanExtensions;
+using AdventOfCode.Year2023.Day05.ExtendedMath;
 
 namespace AdventOfCode.Year2023.Day05.Puzzle;
 
@@ -132,7 +133,8 @@ internal sealed class InputReaderWithCaching
 			throw new InputException("Seed number count must be even to interpret them as ranges.");
 		}
 
-		var seedNumberRanges = new List<Range>(_almanacSeedNumbers.Count / 2);
+
+		var seedNumberRanges = new MultiRange(_almanacSeedNumbers.Count / 2);
 		for (int i = 0; i < _almanacSeedNumbers.Count; i += 2)
 		{
 			uint rangeStart = _almanacSeedNumbers[i];

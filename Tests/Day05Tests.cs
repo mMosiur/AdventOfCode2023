@@ -25,48 +25,142 @@ public class Day05Tests : BaseDayTests<Day05Solver, Day05SolverOptions>
 	public override void TestPart2(string inputFilename, string expectedResult, Day05SolverOptions? options = null)
 		=> base.TestPart2(inputFilename, expectedResult, options);
 
-	public static IEnumerable<object[]> MultiRangeTestData()
+	#region MultiRange Add
+
+	public static IEnumerable<object[]> MultiRangeAddTestData = new[]
 	{
-		yield return new object[]
+		new object[]
 		{
 			new Range[] { new(1, 2), new(5, 6), new(9, 11) },
 			new Range(0, 7),
 			new Range[] { new(0, 7), new(9, 11) }
-		};
-		yield return new object[]
+		},
+		new object[]
 		{
 			new Range[] { new(1, 5), new(7, 10) },
 			new Range(12, 15),
 			new Range[] { new(1, 5), new(7, 10), new(12, 15) }
-		};
-		yield return new object[]
+		},
+		new object[]
 		{
 			new Range[] { new(1, 3), new(5, 8), new(10, 12) },
 			new Range(4, 6),
-			new Range[] { new(1, 3), new(4, 8), new(10, 12) }
-		};
-		yield return new object[]
+			new Range[] { new(1, 8), new(10, 12) }
+		},
+		new object[]
 		{
 			new Range[] { new(1, 5), new(7, 10) },
 			new Range(4, 6),
 			new Range[] { new(1, 6), new(7, 10) }
-		};
-		yield return new object[]
+		},
+		new object[]
 		{
 			new Range[] { new(1, 3), new(5, 8) },
 			new Range(4, 6),
 			new Range[] { new(1, 8) }
-		};
-	}
+		},
+	};
 
 	[Theory]
-	[MemberData(nameof(MultiRangeTestData))]
-	public void Add_ShouldHandleRangesCorrectly(Range[] initialRanges, Range rangeToAdd, Range[] expected)
+	[MemberData(nameof(MultiRangeAddTestData))]
+	public void MultiRangeAddTest(Range[] initialRanges, Range rangeToAdd, Range[] expected)
 	{
 		MultiRange multiRange = new(initialRanges);
 
 		multiRange.Add(rangeToAdd);
 
-		Assert.True(multiRange.SequenceEqual(expected), string.Join(", ", multiRange.AsEnumerable()));
+		Assert.True(multiRange.SequenceEqual(expected), $"Initial: ({string.Join(", ", initialRanges)}); Added: {rangeToAdd} Expected: ({string.Join(", ", expected)}); Actual: ({string.Join(", ", multiRange)})");
 	}
+
+	#endregion
+
+	#region MultiRange Remove
+
+	public static IEnumerable<object[]> RemoveTestData = new[]
+	{
+		new object[]
+		{
+			new Range[] { new(1, 5), new(7, 10), new(12, 15) },
+			new Range(4, 8),
+			new Range[] { new(1, 3), new(9, 10), new(12, 15) },
+			true,
+		},
+		new object[]
+		{
+			new Range[] { new(1, 3), new(6, 8) },
+			new Range(2, 7),
+			new Range[] { new(1, 1), new(8, 8) },
+			true,
+		},
+		new object[]
+		{
+			new Range[] { new(1, 8), new(10, 12) },
+			new Range(3, 5),
+			new Range[] { new(1, 2), new(6, 8), new(10, 12) },
+			true,
+		},
+		new object[]
+		{
+			new Range[] { new(1, 2), new(4, 6), new(10, 15) },
+			new Range(7, 12),
+			new Range[] { new(1, 2), new(4, 6), new(13, 15) },
+			true,
+		},
+		new object[]
+		{
+			new Range[] { new(1, 2), new(4, 6), new(10, 15) },
+			new Range(7, 9),
+			new Range[] { new(1, 2), new(4, 6), new(10, 15) },
+			false,
+		},
+		new object[]
+		{
+			new Range[] { new(1, 6), new(10, 12) },
+			new Range(2, 5),
+			new Range[] { new(1, 1), new(6, 6), new(10, 12) },
+			true,
+		},
+		new object[]
+		{
+			new Range[] { new(1, 6), new(10, 12) },
+			new Range(2, 7),
+			new Range[] { new(1, 1), new(10, 12) },
+			true,
+		},
+		new object[]
+		{
+			new Range[] { new(1, 2), new(4, 6), new(10, 12) },
+			new Range(2, 11),
+			new Range[] { new(1, 1), new(12, 12) },
+			true,
+		},
+	};
+
+	private static bool IsAscending(string s)
+	{
+		for (int i = 1; i < s.Length; i++)
+		{
+			if (s[i - 1] > s[i])
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	[Theory]
+	[MemberData(nameof(RemoveTestData))]
+	public void Remove_ShouldHandleRangesCorrectly(Range[] initialRanges, Range rangeToRemove, Range[] expectedRange, bool expectedReturn)
+	{
+		MultiRange multiRange = new(initialRanges);
+
+		bool removed = multiRange.Remove(rangeToRemove, out string s);
+
+		// Assert.True(IsAscending(s), s);
+		Assert.True(multiRange.SequenceEqual(expectedRange), $"Initial: ({string.Join(", ", initialRanges)}); Removed: {rangeToRemove} Expected: ({string.Join(", ", expectedRange)}); Actual: ({string.Join(", ", multiRange)})");
+		Assert.Equal(expectedReturn, removed);
+	}
+
+	#endregion
 }

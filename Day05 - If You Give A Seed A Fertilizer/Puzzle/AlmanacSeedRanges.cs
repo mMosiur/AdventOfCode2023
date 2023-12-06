@@ -1,10 +1,12 @@
-﻿namespace AdventOfCode.Year2023.Day05.Puzzle;
+﻿using AdventOfCode.Year2023.Day05.ExtendedMath;
 
-internal sealed class AlmanacSeedRanges : Almanac<IReadOnlyCollection<Range>>
+namespace AdventOfCode.Year2023.Day05.Puzzle;
+
+internal sealed class AlmanacSeedRanges : Almanac<MultiRange>
 {
-	public override IReadOnlyCollection<Range> SeedNumbers { get; }
+	public override MultiRange SeedNumbers { get; }
 
-	public AlmanacSeedRanges(IReadOnlyCollection<Range> seedNumbers, IReadOnlyCollection<NumberMap> numberMaps)
+	public AlmanacSeedRanges(MultiRange seedNumbers, IReadOnlyCollection<NumberMap> numberMaps)
 		: base(numberMaps)
 	{
 		SeedNumbers = seedNumbers;

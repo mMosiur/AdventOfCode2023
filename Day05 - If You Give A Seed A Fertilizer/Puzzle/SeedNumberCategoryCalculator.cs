@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Year2023.Day05.Puzzle;
+﻿using AdventOfCode.Year2023.Day05.ExtendedMath;
+
+namespace AdventOfCode.Year2023.Day05.Puzzle;
 
 internal sealed class SeedNumberCategoryCalculator
 {
@@ -30,6 +32,15 @@ internal sealed class SeedNumberCategoryCalculator
 
 	public IReadOnlyCollection<Range> CalculateTargetCategoryNumbers(AlmanacSeedRanges almanac)
 	{
-		throw new NotImplementedException();
+		MultiRange ranges = almanac.SeedNumbers.Clone();
+		var currentNumberCategory = _initialCategory;
+		while (currentNumberCategory != _targetCategory)
+		{
+			var numberMap = almanac[currentNumberCategory];
+			ranges = numberMap.ConvertRanges(ranges);
+			currentNumberCategory = numberMap.DestinationCategory;
+		}
+
+		return ranges;
 	}
 }

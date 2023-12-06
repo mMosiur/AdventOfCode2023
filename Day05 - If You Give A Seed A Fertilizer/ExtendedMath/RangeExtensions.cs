@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day05.Puzzle;
+﻿namespace AdventOfCode.Year2023.Day05.ExtendedMath;
 
 public static class RangeExtensions
 {
@@ -17,5 +17,12 @@ public static class RangeExtensions
 		Range? right = rightStart <= rightEnd ? new(rightStart, rightEnd) : null;
 
 		return (left, middle, right);
+	}
+
+	public static Range MoveBy(this Range range, long offset)
+	{
+		uint newStart = (uint)(range.Start + offset);
+		uint newEnd = (uint)(range.End + offset);
+		return new(newStart, newEnd);
 	}
 }
