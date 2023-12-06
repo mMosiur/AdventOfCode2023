@@ -2,7 +2,7 @@
 
 public sealed partial class MultiRange
 {
-	public bool Remove(Range rangeToRemove, out string s)
+	public bool Remove(Range rangeToRemove)
 	{
 		bool removed = false;
 		int index = 0;
@@ -40,8 +40,6 @@ public sealed partial class MultiRange
 
 			index++;
 		}
-
-		s += "6";
 
 		return removed;
 	}

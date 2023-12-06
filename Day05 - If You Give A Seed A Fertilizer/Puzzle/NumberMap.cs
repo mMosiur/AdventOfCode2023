@@ -17,13 +17,17 @@ internal sealed class NumberMap(NumberCategory sourceCategory, NumberCategory de
 			foreach (var range in sourceRanges)
 			{
 				if (!range.Overlaps(line.SourceRange)) continue;
-				var (unmappedLeft, mappedMiddle, unmappedRight) = range.SplitUsing(line.SourceRange);
-				if (unmappedLeft.HasValue) unmappedRanges.Add(unmappedLeft.Value);
-				if (mappedMiddle.HasValue) destinationRanges.Add(mappedMiddle.Value.MoveBy(line.DestinationOffset));
-				if (unmappedRight.HasValue) unmappedRanges.Add(unmappedRight.Value);
+				var intersection = range.Intersect(line.SourceRange);
+				if (intersection.HasValue)
+				{
+					destinationRanges.Add(intersection.Value.MoveBy(line.DestinationOffset));
+					unmappedRanges.Remove(intersection.Value);
+				}
 			}
 		}
-		// Anything that was unmapped
+
+		destinationRanges.Add(unmappedRanges);
+
 		return destinationRanges;
 	}
 

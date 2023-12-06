@@ -34,4 +34,12 @@ public sealed partial class MultiRange
 		// Insert the merged or original range at the appropriate position
 		_ranges.Insert(index - rangesToRemove, new(newRangeStart, newRangeEnd));
 	}
+
+	public void Add(IEnumerable<Range> ranges)
+	{
+		foreach (var range in ranges)
+		{
+			Add(range);
+		}
+	}
 }
