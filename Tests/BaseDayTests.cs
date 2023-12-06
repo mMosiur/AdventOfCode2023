@@ -3,7 +3,7 @@ using AdventOfCode.Abstractions;
 namespace AdventOfCode.Year2023.Tests;
 
 /// <summary>
-/// The base day tests. Allows subclasses to simply implement few needed methods and call the <c>base.TestPart1</c> or <c>base.TestPart2</c> methods
+/// The base day tests. Allows subclasses to simply implement few needed methods and call the <c>BaseTestPart1</c> or <c>BaseTestPart2</c> methods
 /// to universally test general part solving of the <see cref="DaySolver"/>.
 /// </summary>
 /// <typeparam name="TDaySolver">The solver class for given day</typeparam>
@@ -72,7 +72,7 @@ public abstract class BaseDayTests<TDaySolver, TDaySolverOptions>
 	/// <param name="inputFilename">The filename of the input file use during test</param>
 	/// <param name="expectedResult">The expected return value for given test file</param>
 	/// <param name="options">Options used to create the solver; uses default values if <c>null</c></param>
-	public virtual void TestPart1(string inputFilename, string expectedResult, TDaySolverOptions? options = null)
+	protected void BaseTestPart1(string inputFilename, string expectedResult, TDaySolverOptions? options = null)
 	{
 		options ??= new();
 		options.InputFilepath = GetInputFilepath(inputFilename);
@@ -91,7 +91,7 @@ public abstract class BaseDayTests<TDaySolver, TDaySolverOptions>
 	/// <param name="inputFilename">The filename of the input file use during test</param>
 	/// <param name="expectedResult">The expected return value for given test file</param>
 	/// <param name="options">Options used to create the solver; uses default values if <c>null</c></param>
-	public virtual void TestPart2(string inputFilename, string expectedResult, TDaySolverOptions? options = null)
+	protected void BaseTestPart2(string inputFilename, string expectedResult, TDaySolverOptions? options = null)
 	{
 		options ??= new();
 		options.InputFilepath = GetInputFilepath(inputFilename);
