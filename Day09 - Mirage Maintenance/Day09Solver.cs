@@ -10,6 +10,7 @@ public sealed class Day09Solver : DaySolver
 	public override string Title => "Mirage Maintenance";
 
 	private readonly ReportReader _reportReader;
+	private Report? _report;
 
 	public Day09Solver(Day09SolverOptions options) : base(options)
 	{
@@ -27,9 +28,9 @@ public sealed class Day09Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		var report = _reportReader.ReadReport(InputLines);
+		_report ??= _reportReader.ReadReport(InputLines);
 
-		int result = report
+		int result = _report
 			.Histories
 			.Select(h => h.PredictNextValue())
 			.Sum();
@@ -39,6 +40,13 @@ public sealed class Day09Solver : DaySolver
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		_report ??= _reportReader.ReadReport(InputLines);
+
+		int result = _report
+			.Histories
+			.Select(h => h.ExtrapolatePreviousValue())
+			.Sum();
+
+		return result.ToString();
 	}
 }
