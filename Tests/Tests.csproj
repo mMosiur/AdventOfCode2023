@@ -38,6 +38,7 @@
     <ProjectReference Include="..\Day06 - Wait For It\Day06.csproj" />
     <ProjectReference Include="..\Day07 - Camel Cards\Day07.csproj" />
     <ProjectReference Include="..\Day08 - Haunted Wasteland\Day08.csproj"/>
+    <ProjectReference Include="..\Day09 - Mirage Maintenance\Day09.csproj" />
   </ItemGroup>
 
 </Project>
