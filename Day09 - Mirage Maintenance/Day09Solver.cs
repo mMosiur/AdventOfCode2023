@@ -1,4 +1,5 @@
 using AdventOfCode.Abstractions;
+using AdventOfCode.Year2023.Day09.Puzzle.Oasis;
 
 namespace AdventOfCode.Year2023.Day09;
 
@@ -8,11 +9,11 @@ public sealed class Day09Solver : DaySolver
 	public override int Day => 9;
 	public override string Title => "Mirage Maintenance";
 
+	private readonly ReportReader _reportReader;
+
 	public Day09Solver(Day09SolverOptions options) : base(options)
 	{
-		// Initialize Day09 solver here.
-		// Property `Input` contains the raw input text.
-		// Property `InputLines` enumerates lines in the input text.
+		_reportReader = new();
 	}
 
 	public Day09Solver(Action<Day09SolverOptions> configure)
@@ -26,7 +27,14 @@ public sealed class Day09Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		return "UNSOLVED";
+		var report = _reportReader.ReadReport(InputLines);
+
+		int result = report
+			.Histories
+			.Select(h => h.PredictNextValue())
+			.Sum();
+
+		return result.ToString();
 	}
 
 	public override string SolvePart2()
