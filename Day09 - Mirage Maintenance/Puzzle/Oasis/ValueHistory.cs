@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace AdventOfCode.Year2023.Day09.Puzzle.Oasis;
 
