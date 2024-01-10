@@ -1,5 +1,3 @@
-﻿using AdventOfCode.Year2023.Day05.ExtendedMath;
-
 namespace AdventOfCode.Year2023.Day05.Puzzle;
 
 internal sealed class NumberMap(NumberCategory sourceCategory, NumberCategory destinationCategory, IReadOnlyList<NumberMapLine> lines)
@@ -17,10 +15,10 @@ internal sealed class NumberMap(NumberCategory sourceCategory, NumberCategory de
 			foreach (var range in sourceRanges)
 			{
 				if (!range.Overlaps(line.SourceRange)) continue;
-				var intersection = range.Intersect(line.SourceRange);
+				var intersection = range.IntersectedWith(line.SourceRange);
 				if (intersection.HasValue)
 				{
-					destinationRanges.Add(intersection.Value.MoveBy(line.DestinationOffset));
+					destinationRanges.Add(intersection.Value.MovedBy(line.DestinationOffset));
 					unmappedRanges.Remove(intersection.Value);
 				}
 			}
@@ -39,10 +37,7 @@ internal sealed class NumberMap(NumberCategory sourceCategory, NumberCategory de
 			return sourceNumber;
 		}
 
-		checked // TODO: remove checked section after testing
-		{
-			return (uint)(sourceNumber + line.DestinationOffset);
-		}
+		return (uint)(sourceNumber + line.DestinationOffset);
 	}
 
 	public override string ToString()

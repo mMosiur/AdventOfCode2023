@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day05.Puzzle;
+namespace AdventOfCode.Year2023.Day05.Puzzle;
 
 internal readonly record struct NumberMapLine
 {
@@ -8,9 +8,6 @@ internal readonly record struct NumberMapLine
 	public NumberMapLine(uint destinationRangeStart, uint sourceRangeStart, uint rangeLength)
 	{
 		SourceRange = new(sourceRangeStart, sourceRangeStart + rangeLength - 1);
-		checked // TODO: remove checked section after testing
-		{
-			DestinationOffset = (long)destinationRangeStart - sourceRangeStart;
-		}
+		DestinationOffset = (long)destinationRangeStart - sourceRangeStart;
 	}
 }

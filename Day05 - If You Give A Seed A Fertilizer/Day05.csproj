@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="mMosiur.AdventOfCode.Abstractions" Version="4.4.0" />
-    <PackageReference Include="mMosiur.AdventOfCode.Common" Version="0.1.0" />
+    <PackageReference Include="mMosiur.AdventOfCode.Common" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>

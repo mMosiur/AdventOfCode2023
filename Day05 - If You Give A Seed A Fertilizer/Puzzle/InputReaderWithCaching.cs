@@ -1,7 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using AdventOfCode.Common.SpanExtensions;
-using AdventOfCode.Year2023.Day05.ExtendedMath;
 
 namespace AdventOfCode.Year2023.Day05.Puzzle;
 
@@ -64,11 +63,11 @@ internal sealed class InputReaderWithCaching
 	private static NumberMapLine ReadNumberMapLine(ReadOnlySpan<char> lineSpan)
 	{
 		if (!lineSpan.TrySplitInThree(
-			    separator: ' ',
-			    out var firstNumberSpan,
-			    out var secondNumberSpan,
-			    out var thirdNumberSpan,
-			    allowMultipleSeparators: true))
+				separator: ' ',
+				out var firstNumberSpan,
+				out var secondNumberSpan,
+				out var thirdNumberSpan,
+				allowMultipleSeparators: true))
 		{
 			throw new InputException($"""Could not parse number map line from input line "{lineSpan}".""");
 		}

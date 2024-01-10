@@ -1,5 +1,3 @@
-﻿using AdventOfCode.Year2023.Day05.ExtendedMath;
-
 namespace AdventOfCode.Year2023.Day05.Puzzle;
 
 internal sealed class SeedNumberCategoryCalculator
