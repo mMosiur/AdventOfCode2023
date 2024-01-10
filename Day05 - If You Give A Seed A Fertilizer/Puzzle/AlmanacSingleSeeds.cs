@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day05.Puzzle;
+namespace AdventOfCode.Year2023.Day05.Puzzle;
 
 internal sealed class AlmanacSingleSeeds : Almanac<IReadOnlyCollection<uint>>
 {
