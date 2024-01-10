@@ -5,40 +5,40 @@ public sealed partial class MultiRange
 	public bool Remove(Range rangeToRemove)
 	{
 		bool removed = false;
-		int index = 0;
-
-		while (index < _ranges.Count && _ranges[index].End < rangeToRemove.Start)
+		for (int i = 0; i < _ranges.Count; i++)
 		{
-			index++;
-		}
+			var currentRange = _ranges[i];
+			if (currentRange.End < rangeToRemove.Start)
+			{
+				continue;
+			}
+			if (currentRange.Start > rangeToRemove.End)
+			{
+				break;
+			}
+			removed = true;
 
-		while (index < _ranges.Count && _ranges[index].Start <= rangeToRemove.End)
-		{
-			if (_ranges[index].Start >= rangeToRemove.Start && _ranges[index].End <= rangeToRemove.End)
-			{
-				// This happens when the range to remove is larger than the current range and the current range is completely removed.
-				_ranges.RemoveAt(index);
-				removed = true;
-			}
-			else if (_ranges[index].Start < rangeToRemove.Start && _ranges[index].End > rangeToRemove.End)
-			{
-				// This happens when the range to remove is smaller than the current range and the current range is split into two.
-				_ranges.Insert(index + 1, new(rangeToRemove.End + 1, _ranges[index].End));
-				_ranges[index] = new(_ranges[index].Start, rangeToRemove.Start - 1);
-				removed = true;
-			}
-			else if (_ranges[index].Start < rangeToRemove.Start && _ranges[index].End >= rangeToRemove.Start)
-			{
-				_ranges[index] = new(_ranges[index].Start, rangeToRemove.Start - 1);
-				removed = true;
-			}
-			else if (_ranges[index].Start <= rangeToRemove.End && _ranges[index].End > rangeToRemove.End)
-			{
-				_ranges[index] = new(rangeToRemove.End + 1, _ranges[index].End);
-				removed = true;
-			}
+			var (left1, left2) = currentRange.Remove(rangeToRemove);
 
-			index++;
+			if (left1 is null && left2 is null)
+			{
+				_ranges.RemoveAt(i);
+				i--;
+			}
+			else if (left1 is not null && left2 is null)
+			{
+				_ranges[i] = left1.Value;
+			}
+			else if (left1 is null && left2 is not null)
+			{
+				_ranges[i] = left2.Value;
+			}
+			else
+			{
+				_ranges[i] = left1!.Value;
+				i++;
+				_ranges.Insert(i, left2!.Value);
+			}
 		}
 
 		return removed;
