@@ -21,6 +21,8 @@ jobs:
     - name: Restore Inputs
       id: restore-inputs
       shell: pwsh
+      env: # Or as an environment variable
+        AOC_SESSION: ${{ secrets.AOC_SESSION }}
       run: ./restore-inputs.ps1
 
     - name: Setup .NET
