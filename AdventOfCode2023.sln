@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Repository", ".Repository"
 		global.json = global.json
 		LICENSE.md = LICENSE.md
 		README.md = README.md
+		restore-inputs.ps1 = restore-inputs.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solved", "Solved", "{F6C05A63-6269-425F-B877-9E9F0BC1FC26}"

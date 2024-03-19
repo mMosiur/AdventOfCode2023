@@ -21,9 +21,9 @@ jobs:
     - name: Restore Inputs
       id: restore-inputs
       shell: pwsh
-      env: # Or as an environment variable
+      env:
         AOC_SESSION: ${{ secrets.AOC_SESSION }}
-      run: ./restore-inputs.ps1
+      run: ./restore-inputs.ps1 -Verbose -UseCache
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v2

@@ -1,5 +1,7 @@
 [CmdletBinding()]
 param (
+    [Parameter()]
+    [switch]$UseCache
 )
 
 $InformationPreference = 'Continue'
@@ -12,7 +14,6 @@ $sessionToken = $env:AOC_SESSION
 $inputFilename = "input.txt"
 $testInputFilename = "my-input.txt"
 $inputCacheDirName = "input-cache"
-$useCache = $false
 
 if (-not $sessionToken) {
     Write-Error "AOC_SESSION environment variable is not set. Please set it to your session token."
@@ -23,31 +24,33 @@ $originalDirectory = Get-Location
 
 # Populate directory from cache directory
 
-if (Test-Path $inputCacheDirName) {
-    $useCache = $true
-    Write-Information "Cache directory exists, copying files to day directories"
-    Set-Location $inputCacheDirName
-    foreach ($cacheDayDirectory in Get-ChildItem -Directory) {
-        $cacheDayDirectoryName = $cacheDayDirectory.Name
-        try {
-            $destinationDirectory = get-item "../$cacheDayDirectoryName*"
-            if (-not $destinationDirectory) {
-                Write-Warning "Cache contains directory '$cacheDayDirectoryName' but no corresponding day directory was found."
-                continue
+if ($UseCache) {
+    if (Test-Path $inputCacheDirName) {
+        Write-Information "Copying cache files to day directories"
+        Set-Location $inputCacheDirName
+        foreach ($cacheDayDirectory in Get-ChildItem -Directory) {
+            $cacheDayDirectoryName = $cacheDayDirectory.Name
+            try {
+                $destinationDirectory = get-item "../$cacheDayDirectoryName*"
+                if (-not $destinationDirectory) {
+                    Write-Warning "Cache contains directory '$cacheDayDirectoryName' but no corresponding day directory was found."
+                    continue
+                }
+                $destinationDirectoryName = $destinationDirectory.Name
+                Copy-Item "$cacheDayDirectory/*" $destinationDirectory
+                Write-Information "  Cached input '$cacheDayDirectoryName' copied to day directory '$destinationDirectoryName'"
             }
-            $destinationDirectoryName = $destinationDirectory.Name
-            Copy-Item "$cacheDayDirectory/*" $destinationDirectory
-            Write-Information "  Cached input '$cacheDayDirectoryName' copied to day directory '$destinationDirectoryName'"
+            catch {
+                Write-Warning "Error while copying input for '$cacheDayDirectoryName'"
+            }
         }
-        catch {
-            Write-Warning "Error while copying input for '$cacheDayDirectoryName'"
-        }
+        Set-Location $originalDirectory
     }
-    Write-Information "  Finished cache extraction"
-    Set-Location $originalDirectory
-}
-else {
-    Write-Verbose "Cache directory not found"
+    else {
+        $inputCacheCreatedDirectory = New-Item -ItemType Directory -Path $inputCacheDirName
+        $inputCacheRelativePath = Resolve-Path -Path $inputCacheCreatedDirectory -Relative -RelativeBasePath $originalDirectory
+        Write-Information "Cache directory not found, created at $inputCacheRelativePath"
+    }
 }
 
 $dayDirectories = Get-ChildItem -Directory | Where-Object { $_.Name -match "Day\d{2}" }
