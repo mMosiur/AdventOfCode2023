@@ -1,10 +1,15 @@
 ### Custom ignore files
 
-# Ignore example input file I put in for testing and debugging
-example*.txt
+# Ignore the input cache directory
+input-cache
 
-# Do not ignore example inputs in the Tests project
+# In day puzzle files ignore example input files and my input file
+example*.txt
+input.txt
+
+# In Tests project do not ignore example inputs but do ignore my input files
 !Tests/Inputs/*/example*.txt
+Tests/Inputs/*/my-input.txt
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/dotnetcore,visualstudiocode,visualstudio,rider
