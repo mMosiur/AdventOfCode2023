@@ -3,7 +3,11 @@ param (
 )
 
 $InformationPreference = 'Continue'
+$scriptName = $MyInvocation.MyCommand.Name
 $aocYear = 2023
+$branchName = (git branch --show-current) ?? "main"
+$scriptWebAddress = "https://github.com/mMosiur/AdventOfCode$aocYear/blob/$branchName/$scriptName"
+$author = "mpmorus@gmail.com"
 $sessionToken = $env:AOC_SESSION
 $inputFilename = "input.txt"
 $testInputFilename = "my-input.txt"
@@ -62,7 +66,10 @@ foreach ($dayDirectory in $dayDirectories) {
         else {
             $url = "https://adventofcode.com/$aocYear/day/$dayNumber/input"
             Write-Information "  Downloading input file from $url"
-            Invoke-WebRequest -Uri $url -Headers @{ Cookie = "session=$sessionToken" } -OutFile $inputFilename
+            Invoke-WebRequest -Uri $url -OutFile $inputFilename -Headers @{
+                "Cookie" = "session=$sessionToken"
+                "User-Agent" = "Mozilla/5.0 ($scriptWebAddress by $author)"
+            }
             $fileHash = (Get-FileHash $inputFilename -Algorithm MD5).Hash
             Write-Information "  Input file downloaded, hash: $fileHash"
         }
