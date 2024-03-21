@@ -9,11 +9,8 @@ public sealed class Day06Solver : DaySolver
 	public override int Day => 6;
 	public override string Title => "Wait For It";
 
-	private readonly BoatRecordAnalyzer _recordAnalyzer;
-
 	public Day06Solver(Day06SolverOptions options) : base(options)
 	{
-		_recordAnalyzer = new();
 	}
 
 	public Day06Solver(Action<Day06SolverOptions> configure)
@@ -29,8 +26,9 @@ public sealed class Day06Solver : DaySolver
 	{
 		Part1InputReader part1InputReader = new();
 		var records = part1InputReader.ReadRecords(Input);
+		var recordAnalyzer = new NaiveBoatRecordAnalyzer();
 		int result = records
-			.Select(r => _recordAnalyzer.CountWaysToBeatRecord(r))
+			.Select(r => recordAnalyzer.CountWaysToBeatRecord(r))
 			.Aggregate((n1, n2) => n1 * n2);
 		return result.ToString();
 	}
@@ -39,7 +37,8 @@ public sealed class Day06Solver : DaySolver
 	{
 		Part2InputReader part2InputReader = new();
 		var record = part2InputReader.ReadRecord(Input);
-		int result = _recordAnalyzer.CountWaysToBeatRecord(record);
+		var recordAnalyzer = new OptimizedBoatRecordAnalyzer(record);
+		int result = recordAnalyzer.CountWaysToBeatRecord();
 		return result.ToString();
 	}
 }
