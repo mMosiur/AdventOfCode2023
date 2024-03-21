@@ -7,6 +7,8 @@ internal sealed class InputReader
 {
 	private static readonly Regex InputRegex = new(@"^\s*Time:\s*([\d ]+)\s*\r?\nDistance:\s*([\d ]+)\s*$");
 
+	private const int DefaultCapacity = 4;
+
 	public IReadOnlyList<BoatRecord> ReadRecords(string input)
 	{
 		var match = InputRegex.Match(input);
@@ -15,46 +17,35 @@ internal sealed class InputReader
 			throw new FormatException("Input is not in the expected format.");
 		}
 
-		var times = new List<int>(4);
-		foreach (var timeSpan in match.Groups[1].ValueSpan.Split(' '))
+		var timeValues = new List<int>(DefaultCapacity);
+		foreach (var timeValueSpan in match.Groups[1].ValueSpan.Split(' '))
 		{
-			if (timeSpan.IsEmpty) continue;
-			if (!int.TryParse(timeSpan, out int time))
+			if (timeValueSpan.IsEmpty) continue;
+			if (!int.TryParse(timeValueSpan, out int timeValue))
 			{
-				throw new FormatException($"Could not parse time number '{timeSpan}'.");
+				throw new FormatException($"Could not parse time value '{timeValueSpan}'.");
 			}
 
-			times.Add(time);
+			timeValues.Add(timeValue);
 		}
 
-		var distances = new List<int>(times.Count);
-		foreach (var distanceSpan in match.Groups[2].ValueSpan.Split(' '))
+		var distanceValues = new List<int>(timeValues.Count);
+		foreach (var distanceValueSpan in match.Groups[2].ValueSpan.Split(' '))
 		{
-			if (distanceSpan.IsEmpty) continue;
-			if (!int.TryParse(distanceSpan, out int distance))
+			if (distanceValueSpan.IsEmpty) continue;
+			if (!int.TryParse(distanceValueSpan, out int distanceValue))
 			{
-				throw new FormatException($"Could not parse distance number '{distanceSpan}'.");
+				throw new FormatException($"Could not parse distance value '{distanceValueSpan}'.");
 			}
 
-			distances.Add(distance);
+			distanceValues.Add(distanceValue);
 		}
 
-		if (times.Count != distances.Count)
+		if (timeValues.Count != distanceValues.Count)
 		{
-			throw new FormatException("Number of times and distances does not match.");
+			throw new FormatException("Numbers of time values and distance values do not match.");
 		}
 
-		return Enumerable.Range(0, times.Count)
-			.Select(i => new BoatRecord
-			{
-				Time = times[i],
-				Distance = distances[i],
-			}).ToList();
+		return timeValues.Zip(distanceValues, (time, distance) => new BoatRecord(time, distance)).ToList();
 	}
-}
-
-internal readonly struct BoatRecord
-{
-	public required int Time { get; init; }
-	public required int Distance { get; init; }
 }
