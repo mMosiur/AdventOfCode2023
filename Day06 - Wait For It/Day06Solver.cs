@@ -35,24 +35,11 @@ public sealed class Day06Solver : DaySolver
 		return result.ToString();
 	}
 
-	private int CountWaysToBeatTheRecord(BoatRecord record)
-	{
-		int count = 0;
-		for (int timeHoldingButton = 1; timeHoldingButton < record.Time; timeHoldingButton++)
-		{
-			int timeLeft = record.Time - timeHoldingButton;
-			int speed = timeHoldingButton;
-			int distance = speed * timeLeft;
-			if (distance > record.Distance)
-			{
-				count++;
-			}
-		}
-		return count;
-	}
-
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		Part2InputReader part2InputReader = new();
+		var record = part2InputReader.ReadRecord(Input);
+		int result = _recordAnalyzer.CountWaysToBeatRecord(record);
+		return result.ToString();
 	}
 }
