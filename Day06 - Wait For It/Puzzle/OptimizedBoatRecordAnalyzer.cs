@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day06.Puzzle;
+namespace AdventOfCode.Year2023.Day06.Puzzle;
 
 internal sealed class OptimizedBoatRecordAnalyzer
 {
