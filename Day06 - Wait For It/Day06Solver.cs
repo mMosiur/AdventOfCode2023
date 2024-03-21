@@ -9,15 +9,11 @@ public sealed class Day06Solver : DaySolver
 	public override int Day => 6;
 	public override string Title => "Wait For It";
 
-	private readonly IReadOnlyList<BoatRecord> _records;
+	private readonly BoatRecordAnalyzer _recordAnalyzer;
 
 	public Day06Solver(Day06SolverOptions options) : base(options)
 	{
-		// Initialize Day06 solver here.
-		// Property `Input` contains the raw input text.
-		// Property `InputLines` enumerates lines in the input text.
-		InputReader inputReader = new();
-		_records = inputReader.ReadRecords(Input);
+		_recordAnalyzer = new();
 	}
 
 	public Day06Solver(Action<Day06SolverOptions> configure)
@@ -31,8 +27,10 @@ public sealed class Day06Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		int result = _records
-			.Select(CountWaysToBeatTheRecord)
+		Part1InputReader part1InputReader = new();
+		var records = part1InputReader.ReadRecords(Input);
+		int result = records
+			.Select(r => _recordAnalyzer.CountWaysToBeatRecord(r))
 			.Aggregate((n1, n2) => n1 * n2);
 		return result.ToString();
 	}
