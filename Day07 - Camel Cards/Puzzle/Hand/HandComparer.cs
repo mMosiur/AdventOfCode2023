@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day07.Puzzle;
+﻿namespace AdventOfCode.Year2023.Day07.Puzzle.Hand;
 
 internal sealed class HandComparer : IComparer<Hand>
 {

@@ -1,8 +1,8 @@
-﻿namespace AdventOfCode.Year2023.Day07.Puzzle;
+﻿namespace AdventOfCode.Year2023.Day07.Puzzle.Hand;
 
 internal sealed class Hand
 {
-	public IReadOnlyList<Card> Cards { get; }
+	public IReadOnlyList<Card.Card> Cards { get; }
 	public HandType HandType { get; }
 	public int Bid { get; }
 
@@ -13,17 +13,12 @@ internal sealed class Hand
 			throw new ArgumentException("Hand representation must contain exactly 5 characters", nameof(handRepresentation));
 		}
 
-		if (handRepresentation.Any(c => !Card.NumericValues.ContainsKey(c)))
-		{
-			throw new ArgumentException("Hand representation contains invalid characters", nameof(handRepresentation));
-		}
-
 		if (!Enum.IsDefined(handType))
 		{
 			throw new ArgumentException("Invalid hand type", nameof(handType));
 		}
 
-		Cards = handRepresentation.Select(c => new Card(c)).ToArray();
+		Cards = handRepresentation.Select(c => new Card.Card(c)).ToArray();
 		HandType = handType;
 		Bid = bid;
 	}

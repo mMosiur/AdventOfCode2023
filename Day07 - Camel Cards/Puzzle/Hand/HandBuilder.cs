@@ -1,9 +1,15 @@
-﻿namespace AdventOfCode.Year2023.Day07.Puzzle;
+﻿namespace AdventOfCode.Year2023.Day07.Puzzle.Hand;
 
 internal sealed class HandBuilder
 {
 	private string? _handRepresentation;
 	private int? _bid;
+	private readonly bool _treatJackAsJoker;
+
+	public HandBuilder(bool treatJackAsJoker)
+	{
+		_treatJackAsJoker = treatJackAsJoker;
+	}
 
 	public HandBuilder WithCards(string handRepresentation)
 	{
@@ -40,8 +46,12 @@ internal sealed class HandBuilder
 		_bid = null;
 	}
 
-	private static HandType DetermineHandType(IEnumerable<char> cardRepresentations)
+	private HandType DetermineHandType(IEnumerable<char> cardRepresentations)
 	{
+		if (_treatJackAsJoker)
+		{
+			throw new NotImplementedException();
+		}
 		var groups = cardRepresentations.GroupBy(c => c).ToArray();
 		switch (groups.Length)
 		{
