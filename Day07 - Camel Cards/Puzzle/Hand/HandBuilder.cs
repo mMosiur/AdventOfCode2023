@@ -1,12 +1,12 @@
-﻿using AdventOfCode.Year2023.Day07.Puzzle.Cards;
+using AdventOfCode.Year2023.Day07.Puzzle.Cards;
 
 namespace AdventOfCode.Year2023.Day07.Puzzle.Hand;
 
 internal sealed class HandBuilder
 {
-	private string? _handRepresentation;
-	private int? _bid;
 	private readonly bool _treatJackAsJoker;
+	private int? _bid;
+	private string? _handRepresentation;
 
 	public HandBuilder(bool treatJackAsJoker)
 	{
@@ -125,6 +125,7 @@ internal sealed class HandBuilder
 				// If there are 2, exactly one other group will have 2 cards also and together they make four of a kind.
 				return HandType.FourOfKind;
 			}
+
 			return groups.Any(g => g.Count() is 3)
 				? HandType.FourOfKind // There is one group of 3 cards and one of 1 card, the single joker makes a four of a kind with the former
 				: HandType.FullHouse; // There are two groups of 2 cards and one joker, adding to either pair makes a full house

@@ -1,13 +1,9 @@
-﻿using AdventOfCode.Year2023.Day07.Puzzle.Cards;
+using AdventOfCode.Year2023.Day07.Puzzle.Cards;
 
 namespace AdventOfCode.Year2023.Day07.Puzzle.Hand;
 
 internal sealed class Hand
 {
-	public IReadOnlyList<Card> Cards { get; }
-	public HandType HandType { get; }
-	public int Bid { get; }
-
 	public Hand(string handRepresentation, HandType handType, int bid, bool treatJackAsJoker)
 	{
 		if (handRepresentation.Length is not 5)
@@ -24,6 +20,10 @@ internal sealed class Hand
 		HandType = handType;
 		Bid = bid;
 	}
+
+	public IReadOnlyList<Card> Cards { get; }
+	public HandType HandType { get; }
+	public int Bid { get; }
 
 	public override string ToString() => $"{string.Join(' ', Cards.Select(c => c.Label))} ({Bid})";
 }

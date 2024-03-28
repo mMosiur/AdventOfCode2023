@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day07.Puzzle.Cards;
+namespace AdventOfCode.Year2023.Day07.Puzzle.Cards;
 
 internal enum CardType
 {

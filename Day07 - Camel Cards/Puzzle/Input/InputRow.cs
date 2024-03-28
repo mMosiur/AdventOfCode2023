@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day07.Puzzle.Input;
+namespace AdventOfCode.Year2023.Day07.Puzzle.Input;
 
 internal readonly struct InputRow
 {
