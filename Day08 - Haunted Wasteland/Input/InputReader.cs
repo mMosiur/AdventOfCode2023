@@ -37,7 +37,7 @@ internal sealed class InputReader
 				throw new InputException("No nodes defined in input data");
 			}
 
-			var nodesBuilder = new NodesBuilder(_startNodeLabel, _endNodeLabel);
+			var nodesBuilder = new NodesBuilder(_startNodeLabel, _endNodeLabel, instructions);
 			do
 			{
 				var lineNodeData = ReadNodeDataLine(enumerator.Current);

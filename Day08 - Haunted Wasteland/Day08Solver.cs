@@ -33,11 +33,7 @@ public sealed class Day08Solver : DaySolver
 		var node = _mapDocuments.StartNode;
 		while (node != _mapDocuments.EndNode)
 		{
-			foreach (var step in _mapDocuments.Instructions)
-			{
-				node = node[step];
-			}
-
+			node = node.NextInPath;
 			stepCount += _mapDocuments.Instructions.Count;
 		}
 
