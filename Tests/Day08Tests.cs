@@ -12,13 +12,15 @@ public sealed class Day08Tests : BaseDayTests<Day08Solver, Day08SolverOptions>
 	protected override Day08Solver CreateSolver(Day08SolverOptions options) => new(options);
 
 	[Theory]
-	[InlineData("example-input.txt", "UNSOLVED", Skip = "Not implemented yet")]
-	[InlineData("my-input.txt", "UNSOLVED", Skip = "Not implemented yet")]
+	[InlineData("example-input-1.txt", "2")]
+	[InlineData("example-input-2.txt", "6")]
+	[InlineData("my-input.txt", "19099")]
 	public void TestPart1(string inputFilename, string expectedResult, Day08SolverOptions? options = null)
 		=> BaseTestPart1(inputFilename, expectedResult, options);
 
 	[Theory]
-	[InlineData("example-input.txt", "UNSOLVED", Skip = "Not implemented yet")]
+	[InlineData("example-input-1.txt", "UNSOLVED", Skip = "Not implemented yet")]
+	[InlineData("example-input-2.txt", "UNSOLVED", Skip = "Not implemented yet")]
 	[InlineData("my-input.txt", "UNSOLVED", Skip = "Not implemented yet")]
 	public void TestPart2(string inputFilename, string expectedResult, Day08SolverOptions? options = null)
 		=> BaseTestPart2(inputFilename, expectedResult, options);

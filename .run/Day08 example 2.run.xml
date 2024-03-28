@@ -1,8 +1,8 @@
 ﻿<component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Day08 example" type="DotNetProject" factoryName=".NET Project"
+    <configuration default="false" name="Day08 example 2" type="DotNetProject" factoryName=".NET Project"
                    folderName="Day08">
         <option name="EXE_PATH" value="$PROJECT_DIR$/Day08 - Haunted Wasteland/bin/Debug/net8.0/Day08.exe"/>
-        <option name="PROGRAM_PARAMETERS" value="example.txt"/>
+        <option name="PROGRAM_PARAMETERS" value="example2.txt"/>
         <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Day08 - Haunted Wasteland/bin/Debug/net8.0"/>
         <option name="PASS_PARENT_ENVS" value="1"/>
         <option name="USE_EXTERNAL_CONSOLE" value="0"/>
