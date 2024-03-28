@@ -54,13 +54,15 @@ public sealed class Day07Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		var hands = BuildHands(treatJackAsJoker: false);
+		var hands = BuildHands();
 		int totalWinnings = CalculateTotalWinnings(hands);
 		return totalWinnings.ToString();
 	}
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var hands = BuildHands(treatJackAsJoker: true);
+		int totalWinnings = CalculateTotalWinnings(hands);
+		return totalWinnings.ToString();
 	}
 }

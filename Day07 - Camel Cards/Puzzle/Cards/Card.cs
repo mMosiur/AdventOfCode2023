@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day07.Puzzle.Card;
+﻿namespace AdventOfCode.Year2023.Day07.Puzzle.Cards;
 
 internal readonly struct Card : IEquatable<Card>, IComparable<Card>
 {
@@ -8,7 +8,7 @@ internal readonly struct Card : IEquatable<Card>, IComparable<Card>
 
 	public char Label => CardLabels[(int)Type];
 
-	public Card(char label, bool treatJackAsJoker = false)
+	public Card(char label, bool treatJackAsJoker)
 	{
 		Type = label switch
 		{
@@ -33,6 +33,8 @@ internal readonly struct Card : IEquatable<Card>, IComparable<Card>
 	{
 		Type = card.Type;
 	}
+
+	public static char GetCardTypeLabel(CardType type) => CardLabels[(int)type];
 
 	private int NumericValue => (int)Type;
 
