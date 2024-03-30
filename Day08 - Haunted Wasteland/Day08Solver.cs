@@ -6,12 +6,13 @@ namespace AdventOfCode.Year2023.Day08;
 
 public sealed class Day08Solver : DaySolver
 {
+	private readonly Day08SolverOptions _options;
 	private readonly MapDocuments _mapDocuments;
 
 	public Day08Solver(Day08SolverOptions options) : base(options)
 	{
-		var inputReader = new InputReader(options.StartNodeLabelSuffix, options.EndNodeLabelSuffix);
-		_mapDocuments = inputReader.Read(InputLines);
+		_options = options;
+		_mapDocuments = InputReader.Read(InputLines);
 	}
 
 	public Day08Solver(Action<Day08SolverOptions> configure)
@@ -28,6 +29,26 @@ public sealed class Day08Solver : DaySolver
 	public override string Title => "Haunted Wasteland";
 
 	public override string SolvePart1()
+	{
+		string startLabel = _options.PartOneStartNodeLabel;
+		string endLabel = _options.PartOneEndNodeLabel;
+		_mapDocuments.ReassignNodeTypes(LabelMatchingStrategy.WholeLabel, startLabel, endLabel);
+
+		int steps = CountStepsFromStartToEnd();
+		return steps.ToString();
+	}
+
+	public override string SolvePart2()
+	{
+		string startLabel = _options.PartTwoStartNodeLabelSuffix;
+		string endLabel = _options.PartTwoEndNodeLabelSuffix;
+		_mapDocuments.ReassignNodeTypes(LabelMatchingStrategy.LabelSuffix, startLabel, endLabel);
+
+		int steps = CountStepsFromStartToEnd();
+		return steps.ToString();
+	}
+
+	private int CountStepsFromStartToEnd()
 	{
 		int stepCount = 0;
 		int stepLength = _mapDocuments.Instructions.Count;
@@ -46,12 +67,6 @@ public sealed class Day08Solver : DaySolver
 			stepCount++;
 		}
 
-		int steps = stepCount * stepLength;
-		return steps.ToString();
-	}
-
-	public override string SolvePart2()
-	{
-		return "UNSOLVED";
+		return stepCount * stepLength;
 	}
 }

@@ -3,20 +3,11 @@ using AdventOfCode.Year2023.Day08.Map;
 
 namespace AdventOfCode.Year2023.Day08.Input;
 
-internal sealed class InputReader
+internal static class InputReader
 {
 	private static readonly Regex InputDataLineRegex = new(@"^\s*(\w+)\s*=\s*\((\w+)\s*,\s*(\w+)\)\s*$", RegexOptions.Compiled);
-	private readonly string _endNodeLabel;
 
-	private readonly string _startNodeLabel;
-
-	public InputReader(string startNodeLabel, string endNodeLabel)
-	{
-		_startNodeLabel = startNodeLabel;
-		_endNodeLabel = endNodeLabel;
-	}
-
-	public MapDocuments Read(IEnumerable<string> inputLines)
+	public static MapDocuments Read(IEnumerable<string> inputLines)
 	{
 		try
 		{
@@ -37,14 +28,14 @@ internal sealed class InputReader
 				throw new InputException("No nodes defined in input data");
 			}
 
-			var nodesBuilder = new NodesBuilder(_startNodeLabel, _endNodeLabel, instructions);
+			var nodesBuilder = new NodesBuilder();
 			do
 			{
 				var lineNodeData = ReadNodeDataLine(enumerator.Current);
 				nodesBuilder.AddNode(lineNodeData.Label, lineNodeData.LeftLabel, lineNodeData.RightLabel);
 			} while (enumerator.MoveNext() && !string.IsNullOrWhiteSpace(enumerator.Current));
 
-			var nodes = nodesBuilder.Build();
+			var nodes = nodesBuilder.Build(instructions);
 
 			return new()
 			{
@@ -62,7 +53,7 @@ internal sealed class InputReader
 		}
 	}
 
-	private static IReadOnlyList<Direction> ReadInstructions(ReadOnlySpan<char> instructionsLine)
+	private static List<Direction> ReadInstructions(ReadOnlySpan<char> instructionsLine)
 	{
 		instructionsLine = instructionsLine.Trim();
 		var instructions = new List<Direction>(instructionsLine.Length);

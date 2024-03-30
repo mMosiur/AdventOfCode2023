@@ -2,32 +2,26 @@ namespace AdventOfCode.Year2023.Day08.Map;
 
 internal sealed class NodesBuilder
 {
-	private readonly string _endNodeLabelSuffix;
-	private readonly IReadOnlyList<Direction> _instruction;
-	private readonly Dictionary<string, (InternalNode Node, string LeftLabel, string RightLabel)> _nodes;
-	private readonly string _startNodeLabelSuffix;
+	private readonly Dictionary<string, (InternalNode Node, string LeftLabel, string RightLabel)> _nodes = new();
 
-	public NodesBuilder(string startNodeLabelSuffix, string endNodeLabelSuffix, IReadOnlyList<Direction> instruction)
+	public NodesBuilder AddNode(string label, string leftLabel, string rightLabel)
 	{
-		_nodes = new();
-		_startNodeLabelSuffix = startNodeLabelSuffix;
-		_endNodeLabelSuffix = endNodeLabelSuffix;
-		_instruction = instruction;
-	}
-
-	public void AddNode(string label, string leftLabel, string rightLabel)
-	{
-		bool isStartNode = label.EndsWith(_startNodeLabelSuffix);
-		var startNodeType = isStartNode ? NodeType.Start : NodeType.Normal;
-		bool isEndNode = label.EndsWith(_endNodeLabelSuffix);
-		var endNodeType = isEndNode ? NodeType.End : NodeType.Normal;
-		var type = startNodeType | endNodeType;
-		var node = new InternalNode(label, type);
+		var node = new InternalNode(label);
 		_nodes.Add(label, (node, leftLabel, rightLabel));
+		return this;
 	}
 
-	public IReadOnlyList<Node> Build()
+	public IReadOnlyList<Node> Build(IReadOnlyList<Direction> instructions)
 	{
+		if (instructions is not { Count: > 0 })
+		{
+			throw new ArgumentException("No instructions provided", nameof(instructions));
+		}
+
+		if (_nodes.Count == 0)
+		{
+			throw new InvalidOperationException("No nodes defined");
+		}
 
 		foreach (var (node, leftLabel, rightLabel) in _nodes.Values)
 		{
@@ -52,7 +46,7 @@ internal sealed class NodesBuilder
 		foreach (var node in nodes)
 		{
 			node.NextInPathInternal = node;
-			foreach (var direction in _instruction)
+			foreach (var direction in instructions)
 			{
 				node.NextInPathInternal = node.NextInPathInternal.GoTo(direction);
 			}
@@ -61,7 +55,7 @@ internal sealed class NodesBuilder
 		return nodes;
 	}
 
-	private sealed class InternalNode(string label, NodeType type) : Node(label, type)
+	private sealed class InternalNode(string label) : Node(label)
 	{
 		internal InternalNode? LeftInternal { get; set; }
 		internal InternalNode? RightInternal { get; set; }
@@ -79,5 +73,7 @@ internal sealed class NodesBuilder
 				_ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
 			};
 		}
+
+		public override string ToString() => $"{Label} ({LeftInternal?.Label ?? "<null>"}, {RightInternal?.Label ?? "<null?"}) [{NextInPathInternal?.Label ?? "<null>"}]";
 	}
 }
