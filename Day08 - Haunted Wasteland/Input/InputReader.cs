@@ -44,14 +44,12 @@ internal sealed class InputReader
 				nodesBuilder.AddNode(lineNodeData.Label, lineNodeData.LeftLabel, lineNodeData.RightLabel);
 			} while (enumerator.MoveNext() && !string.IsNullOrWhiteSpace(enumerator.Current));
 
-			var (nodes, startNode, endNode) = nodesBuilder.Build();
+			var nodes = nodesBuilder.Build();
 
 			return new()
 			{
 				Instructions = instructions,
 				Nodes = nodes,
-				StartNode = startNode,
-				EndNode = endNode
 			};
 		}
 		catch (InputException)

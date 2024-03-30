@@ -4,6 +4,6 @@ namespace AdventOfCode.Year2023.Day08;
 
 public sealed class Day08SolverOptions : DaySolverOptions
 {
-	public string StartNodeLabel { get; set; } = "AAA";
-	public string EndNodeLabel { get; set; } = "ZZZ";
+	public string StartNodeLabelSuffix { get; set; } = "A";
+	public string EndNodeLabelSuffix { get; set; } = "Z";
 }

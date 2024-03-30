@@ -10,7 +10,7 @@ public sealed class Day08Solver : DaySolver
 
 	public Day08Solver(Day08SolverOptions options) : base(options)
 	{
-		var inputReader = new InputReader(options.StartNodeLabel, options.EndNodeLabel);
+		var inputReader = new InputReader(options.StartNodeLabelSuffix, options.EndNodeLabelSuffix);
 		_mapDocuments = inputReader.Read(InputLines);
 	}
 
@@ -30,14 +30,24 @@ public sealed class Day08Solver : DaySolver
 	public override string SolvePart1()
 	{
 		int stepCount = 0;
-		var node = _mapDocuments.StartNode;
-		while (node != _mapDocuments.EndNode)
+		int stepLength = _mapDocuments.Instructions.Count;
+		var nodes = _mapDocuments.Nodes.Where(n => n.IsStart).ToArray();
+		bool allEndNodes = nodes.All(n => n.IsEnd);
+		while (allEndNodes is false)
 		{
-			node = node.NextInPath;
-			stepCount += _mapDocuments.Instructions.Count;
+			allEndNodes = true;
+			for (int i = 0; i < nodes.Length; i++)
+			{
+				var node = nodes[i].NextInPath;
+				nodes[i] = node;
+				allEndNodes &= node.IsEnd;
+			}
+
+			stepCount++;
 		}
 
-		return stepCount.ToString();
+		int steps = stepCount * stepLength;
+		return steps.ToString();
 	}
 
 	public override string SolvePart2()

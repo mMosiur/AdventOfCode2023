@@ -2,36 +2,32 @@ namespace AdventOfCode.Year2023.Day08.Map;
 
 internal sealed class NodesBuilder
 {
-	private readonly string _endNodeLabel;
+	private readonly string _endNodeLabelSuffix;
 	private readonly IReadOnlyList<Direction> _instruction;
 	private readonly Dictionary<string, (InternalNode Node, string LeftLabel, string RightLabel)> _nodes;
-	private readonly string _startNodeLabel;
+	private readonly string _startNodeLabelSuffix;
 
-	public NodesBuilder(string startNodeLabel, string endNodeLabel, IReadOnlyList<Direction> instruction)
+	public NodesBuilder(string startNodeLabelSuffix, string endNodeLabelSuffix, IReadOnlyList<Direction> instruction)
 	{
 		_nodes = new();
-		_startNodeLabel = startNodeLabel;
-		_endNodeLabel = endNodeLabel;
+		_startNodeLabelSuffix = startNodeLabelSuffix;
+		_endNodeLabelSuffix = endNodeLabelSuffix;
 		_instruction = instruction;
 	}
 
 	public void AddNode(string label, string leftLabel, string rightLabel)
 	{
-		var node = new InternalNode(label);
+		bool isStartNode = label.EndsWith(_startNodeLabelSuffix);
+		var startNodeType = isStartNode ? NodeType.Start : NodeType.Normal;
+		bool isEndNode = label.EndsWith(_endNodeLabelSuffix);
+		var endNodeType = isEndNode ? NodeType.End : NodeType.Normal;
+		var type = startNodeType | endNodeType;
+		var node = new InternalNode(label, type);
 		_nodes.Add(label, (node, leftLabel, rightLabel));
 	}
 
-	public (IReadOnlyList<Node> Nodes, Node StartNode, Node EndNode) Build()
+	public IReadOnlyList<Node> Build()
 	{
-		if (!_nodes.TryGetValue(_startNodeLabel, out var startNode))
-		{
-			throw new InvalidOperationException($"Start node labeled '{_startNodeLabel}' not found");
-		}
-
-		if (!_nodes.TryGetValue(_endNodeLabel, out var endNode))
-		{
-			throw new InvalidOperationException($"End node labeled '{_endNodeLabel}' not found");
-		}
 
 		foreach (var (node, leftLabel, rightLabel) in _nodes.Values)
 		{
@@ -62,17 +58,17 @@ internal sealed class NodesBuilder
 			}
 		}
 
-		return (nodes, startNode.Node, endNode.Node);
+		return nodes;
 	}
 
-	private sealed class InternalNode(string label) : Node
+	private sealed class InternalNode(string label, NodeType type) : Node(label, type)
 	{
 		internal InternalNode? LeftInternal { get; set; }
 		internal InternalNode? RightInternal { get; set; }
 		internal InternalNode? NextInPathInternal { get; set; }
 
-		public override string Label { get; } = label;
 		public override Node NextInPath => NextInPathInternal!;
+
 
 		internal InternalNode GoTo(Direction direction)
 		{
