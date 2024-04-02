@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day08.Puzzle.Map;
+namespace AdventOfCode.Year2023.Day08.Puzzle.Map;
 
 [Flags]
 internal enum NodeType
