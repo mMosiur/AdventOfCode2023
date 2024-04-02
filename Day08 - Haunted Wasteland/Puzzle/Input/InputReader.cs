@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
-using AdventOfCode.Year2023.Day08.Map;
+using AdventOfCode.Year2023.Day08.Puzzle.Map;
 
-namespace AdventOfCode.Year2023.Day08.Input;
+namespace AdventOfCode.Year2023.Day08.Puzzle.Input;
 
 internal static class InputReader
 {

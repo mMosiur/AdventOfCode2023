@@ -1,13 +1,13 @@
 using AdventOfCode.Abstractions;
-using AdventOfCode.Year2023.Day08.Input;
-using AdventOfCode.Year2023.Day08.Map;
+using AdventOfCode.Year2023.Day08.Puzzle.Input;
+using AdventOfCode.Year2023.Day08.Puzzle.Map;
 
 namespace AdventOfCode.Year2023.Day08;
 
 public sealed class Day08Solver : DaySolver
 {
-	private readonly Day08SolverOptions _options;
 	private readonly MapDocuments _mapDocuments;
+	private readonly Day08SolverOptions _options;
 
 	public Day08Solver(Day08SolverOptions options) : base(options)
 	{
@@ -34,7 +34,8 @@ public sealed class Day08Solver : DaySolver
 		string endLabel = _options.PartOneEndNodeLabel;
 		_mapDocuments.ReassignNodeTypes(LabelMatchingStrategy.WholeLabel, startLabel, endLabel);
 
-		int steps = CountStepsFromStartToEnd();
+		var startNode = _mapDocuments.Nodes.First(n => n.IsStart);
+		ulong steps = CountStepsFromStartToEnd(startNode);
 		return steps.ToString();
 	}
 
@@ -44,29 +45,33 @@ public sealed class Day08Solver : DaySolver
 		string endLabel = _options.PartTwoEndNodeLabelSuffix;
 		_mapDocuments.ReassignNodeTypes(LabelMatchingStrategy.LabelSuffix, startLabel, endLabel);
 
-		int steps = CountStepsFromStartToEnd();
+		var startNodes = _mapDocuments.Nodes.Where(n => n.IsStart).ToArray();
+		ulong steps = CountStepsFromStartToEnd(startNodes);
 		return steps.ToString();
 	}
 
-	private int CountStepsFromStartToEnd()
+	private static ulong CountStepsFromStartToEnd(Node node)
 	{
-		int stepCount = 0;
-		int stepLength = _mapDocuments.Instructions.Count;
-		var nodes = _mapDocuments.Nodes.Where(n => n.IsStart).ToArray();
-		bool allEndNodes = nodes.All(n => n.IsEnd);
-		while (allEndNodes is false)
+		ulong nodeStepCount = 0;
+		while (node.IsEnd is false)
 		{
-			allEndNodes = true;
-			for (int i = 0; i < nodes.Length; i++)
-			{
-				var node = nodes[i].NextInPath;
-				nodes[i] = node;
-				allEndNodes &= node.IsEnd;
-			}
-
-			stepCount++;
+			nodeStepCount += (ulong)node.PathLength;
+			node = node.NextInPath;
 		}
 
-		return stepCount * stepLength;
+		return nodeStepCount;
+	}
+
+	private static ulong CountStepsFromStartToEnd(IReadOnlyCollection<Node> nodes)
+	{
+		if (nodes.Count == 0)
+		{
+			return 0;
+		}
+
+		var nodeStepCounts = nodes
+			.Select(CountStepsFromStartToEnd);
+
+		return MathExtended.LeastCommonMultiple(nodeStepCounts);
 	}
 }

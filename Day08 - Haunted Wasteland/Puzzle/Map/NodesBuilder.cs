@@ -1,4 +1,4 @@
-namespace AdventOfCode.Year2023.Day08.Map;
+namespace AdventOfCode.Year2023.Day08.Puzzle.Map;
 
 internal sealed class NodesBuilder
 {
@@ -45,11 +45,14 @@ internal sealed class NodesBuilder
 		// Optimize nodes to have the next node in the path already set as we can only travel in whole paths
 		foreach (var node in nodes)
 		{
-			node.NextInPathInternal = node;
+			var nextNodeInPath = node;
 			foreach (var direction in instructions)
 			{
-				node.NextInPathInternal = node.NextInPathInternal.GoTo(direction);
+				nextNodeInPath = nextNodeInPath.GoTo(direction);
 			}
+
+			node.NextInPathInternal = nextNodeInPath;
+			node.PathLengthInternal = instructions.Count;
 		}
 
 		return nodes;
@@ -57,11 +60,13 @@ internal sealed class NodesBuilder
 
 	private sealed class InternalNode(string label) : Node(label)
 	{
-		internal InternalNode? LeftInternal { get; set; }
-		internal InternalNode? RightInternal { get; set; }
-		internal InternalNode? NextInPathInternal { get; set; }
+		internal InternalNode? LeftInternal;
+		internal InternalNode? NextInPathInternal;
+		internal int PathLengthInternal;
+		internal InternalNode? RightInternal;
 
 		public override Node NextInPath => NextInPathInternal!;
+		public override int PathLength => PathLengthInternal;
 
 
 		internal InternalNode GoTo(Direction direction)

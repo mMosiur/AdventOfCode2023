@@ -1,4 +1,4 @@
-namespace AdventOfCode.Year2023.Day08.Input;
+namespace AdventOfCode.Year2023.Day08.Puzzle.Input;
 
 internal struct InputNodeData
 {

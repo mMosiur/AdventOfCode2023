@@ -1,13 +1,13 @@
-using AdventOfCode.Year2023.Day08.Input;
+using AdventOfCode.Year2023.Day08.Puzzle.Input;
 
-namespace AdventOfCode.Year2023.Day08.Map;
+namespace AdventOfCode.Year2023.Day08.Puzzle.Map;
 
 internal sealed class MapDocuments
 {
 	public required IReadOnlyList<Direction> Instructions { get; init; }
 	public required IReadOnlyList<Node> Nodes { get; init; }
 
-	public void ReassignNodeTypes(LabelMatchingStrategy strategy,string startLabel, string endLabel)
+	public void ReassignNodeTypes(LabelMatchingStrategy strategy, string startLabel, string endLabel)
 	{
 		switch (strategy)
 		{
