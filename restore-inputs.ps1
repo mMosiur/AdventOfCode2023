@@ -7,7 +7,11 @@ param (
 $InformationPreference = 'Continue'
 $scriptName = $MyInvocation.MyCommand.Name
 $aocYear = 2023
-$branchName = (git branch --show-current) ?? "main"
+$branchName = (git branch --show-current)
+if (-not $branchName)
+{
+    $branchName = "main"
+}
 $scriptWebAddress = "https://github.com/mMosiur/AdventOfCode$aocYear/blob/$branchName/$scriptName"
 $author = "mpmorus@gmail.com"
 $sessionToken = $env:AOC_SESSION
