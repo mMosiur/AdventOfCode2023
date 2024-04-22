@@ -1,4 +1,5 @@
 using AdventOfCode.Abstractions;
+using AdventOfCode.Year2023.Day10.Puzzle.Pipes;
 
 namespace AdventOfCode.Year2023.Day10;
 
@@ -8,11 +9,18 @@ public sealed class Day10Solver : DaySolver
 	public override int Day => 10;
 	public override string Title => "Pipe Maze";
 
+	private readonly PipeMapBuilder _mapBuilder;
+
 	public Day10Solver(Day10SolverOptions options) : base(options)
 	{
-		// Initialize Day10 solver here.
-		// Property `Input` contains the raw input text.
-		// Property `InputLines` enumerates lines in the input text.
+		try
+		{
+			_mapBuilder = new(options);
+		}
+		catch (Exception e)
+		{
+			throw new InputException("Invalid day solver options", e);
+		}
 	}
 
 	public Day10Solver(Action<Day10SolverOptions> configure)
@@ -26,7 +34,18 @@ public sealed class Day10Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		return "UNSOLVED";
+		var map = _mapBuilder.BuildFromLines(InputLines);
+		var traverser = map.CreateTraverser();
+
+		do
+		{
+			traverser.TakeStep();
+		} while (traverser.CurrentPoint != map.Start);
+
+		// Since this is a loop then the furthest point will be at half the step count the traverser took
+		int furthestPointDistance = traverser.StepCount / 2;
+
+		return furthestPointDistance.ToString();
 	}
 
 	public override string SolvePart2()
