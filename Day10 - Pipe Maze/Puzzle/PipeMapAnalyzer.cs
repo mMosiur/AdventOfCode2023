@@ -20,6 +20,8 @@ internal sealed class PipeMapAnalyzer(PipeMap pipeMap)
 
 	public int CalculateEnclosedArea()
 	{
+		// Shoelace formula for polygon area
+		// https://en.wikipedia.org/wiki/Shoelace_formula
 		var points = EnumerateLoopPoints().ToArray();
 
 		int sum = 0;
