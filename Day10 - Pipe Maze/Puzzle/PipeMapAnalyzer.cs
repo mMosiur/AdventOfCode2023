@@ -1,4 +1,4 @@
-﻿using AdventOfCode.Year2023.Day10.Puzzle.Pipes;
+using AdventOfCode.Year2023.Day10.Puzzle.Pipes;
 
 namespace AdventOfCode.Year2023.Day10.Puzzle;
 
