@@ -20,8 +20,11 @@ public sealed class Day10Tests : BaseDayTests<Day10Solver, Day10SolverOptions>
 		=> BaseTestPart1(inputFilename, expectedResult, options);
 
 	[Theory]
-	[InlineData("example-input.txt", "", Skip = "Unsolved yet")]
-	[InlineData("my-input.txt", "", Skip = "Unsolved yet")]
+	[InlineData("example-input-5.txt", "4")]
+	[InlineData("example-input-6.txt", "4")]
+	[InlineData("example-input-7.txt", "8")]
+	[InlineData("example-input-8.txt", "10")]
+	[InlineData("my-input.txt", "511")]
 	public void TestPart2(string inputFilename, string expectedResult, Day10SolverOptions? options = null)
 		=> BaseTestPart2(inputFilename, expectedResult, options);
 }
