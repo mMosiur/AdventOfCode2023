@@ -40,6 +40,7 @@
     <ProjectReference Include="..\Day08 - Haunted Wasteland\Day08.csproj"/>
     <ProjectReference Include="..\Day09 - Mirage Maintenance\Day09.csproj" />
     <ProjectReference Include="..\Day10 - Pipe Maze\Day10.csproj" />
+    <ProjectReference Include="..\Day11 - Cosmic Expansion\Day11.csproj"/>
   </ItemGroup>
 
 </Project>
