@@ -15,12 +15,12 @@ public sealed class Day08Tests : BaseDayTests<Day08Solver, Day08SolverOptions>
 	[InlineData("example-input-1.txt", "2")]
 	[InlineData("example-input-2.txt", "6")]
 	[InlineData("my-input.txt", "19099")]
-	public void TestPart1(string inputFilename, string expectedResult, Day08SolverOptions? options = null)
-		=> BaseTestPart1(inputFilename, expectedResult, options);
+	public void TestPart1(string inputFilename, string expectedResult)
+		=> BaseTestPart1(inputFilename, expectedResult);
 
 	[Theory]
 	[InlineData("example-input-3.txt", "6")]
 	[InlineData("my-input.txt", "17099847107071")]
-	public void TestPart2(string inputFilename, string expectedResult, Day08SolverOptions? options = null)
-		=> BaseTestPart2(inputFilename, expectedResult, options);
+	public void TestPart2(string inputFilename, string expectedResult)
+		=> BaseTestPart2(inputFilename, expectedResult);
 }
