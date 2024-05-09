@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day11.Puzzle;
+namespace AdventOfCode.Year2023.Day11.Puzzle;
 
 internal interface IGalaxy
 {
