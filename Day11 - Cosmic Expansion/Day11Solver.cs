@@ -6,13 +6,15 @@ namespace AdventOfCode.Year2023.Day11;
 
 public sealed class Day11Solver : DaySolver
 {
-	private readonly GalaxyMap _galaxyMap;
+	private readonly IReadOnlyCollection<Point> _initialPositions;
+
+	private readonly Day11SolverOptions _options;
 
 	public Day11Solver(Day11SolverOptions options) : base(options)
 	{
+		_options = options;
 		var inputReader = new InputReader(options.GalaxyChar);
-		var positions = inputReader.ReadGalaxyPositions(Input);
-		_galaxyMap = new GalaxyMap(positions);
+		_initialPositions = inputReader.ReadGalaxyPositions(Input);
 	}
 
 	public Day11Solver(Action<Day11SolverOptions> configure)
@@ -30,23 +32,33 @@ public sealed class Day11Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		_galaxyMap.Expand();
-		int sum = 0;
-		for (int i = 0; i < _galaxyMap.Galaxies.Count; i++)
-		{
-			var g1 = _galaxyMap.Galaxies[i];
-			for (int j = i + 1; j < _galaxyMap.Galaxies.Count; j++)
-			{
-				var g2 = _galaxyMap.Galaxies[j];
-				sum += MathG.ManhattanDistance(g1.Position, g2.Position);
-			}
-		}
-
+		var galaxyMap = new GalaxyMap(_initialPositions);
+		galaxyMap.Expand(_options.PartOneExpansionMagnitude);
+		long sum = SumDistancesBetweenGalaxies(galaxyMap);
 		return sum.ToString();
 	}
 
 	public override string SolvePart2()
 	{
-		return "Unsolved";
+		var galaxyMap = new GalaxyMap(_initialPositions);
+		galaxyMap.Expand(_options.PartTwoExpansionMagnitude);
+		long sum = SumDistancesBetweenGalaxies(galaxyMap);
+		return sum.ToString();
+	}
+
+	private static long SumDistancesBetweenGalaxies(GalaxyMap galaxyMap)
+	{
+		long sum = 0;
+		for (int i = 0; i < galaxyMap.Galaxies.Count; i++)
+		{
+			var g1 = galaxyMap.Galaxies[i];
+			for (int j = i + 1; j < galaxyMap.Galaxies.Count; j++)
+			{
+				var g2 = galaxyMap.Galaxies[j];
+				sum += MathG.ManhattanDistance(g1.Position, g2.Position);
+			}
+		}
+
+		return sum;
 	}
 }

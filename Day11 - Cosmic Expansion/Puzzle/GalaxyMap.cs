@@ -5,8 +5,8 @@ internal sealed class GalaxyMap
 	private const int ExpandListInitialCapacity = 10;
 
 	private readonly List<Galaxy> _galaxies;
-	private int _maxColumn;
-	private int _maxRow;
+	private long _maxColumn;
+	private long _maxRow;
 
 	public GalaxyMap(IEnumerable<Point> galaxyPositions)
 	{
@@ -17,18 +17,18 @@ internal sealed class GalaxyMap
 
 	public IReadOnlyList<IGalaxy> Galaxies => _galaxies;
 
-	public void Expand()
+	public void Expand(int expansionMagnitude)
 	{
-		ExpandRows();
-		ExpandColumns();
+		ExpandRows(expansionMagnitude);
+		ExpandColumns(expansionMagnitude);
 	}
 
-	private void ExpandRows()
+	private void ExpandRows(int expansionMagnitude)
 	{
 		var galaxiesPerRow = new List<Galaxy>?[_maxRow + 1];
 		foreach (var galaxy in _galaxies)
 		{
-			int row = galaxy.Position.X;
+			long row = galaxy.Position.X;
 			var rowList = galaxiesPerRow[row];
 			if (rowList is null)
 			{
@@ -45,7 +45,7 @@ internal sealed class GalaxyMap
 			var rowList = galaxiesPerRow[row];
 			if (rowList is null)
 			{
-				rowOffset++;
+				rowOffset = rowOffset + expansionMagnitude - 1;
 				continue;
 			}
 
@@ -58,12 +58,12 @@ internal sealed class GalaxyMap
 		_maxRow += rowOffset;
 	}
 
-	private void ExpandColumns()
+	private void ExpandColumns(int expansionMagnitude)
 	{
 		var galaxiesPerColumn = new List<Galaxy>?[_maxColumn + 1];
 		foreach (var galaxy in _galaxies)
 		{
-			int column = galaxy.Position.Y;
+			long column = galaxy.Position.Y;
 			var columnList = galaxiesPerColumn[column];
 			if (columnList is null)
 			{
@@ -80,7 +80,7 @@ internal sealed class GalaxyMap
 			var columnList = galaxiesPerColumn[column];
 			if (columnList is null)
 			{
-				columnOffset++;
+				columnOffset = columnOffset + expansionMagnitude - 1;
 				continue;
 			}
 

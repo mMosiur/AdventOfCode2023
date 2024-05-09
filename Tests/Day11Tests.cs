@@ -13,12 +13,21 @@ public sealed class Day11Tests : BaseDayTests<Day11Solver, Day11SolverOptions>
 	[Theory]
 	[InlineData("example-input.txt", "374")]
 	[InlineData("my-input.txt", "10173804")]
-	public void TestPart1(string inputFilename, string expectedResult, Day11SolverOptions? options = null)
-		=> BaseTestPart1(inputFilename, expectedResult, options);
+	public void TestPart1(string inputFilename, string expectedResult)
+		=> BaseTestPart1(inputFilename, expectedResult);
 
 	[Theory]
-	[InlineData("example-input.txt", "", Skip = "Unsolved yet")]
-	[InlineData("my-input.txt", "", Skip = "Unsolved yet")]
-	public void TestPart2(string inputFilename, string expectedResult, Day11SolverOptions? options = null)
-		=> BaseTestPart2(inputFilename, expectedResult, options);
+	[InlineData("example-input.txt", "1030", 10)]
+	[InlineData("example-input.txt", "8410", 100)]
+	[InlineData("my-input.txt", "634324905172")]
+	public void TestPart2(string inputFilename, string expectedResult, int? expansionMagnitude = null)
+	{
+		var options = new Day11SolverOptions();
+		if (expansionMagnitude.HasValue)
+		{
+			options.PartTwoExpansionMagnitude = expansionMagnitude.Value;
+		}
+
+		BaseTestPart2(inputFilename, expectedResult, options);
+	}
 }

@@ -14,7 +14,6 @@ internal sealed class InputReader
 	{
 		var list = new List<Point>(InitialGalaxyListSize);
 		int row = 0;
-		int maxColumn = 0;
 		foreach (var lineSpan in input.AsSpan().EnumerateLines())
 		{
 			int column = 0;
@@ -27,8 +26,6 @@ internal sealed class InputReader
 
 				column++;
 			}
-
-			maxColumn = Math.Max(maxColumn, column);
 
 			row++;
 		}

@@ -1,1 +1,1 @@
-﻿global using Point = AdventOfCode.Common.Geometry.Point2D<int>;
+﻿global using Point = AdventOfCode.Common.Geometry.Point2D<long>;
