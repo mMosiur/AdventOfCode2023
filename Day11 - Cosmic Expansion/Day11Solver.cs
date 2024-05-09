@@ -6,8 +6,11 @@ namespace AdventOfCode.Year2023.Day11;
 
 public sealed class Day11Solver : DaySolver
 {
-	private readonly IReadOnlyCollection<Point> _initialPositions;
+	public override int Year => 2023;
+	public override int Day => 11;
+	public override string Title => "Cosmic Expansion";
 
+	private readonly IReadOnlyCollection<Point> _initialPositions;
 	private readonly Day11SolverOptions _options;
 
 	public Day11Solver(Day11SolverOptions options) : base(options)
@@ -25,10 +28,6 @@ public sealed class Day11Solver : DaySolver
 	public Day11Solver() : this(new Day11SolverOptions())
 	{
 	}
-
-	public override int Year => 2023;
-	public override int Day => 11;
-	public override string Title => "Cosmic Expansion";
 
 	public override string SolvePart1()
 	{
