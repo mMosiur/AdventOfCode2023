@@ -5,22 +5,15 @@ namespace AdventOfCode.Year2023.Day12;
 
 internal sealed class InputReader
 {
-	private readonly char _operationalSpringChar;
-	private readonly char _damagedSpringChar;
-	private readonly char _unknownSpringChar;
+	private const char OperationalSpringChar = '.';
+	private const char DamagedSpringChar = '#';
+	private const char UnknownSpringChar = '?';
 
 	private static readonly Regex SpringRowRegex = new(@"^\s*(.+)\s+([\d,]+)\s*$", RegexOptions.Compiled);
 
-	public InputReader(Day12SolverOptions options)
+	public SpringRow[] ReadInput(IEnumerable<string> inputLines)
 	{
-		_operationalSpringChar = options.OperationalSpringChar;
-		_damagedSpringChar = options.DamagedSpringChar;
-		_unknownSpringChar = options.UnknownSpringChar;
-	}
-
-	public IReadOnlyList<InputRow> ReadInput(IEnumerable<string> inputLines)
-	{
-		List<InputRow> rows = new(1000);
+		List<SpringRow> rows = new(1000);
 		foreach (string line in inputLines)
 		{
 			if (string.IsNullOrWhiteSpace(line))
@@ -40,13 +33,13 @@ internal sealed class InputReader
 			var springGroupSizesSpan = match.Groups[2].ValueSpan;
 			var springGroupSizes = ReadSpringGroupSizes(springGroupSizesSpan);
 
-			rows.Add(new InputRow(springs, springGroupSizes));
+			rows.Add(new SpringRow(springs, springGroupSizes));
 		}
 
-		return rows;
+		return rows.ToArray();
 	}
 
-	private IReadOnlyList<SpringCondition> ReadSprings(ReadOnlySpan<char> springs)
+	private SpringCondition[] ReadSprings(ReadOnlySpan<char> springs)
 	{
 		springs = springs.Trim();
 		var result = new SpringCondition[springs.Length];
@@ -58,27 +51,16 @@ internal sealed class InputReader
 		return result;
 	}
 
-	private SpringCondition ParseSpringType(char c)
-	{
-		if (c == _operationalSpringChar)
+	private static SpringCondition ParseSpringType(char c)
+		=> c switch
 		{
-			return SpringCondition.Operational;
-		}
+			OperationalSpringChar => SpringCondition.Operational,
+			DamagedSpringChar => SpringCondition.Damaged,
+			UnknownSpringChar => SpringCondition.Unknown,
+			_ => throw new InputException($"Invalid spring type character ('{c}')")
+		};
 
-		if (c == _damagedSpringChar)
-		{
-			return SpringCondition.Damaged;
-		}
-
-		if (c == _unknownSpringChar)
-		{
-			return SpringCondition.Unknown;
-		}
-
-		throw new InputException($"Invalid spring type character ('{c}')");
-	}
-
-	private IReadOnlyList<int> ReadSpringGroupSizes(ReadOnlySpan<char> springGroupSizes)
+	private int[] ReadSpringGroupSizes(ReadOnlySpan<char> springGroupSizes)
 	{
 		int count = springGroupSizes.Count(',');
 		var result = new List<int>(count + 1);
@@ -91,19 +73,6 @@ internal sealed class InputReader
 			result.Add(size);
 		}
 
-		return result;
+		return result.ToArray();
 	}
-}
-
-internal enum SpringCondition
-{
-	Unknown,
-	Operational,
-	Damaged,
-}
-
-internal class InputRow(IReadOnlyList<SpringCondition> springs, IReadOnlyList<int> springGroupSizes)
-{
-	public IReadOnlyList<SpringCondition> Springs { get; } = springs;
-	public IReadOnlyList<int> SpringGroupSizes { get; } = springGroupSizes;
 }

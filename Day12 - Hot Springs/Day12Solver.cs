@@ -8,11 +8,11 @@ public sealed class Day12Solver : DaySolver
 	public override int Day => 12;
 	public override string Title => "Hot Springs";
 
-	private readonly IReadOnlyList<InputRow> _rows;
+	private readonly IReadOnlyList<SpringRow> _rows;
 
 	public Day12Solver(Day12SolverOptions options) : base(options)
 	{
-		var inputReader = new InputReader(options);
+		var inputReader = new InputReader();
 		_rows = inputReader.ReadInput(InputLines);
 	}
 
@@ -27,7 +27,8 @@ public sealed class Day12Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		var result = _rows.Select(r => r.Springs.Count(s => s == SpringCondition.Unknown)).Max();
+		var counter = new SpringArrangementCounter();
+		var result = _rows.Select(r => counter.CountPossibleArrangements(r)).Sum();
 		return result.ToString();
 	}
 
