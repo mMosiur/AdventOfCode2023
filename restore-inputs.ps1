@@ -87,6 +87,14 @@ foreach ($dayDirectory in $dayDirectories) {
             $testsInputRelativePath = Resolve-Path -Path $testsInputCreatedDirectory -Relative -RelativeBasePath $originalDirectory
             Write-Information "  Tests directory was not found, created at $testsInputRelativePath"
         }
+        else {
+            # If directory existed, copy back potential example input files in them
+            $exampleInputFiles = Get-ChildItem -Path $testsInputDirectoryPath -Filter "example-input*.txt"
+            foreach ($exampleInputFile in $exampleInputFiles) {
+                $newExampleInputFileName = $exampleInputFile.Name -replace "^example-input-?", "example"
+                Copy-Item -Path $exampleInputFile.FullName -Destination $newExampleInputFileName
+            }
+        }
         $testsInputPath = Join-Path $testsInputDirectoryPath $testInputFilename
         if (Test-Path $testsInputPath) {
             $testFileHash = (Get-FileHash $testsInputPath -Algorithm MD5).Hash
