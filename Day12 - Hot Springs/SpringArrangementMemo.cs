@@ -2,7 +2,7 @@
 
 internal sealed class SpringArrangementMemo
 {
-	private int[,,] _memo = new int[0, 0, 0];
+	private long[,,] _memo = new long[0, 0, 0];
 
 	public void ClearAndResizeFor(SpringRow row)
 	{
@@ -15,7 +15,7 @@ internal sealed class SpringArrangementMemo
 			int newSpringsDimension = Math.Max(_memo.GetLength(0), nofSprings);
 			int newGroupsDimension = Math.Max(_memo.GetLength(1), nofGroups);
 			int newGroupSizeDimension = Math.Max(_memo.GetLength(2), maxGroupSize) + 1;
-			_memo = new int[newSpringsDimension, newGroupsDimension, newGroupSizeDimension];
+			_memo = new long[newSpringsDimension, newGroupsDimension, newGroupSizeDimension];
 		}
 		else
 		{
@@ -23,7 +23,7 @@ internal sealed class SpringArrangementMemo
 		}
 	}
 
-	public int this[int springIndex, int groupIndex, int groupSize]
+	public long this[int springIndex, int groupIndex, int groupSize]
 	{
 		get => _memo[springIndex, groupIndex, groupSize];
 		set => _memo[springIndex, groupIndex, groupSize] = value;

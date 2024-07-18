@@ -4,7 +4,7 @@ internal sealed class SpringArrangementCounter
 {
 	private readonly SpringArrangementMemo _memo = new();
 
-	public int CountPossibleArrangements(SpringRow row)
+	public long CountPossibleArrangements(SpringRow row)
 	{
 		// Extend row with one operational spring at the end, with that making sure that the last spring cannot
 		// be part of a damaged group, and so we can add a group size of size 0 at the end also
@@ -44,7 +44,7 @@ internal sealed class SpringArrangementCounter
 	/// all possible arrangements for previous spring (at currentSpringIndex - 1) are already stored in the memo (base
 	/// cases for currentSpringIndex = 0 are handled correctly as well).
 	/// </summary>
-	private int CalculatePossibleArrangementsAt(int currentSpringIndex, int currentGroupIndex, int currentGroupSize, SpringRow row)
+	private long CalculatePossibleArrangementsAt(int currentSpringIndex, int currentGroupIndex, int currentGroupSize, SpringRow row)
 	{
 		var springCondition = row.ConditionRecords[currentSpringIndex];
 
@@ -54,7 +54,7 @@ internal sealed class SpringArrangementCounter
 			return CalculateBasePossibleArrangements(currentGroupIndex, currentGroupSize, springCondition);
 		}
 
-		int possibleArrangementCount = 0;
+		long possibleArrangementCount = 0;
 
 		if (springCondition is SpringCondition.Operational or SpringCondition.Unknown)
 		{
@@ -72,7 +72,7 @@ internal sealed class SpringArrangementCounter
 	/// <summary>
 	/// Calculates values for base cases of first spring at index 0, does not use memo as it is not needed.
 	/// </summary>
-	private static int CalculateBasePossibleArrangements(int currentGroupIndex, int currentGroupSize, SpringCondition firstSpringCondition)
+	private static long CalculateBasePossibleArrangements(int currentGroupIndex, int currentGroupSize, SpringCondition firstSpringCondition)
 	{
 		// Base arrangements work on an assumption of i = 0 as base only applies to the first spring
 
@@ -102,7 +102,7 @@ internal sealed class SpringArrangementCounter
 	/// This can either be when the state of the spring is known to be operational, or it is unknown and *can* be operational.
 	/// It may use memo from previous spring (at index currentSpringIndex - 1) to calculate the number of possible arrangements.
 	/// </summary>
-	private int CalculatePossibleArrangementsAssumingCurrentSpringOperational(int currentSpringIndex, int currentGroupIndex, int currentGroupSize, SpringRow row)
+	private long CalculatePossibleArrangementsAssumingCurrentSpringOperational(int currentSpringIndex, int currentGroupIndex, int currentGroupSize, SpringRow row)
 	{
 		if (currentGroupSize > 0)
 		{
@@ -130,7 +130,7 @@ internal sealed class SpringArrangementCounter
 	/// This can either be when the state of the spring is known to be damaged, or it is unknown and *can* be damaged.
 	/// It may use memo from previous spring (at index currentSpringIndex - 1) to calculate the number of possible arrangements.
 	/// </summary>
-	private int CalculatePossibleArrangementsAssumingCurrentSpringDamaged(int currentSpringIndex, int currentGroupIndex, int currentGroupSize)
+	private long CalculatePossibleArrangementsAssumingCurrentSpringDamaged(int currentSpringIndex, int currentGroupIndex, int currentGroupSize)
 	{
 		if (currentGroupSize == 0)
 		{
