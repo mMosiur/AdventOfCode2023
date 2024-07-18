@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day12;
+namespace AdventOfCode.Year2023.Day12;
 
 internal class SpringRow(SpringCondition[] conditionRecords, int[] damagedGroupSizes)
 {

@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using AdventOfCode.Common.SpanExtensions;
 
 namespace AdventOfCode.Year2023.Day12;

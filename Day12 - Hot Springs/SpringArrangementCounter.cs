@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day12;
+namespace AdventOfCode.Year2023.Day12;
 
 internal sealed class SpringArrangementCounter
 {
@@ -9,8 +9,8 @@ internal sealed class SpringArrangementCounter
 		// Extend row with one operational spring at the end, with that making sure that the last spring cannot
 		// be part of a damaged group, and so we can add a group size of size 0 at the end also
 		row = new(
-			[..row.ConditionRecords, SpringCondition.Operational],
-			[..row.DamagedGroupSizes, 0]
+			[.. row.ConditionRecords, SpringCondition.Operational],
+			[.. row.DamagedGroupSizes, 0]
 		);
 
 		_memo.ClearAndResizeFor(row);
@@ -122,7 +122,7 @@ internal sealed class SpringArrangementCounter
 		// previous damage group (currentGroupIndex - 1) ending with its full group size (row.DamagedGroupSizes[j - 1]) or considering
 		// current damage group (currentGroupIndex) ending with empty group size (0)
 		return _memo[currentSpringIndex - 1, currentGroupIndex - 1, row.DamagedGroupSizes[currentGroupIndex - 1]]
-		     + _memo[currentSpringIndex - 1, currentGroupIndex, 0];
+			 + _memo[currentSpringIndex - 1, currentGroupIndex, 0];
 	}
 
 	/// <summary>
