@@ -42,6 +42,7 @@
     <ProjectReference Include="..\Day10 - Pipe Maze\Day10.csproj" />
     <ProjectReference Include="..\Day11 - Cosmic Expansion\Day11.csproj" />
     <ProjectReference Include="..\Day12 - Hot Springs\Day12.csproj" />
+    <ProjectReference Include="..\Day13 - Point of Incidence\Day13.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day11", "Day11 - Cosmic Exp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day12", "Day12 - Hot Springs\Day12.csproj", "{588B94EB-1D61-49FA-ADB2-22DD0A83A172}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day13", "Day13 - Point of Incidence\Day13.csproj", "{66B2642E-F33E-4041-9CD5-279620AB17E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{588B94EB-1D61-49FA-ADB2-22DD0A83A172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{588B94EB-1D61-49FA-ADB2-22DD0A83A172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{588B94EB-1D61-49FA-ADB2-22DD0A83A172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B2642E-F33E-4041-9CD5-279620AB17E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B2642E-F33E-4041-9CD5-279620AB17E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B2642E-F33E-4041-9CD5-279620AB17E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B2642E-F33E-4041-9CD5-279620AB17E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CE8086B8-A3E4-40E0-859F-607F95D25514} = {F6C05A63-6269-425F-B877-9E9F0BC1FC26}
