@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day13;
+namespace AdventOfCode.Year2023.Day13;
 
 internal enum Terrain
 {

@@ -29,12 +29,14 @@ public sealed class Day13Solver : DaySolver
 	public override string SolvePart1()
 	{
 		var analyzer = new MirrorAnalyzer(_options.RowSummaryMultiplier, _options.ColumnSummaryMultiplier);
-		int summary = analyzer.SummarizeMirrorNotes(_mirrors);
+		int summary = _mirrors.Sum(analyzer.SummarizeMirrorNote);
 		return summary.ToString();
 	}
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var analyzer = new SmudgedMirrorAnalyzer(_options.RowSummaryMultiplier, _options.ColumnSummaryMultiplier);
+		int summary = _mirrors.Sum(analyzer.SummarizeMirrorNote);
+		return summary.ToString();
 	}
 }

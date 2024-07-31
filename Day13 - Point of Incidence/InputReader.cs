@@ -1,4 +1,4 @@
-﻿using AdventOfCode.Common.SpanExtensions;
+using AdventOfCode.Common.SpanExtensions;
 
 namespace AdventOfCode.Year2023.Day13;
 
@@ -30,7 +30,7 @@ internal static class InputReader
 				y++;
 			}
 
-			mirrors.Add(new(mirrorTerrain, mirrorIndex));
+			mirrors.Add(new(mirrorTerrain));
 			mirrorIndex++;
 		}
 

@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day13;
+namespace AdventOfCode.Year2023.Day13;
 
 internal sealed class MirrorAnalyzer
 {
@@ -9,11 +9,6 @@ internal sealed class MirrorAnalyzer
 	{
 		_rowSummaryMultiplier = rowSummaryMultiplier;
 		_columnSummaryMultiplier = columnSummaryMultiplier;
-	}
-
-	public int SummarizeMirrorNotes(IEnumerable<Mirror> mirrors)
-	{
-		return mirrors.Sum(SummarizeMirrorNote);
 	}
 
 	public int SummarizeMirrorNote(Mirror mirror)
@@ -76,7 +71,7 @@ internal sealed class MirrorAnalyzer
 	private static IEnumerable<int> FindPotentialVerticalReflections(Mirror mirror)
 	{
 		int prevColHash = mirror.GetColumnHash(0);
-		for(int col = 1; col < mirror.ColumnCount; col++)
+		for (int col = 1; col < mirror.ColumnCount; col++)
 		{
 			int colHash = mirror.GetColumnHash(col);
 			if (prevColHash == colHash)

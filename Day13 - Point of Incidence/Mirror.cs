@@ -1,5 +1,3 @@
-﻿using System.Text;
-
 namespace AdventOfCode.Year2023.Day13;
 
 internal sealed class Mirror
