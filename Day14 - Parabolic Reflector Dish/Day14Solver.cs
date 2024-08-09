@@ -8,10 +8,12 @@ public sealed class Day14Solver : DaySolver
 	public override int Day => 14;
 	public override string Title => "Parabolic Reflector Dish";
 
+	private readonly Day14SolverOptions _options;
 	private readonly SpaceType[,] _plane;
 
 	public Day14Solver(Day14SolverOptions options) : base(options)
 	{
+		_options = options;
 		_plane = InputReader.Read(InputLines);
 	}
 
@@ -32,13 +34,18 @@ public sealed class Day14Solver : DaySolver
 	public override string SolvePart1()
 	{
 		var rockFormation = NewRockFormation();
-		rockFormation.TiltToSlideNorth();
-		int totalLoad = rockFormation.CalculateTotalLoad();
+		var tilter = new RockFormationTilter(rockFormation);
+		tilter.TiltTo(Direction.North);
+		int totalLoad = tilter.RockFormation.CalculateTotalLoad();
 		return totalLoad.ToString();
 	}
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var rockFormation = NewRockFormation();
+		var tilter = new RockFormationTilter(rockFormation);
+		tilter.TiltInCycle(_options.PartTwoCycleCount);
+		int totalLoad = tilter.RockFormation.CalculateTotalLoad();
+		return totalLoad.ToString();
 	}
 }
