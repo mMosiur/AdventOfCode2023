@@ -43,10 +43,14 @@
     <ProjectReference Include="..\Day11 - Cosmic Expansion\Day11.csproj" />
     <ProjectReference Include="..\Day12 - Hot Springs\Day12.csproj" />
     <ProjectReference Include="..\Day13 - Point of Incidence\Day13.csproj" />
+    <ProjectReference Include="..\Day14 - Parabolic Reflector Dish\Day14.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Inputs\Day12\example-input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Inputs\Day14\example-input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
