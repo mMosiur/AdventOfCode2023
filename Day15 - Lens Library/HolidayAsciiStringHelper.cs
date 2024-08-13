@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day15;
+namespace AdventOfCode.Year2023.Day15;
 
 internal static class HolidayAsciiStringHelper
 {
