@@ -44,6 +44,7 @@
     <ProjectReference Include="..\Day12 - Hot Springs\Day12.csproj" />
     <ProjectReference Include="..\Day13 - Point of Incidence\Day13.csproj" />
     <ProjectReference Include="..\Day14 - Parabolic Reflector Dish\Day14.csproj" />
+    <ProjectReference Include="..\Day15 - Lens Library\Day15.csproj" />
   </ItemGroup>
 
   <ItemGroup>
