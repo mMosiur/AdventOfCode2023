@@ -8,11 +8,12 @@ public sealed class Day16Solver : DaySolver
 	public override int Day => 16;
 	public override string Title => "The Floor Will Be Lava";
 
+	private readonly CaveTileGrid _caveTileGrid;
+
 	public Day16Solver(Day16SolverOptions options) : base(options)
 	{
-		// Initialize Day16 solver here.
-		// Property `Input` contains the raw input text.
-		// Property `InputLines` enumerates lines in the input text.
+		var grid = InputReader.ReadCaveSpaceGrid(InputLines);
+		_caveTileGrid = new(grid);
 	}
 
 	public Day16Solver(Action<Day16SolverOptions> configure)
@@ -26,7 +27,10 @@ public sealed class Day16Solver : DaySolver
 
 	public override string SolvePart1()
 	{
-		return "UNSOLVED";
+		var traverser = new CaveBeamTraverser(_caveTileGrid);
+		var tileBeamDirections = traverser.TraverseWithBeam(new(0, 0), Direction.Right);
+		int energizedTileCount = tileBeamDirections.Cast<DirectionSet>().Count(d => d is not DirectionSet.None);
+		return energizedTileCount.ToString();
 	}
 
 	public override string SolvePart2()
