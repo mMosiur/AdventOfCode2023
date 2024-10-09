@@ -31,28 +31,32 @@ public sealed class Day16Solver : DaySolver
 	public override string SolvePart1()
 	{
 		var traverser = new CaveBeamTraverser(_caveTileGrid);
-		var tileBeamDirections = traverser.TraverseWithBeam(new(0, 0), Direction.Right);
-		int energizedTileCount = tileBeamDirections.Cast<DirectionSet>().Count(d => d is not DirectionSet.None);
+		int energizedTileCount = TraverseAndCountEnergizedTiles(traverser, new(0, 0), Direction.Right);
 		return energizedTileCount.ToString();
 	}
 
 	public override string SolvePart2()
 	{
 		var traverser = new CaveBeamTraverser(_caveTileGrid);
-		int maxEnergizedTileCount = 0;
 
-		foreach ((var point, Direction direction) in GenerateInwardPointingPositions(_caveTileGrid.Bounds))
-		{
-			var tileBeamDirections = traverser.TraverseWithBeam(point, direction);
-			int energizedTileCount = tileBeamDirections.Cast<DirectionSet>().Count(d => d is not DirectionSet.None);
-			maxEnergizedTileCount = Math.Max(maxEnergizedTileCount, energizedTileCount);
-		}
+		int maxEnergizedTileCount =
+			GenerateInwardPointingPositions(_caveTileGrid.Bounds)
+				.Select(pd => TraverseAndCountEnergizedTiles(traverser, pd.Point, pd.Direction))
+				.Max();
 
 		return maxEnergizedTileCount.ToString();
 	}
 
-	private static IEnumerable<(Point, Direction)> GenerateInwardPointingPositions(Rectangle<int> bounds)
+	private static int TraverseAndCountEnergizedTiles(CaveBeamTraverser traverser, Point start, Direction direction)
 	{
+		var tileBeamDirections = traverser.TraverseWithBeam(start, direction);
+		return tileBeamDirections.Cast<DirectionSet>().Count(d => d is not DirectionSet.None);
+	}
+
+	private static IEnumerable<(Point Point, Direction Direction)> GenerateInwardPointingPositions(Rectangle<int> bounds)
+	{
+		// The corners will be covered twice, but that's exactly what we want since
+		// in the corners the beam can start in either direction.
 		var downBeams = bounds.YRange.Select(col => (new Point(bounds.XRange.Start, col), Direction.Down));
 		var leftBeams = bounds.XRange.Select(row => (new Point(row, bounds.YRange.End), Direction.Left));
 		var upBeams = bounds.YRange.Select(col => (new Point(bounds.XRange.End, col), Direction.Up));
