@@ -1,3 +1,5 @@
+using AdventOfCode.Year2023.Day16.Puzzle.Cave;
+
 namespace AdventOfCode.Year2023.Day16;
 
 internal static class InputReader

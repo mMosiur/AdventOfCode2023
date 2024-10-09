@@ -1,4 +1,4 @@
-namespace AdventOfCode.Year2023.Day16;
+namespace AdventOfCode.Year2023.Day16.Puzzle.Cave;
 
 internal enum CaveTile
 {

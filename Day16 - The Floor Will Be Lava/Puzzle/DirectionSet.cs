@@ -1,4 +1,4 @@
-namespace AdventOfCode.Year2023.Day16;
+namespace AdventOfCode.Year2023.Day16.Puzzle;
 
 [Flags]
 internal enum DirectionSet
@@ -14,7 +14,6 @@ internal enum DirectionSet
 	Horizontal = Right | Left,
 	All = Right | Down | Left | Up,
 }
-
 
 internal static class DirectionSetHelpers
 {

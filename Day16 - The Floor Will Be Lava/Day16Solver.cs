@@ -1,4 +1,7 @@
 using AdventOfCode.Abstractions;
+using AdventOfCode.Common.Geometry;
+using AdventOfCode.Year2023.Day16.Puzzle;
+using AdventOfCode.Year2023.Day16.Puzzle.Cave;
 
 namespace AdventOfCode.Year2023.Day16;
 

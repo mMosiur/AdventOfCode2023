@@ -1,4 +1,6 @@
-namespace AdventOfCode.Year2023.Day16;
+using AdventOfCode.Common.Geometry;
+
+namespace AdventOfCode.Year2023.Day16.Puzzle.Cave;
 
 internal sealed class CaveTileGrid(CaveTile[,] grid)
 {
