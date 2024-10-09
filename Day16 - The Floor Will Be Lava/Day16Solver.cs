@@ -38,6 +38,26 @@ public sealed class Day16Solver : DaySolver
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var traverser = new CaveBeamTraverser(_caveTileGrid);
+		int maxEnergizedTileCount = 0;
+
+		foreach ((var point, Direction direction) in GenerateInwardPointingPositions(_caveTileGrid.Bounds))
+		{
+			var tileBeamDirections = traverser.TraverseWithBeam(point, direction);
+			int energizedTileCount = tileBeamDirections.Cast<DirectionSet>().Count(d => d is not DirectionSet.None);
+			maxEnergizedTileCount = Math.Max(maxEnergizedTileCount, energizedTileCount);
+		}
+
+		return maxEnergizedTileCount.ToString();
+	}
+
+	private static IEnumerable<(Point, Direction)> GenerateInwardPointingPositions(Rectangle<int> bounds)
+	{
+		var downBeams = bounds.YRange.Select(col => (new Point(bounds.XRange.Start, col), Direction.Down));
+		var leftBeams = bounds.XRange.Select(row => (new Point(row, bounds.YRange.End), Direction.Left));
+		var upBeams = bounds.YRange.Select(col => (new Point(bounds.XRange.End, col), Direction.Up));
+		var rightBeams = bounds.XRange.Select(row => (new Point(row, bounds.YRange.Start), Direction.Right));
+
+		return downBeams.Concat(leftBeams).Concat(upBeams).Concat(rightBeams);
 	}
 }

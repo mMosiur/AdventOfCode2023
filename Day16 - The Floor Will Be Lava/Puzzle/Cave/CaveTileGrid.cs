@@ -8,14 +8,13 @@ internal sealed class CaveTileGrid(CaveTile[,] grid)
 
 	public int Height => _grid.GetLength(0);
 	public int Width => _grid.GetLength(1);
+	public Rectangle<int> Bounds => new(0, Height - 1, 0, Width - 1);
 
 	public CaveTile this[Point point] => _grid[point.X, point.Y];
 	public CaveTile this[int x, int y] => _grid[x, y];
 
 	public bool IsInBounds(Point point)
 	{
-		int width = Height;
-		int height = Width;
-		return point.X >= 0 && point.X < width && point.Y >= 0 && point.Y < height;
+		return Bounds.Contains(point);
 	}
 }
