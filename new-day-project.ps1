@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true, HelpMessage = "In 'dayXX' or 'XX' format, later reformatted to 'DayXX'")]
     [string]$day,
 
     [Parameter(ValueFromRemainingArguments = $true)]
@@ -25,13 +25,15 @@ $day = "Day$day"
 
 if (-not $dayTitle)
 {
-    $continue = Read-Host "No title provided. Do you want to continue without? (y/N)"
-    if ($continue -ne "Y" -and $continue -ne "y")
+    $providedTitle = Read-Host "Title (leave empty to skip)"
+    if ($providedTitle)
     {
-        Write-Host "Exiting script"
-        exit 1
+        $dayTitle = $providedTitle
     }
+}
 
+if (-not $dayTitle)
+{
     dotnet new aocday --year $year -o "$day"
     dotnet sln add ".\$day\"
     cd Tests
