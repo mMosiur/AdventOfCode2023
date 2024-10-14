@@ -4,4 +4,5 @@ namespace AdventOfCode.Year2023.Day17;
 
 public sealed class Day17SolverOptions : DaySolverOptions
 {
+	public int CrucibleMaxDistanceStraight { get; set; } = 3;
 }
