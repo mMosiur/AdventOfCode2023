@@ -19,18 +19,17 @@ public sealed class Day17Solver : DaySolver
 	}
 
 	public Day17Solver(Action<Day17SolverOptions> configure)
-		: this(DaySolverOptions.FromConfigureAction(configure))
-	{
-	}
+		: this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-	public Day17Solver() : this(new Day17SolverOptions())
-	{
-	}
+	public Day17Solver() : this(new Day17SolverOptions()) { }
 
 	public override string SolvePart1()
 	{
-		var startPoint = new Point(0, 0);
-		var traverser = new HeatMapCrucibleTraverser(_map, startPoint, _options.CrucibleMaxDistanceStraight);
+		var traverser = new HeatMapCrucibleTraverser(
+			heatLossMap: _map,
+			startingPoint: new(0, 0),
+			_options.CrucibleMaxDistanceStraight
+		);
 		var finishPoint = new Point(_map.Width - 1, _map.Height - 1);
 		int result = traverser.Traverse(finishPoint);
 		return result.ToString();

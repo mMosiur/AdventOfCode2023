@@ -12,7 +12,7 @@ public sealed class Day17Tests : BaseDayTests<Day17Solver, Day17SolverOptions>
 
 	[Theory]
 	[InlineData("example-input.txt", "102")]
-	[InlineData("my-input.txt", "", Skip = "Unsolved yet")]
+	[InlineData("my-input.txt", "1155")]
 	public void TestPart1(string inputFilename, string expectedResult)
 		=> BaseTestPart1(inputFilename, expectedResult);
 
