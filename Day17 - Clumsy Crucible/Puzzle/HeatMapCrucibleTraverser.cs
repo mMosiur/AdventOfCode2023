@@ -5,8 +5,9 @@ internal sealed class HeatMapCrucibleTraverser
 	private readonly HeatLossMap _heatLossMap;
 	private readonly Point _startingPoint;
 	private readonly int _maxDistanceStraight;
+	private readonly int _minDistanceStraight;
 
-	public HeatMapCrucibleTraverser(HeatLossMap heatLossMap, Point startingPoint, int maxDistanceStraight)
+	public HeatMapCrucibleTraverser(HeatLossMap heatLossMap, Point startingPoint, int maxDistanceStraight, int minDistanceStraight = 1)
 	{
 		if (!heatLossMap.Bounds.Contains(startingPoint))
 		{
@@ -16,6 +17,7 @@ internal sealed class HeatMapCrucibleTraverser
 		_heatLossMap = heatLossMap;
 		_startingPoint = startingPoint;
 		_maxDistanceStraight = maxDistanceStraight;
+		_minDistanceStraight = minDistanceStraight;
 	}
 
 	public int Traverse(Point finishPoint)
@@ -66,6 +68,7 @@ internal sealed class HeatMapCrucibleTraverser
 			stepsTaken++;
 			if (!_heatLossMap.Bounds.Contains(stepState.Position)) break;
 			newHeatLoss += _heatLossMap[stepState.Position];
+			if (stepsTaken < _minDistanceStraight) continue;
 			queue.Enqueue(stepState, newHeatLoss);
 		}
 	}

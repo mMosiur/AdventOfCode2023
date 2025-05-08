@@ -28,7 +28,7 @@ public sealed class Day17Solver : DaySolver
 		var traverser = new HeatMapCrucibleTraverser(
 			heatLossMap: _map,
 			startingPoint: new(0, 0),
-			_options.CrucibleMaxDistanceStraight
+			maxDistanceStraight: _options.CrucibleMaxDistanceStraight
 		);
 		var finishPoint = new Point(_map.Height - 1, _map.Width - 1);
 		int result = traverser.Traverse(finishPoint);
@@ -37,6 +37,14 @@ public sealed class Day17Solver : DaySolver
 
 	public override string SolvePart2()
 	{
-		return "UNSOLVED";
+		var traverser = new HeatMapCrucibleTraverser(
+			heatLossMap: _map,
+			startingPoint: new(0, 0),
+			maxDistanceStraight: _options.UltraCrucibleMaxDistanceStraight,
+			minDistanceStraight: _options.UltraCrucibleMinDistanceStraight
+		);
+		var finishPoint = new Point(_map.Height - 1, _map.Width - 1);
+		int result = traverser.Traverse(finishPoint);
+		return result.ToString();
 	}
 }
