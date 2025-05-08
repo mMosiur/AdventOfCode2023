@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day17.Puzzle;
+namespace AdventOfCode.Year2023.Day17.Puzzle;
 
 internal sealed class HeatLossMap
 {
