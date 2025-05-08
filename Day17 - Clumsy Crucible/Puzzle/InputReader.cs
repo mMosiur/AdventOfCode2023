@@ -6,12 +6,12 @@ internal static class InputReader
 	{
 		int[][] numbers = inputLines
 			.Where(l => !string.IsNullOrWhiteSpace(l))
-			.Select(l => l.Trim().Select(c => c - '0').ToArray())
+			.Select(l => l.Trim().Select(c => (int)char.GetNumericValue(c)).ToArray())
 			.ToArray();
 
 		int width = numbers[0].Length;
 		int height = numbers.Length;
-		int[,] values = new int[width, height];
+		int[,] values = new int[height, width];
 
 		for (int x = 0; x < height; x++)
 		{

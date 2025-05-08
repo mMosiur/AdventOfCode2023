@@ -30,7 +30,7 @@ public sealed class Day17Solver : DaySolver
 			startingPoint: new(0, 0),
 			_options.CrucibleMaxDistanceStraight
 		);
-		var finishPoint = new Point(_map.Width - 1, _map.Height - 1);
+		var finishPoint = new Point(_map.Height - 1, _map.Width - 1);
 		int result = traverser.Traverse(finishPoint);
 		return result.ToString();
 	}

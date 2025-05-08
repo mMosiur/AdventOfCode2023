@@ -4,8 +4,8 @@ internal sealed class HeatLossMap
 {
 	private readonly int[,] _values;
 
-	public int Width => _values.GetLength(0);
-	public int Height => _values.GetLength(1);
+	public int Height => _values.GetLength(0);
+	public int Width => _values.GetLength(1);
 	public Rectangle Bounds => new(0, Height - 1, 0, Width - 1);
 
 	public HeatLossMap(int[,] heatLossMapValues)
