@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/.Repository/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="global.json" />
+    <File Path="LICENSE.md" />
+    <File Path="new-day-project.ps1" />
+    <File Path="README.md" />
+    <File Path="restore-inputs.ps1" />
+  </Folder>
+  <Folder Name="/Solved/">
+    <Project Path="Day01 - Trebuchet/Day01.csproj" />
+    <Project Path="Day02 - Cube Conundrum/Day02.csproj" />
+    <Project Path="Day03 - Gear Ratios/Day03.csproj" />
+    <Project Path="Day04 - Scratchcards/Day04.csproj" />
+    <Project Path="Day05 - If You Give A Seed A Fertilizer/Day05.csproj" />
+    <Project Path="Day06 - Wait For It/Day06.csproj" />
+    <Project Path="Day07 - Camel Cards/Day07.csproj" />
+    <Project Path="Day08 - Haunted Wasteland/Day08.csproj" />
+    <Project Path="Day09 - Mirage Maintenance/Day09.csproj" />
+    <Project Path="Day10 - Pipe Maze/Day10.csproj" />
+    <Project Path="Day11 - Cosmic Expansion/Day11.csproj" />
+    <Project Path="Day12 - Hot Springs/Day12.csproj" />
+    <Project Path="Day13 - Point of Incidence/Day13.csproj" />
+    <Project Path="Day14 - Parabolic Reflector Dish/Day14.csproj" />
+    <Project Path="Day15 - Lens Library/Day15.csproj" />
+    <Project Path="Day16 - The Floor Will Be Lava/Day16.csproj" />
+    <Project Path="Day17 - Clumsy Crucible/Day17.csproj" />
+  </Folder>
+  <Project Path="Tests/Tests.csproj" />
+</Solution>
