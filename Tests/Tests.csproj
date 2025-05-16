@@ -47,6 +47,7 @@
     <ProjectReference Include="..\Day15 - Lens Library\Day15.csproj" />
     <ProjectReference Include="..\Day16 - The Floor Will Be Lava\Day16.csproj" />
     <ProjectReference Include="..\Day17 - Clumsy Crucible\Day17.csproj" />
+    <ProjectReference Include="..\Day18 - Lavaduct Lagoon\Day18.csproj"/>
   </ItemGroup>
 
 </Project>
