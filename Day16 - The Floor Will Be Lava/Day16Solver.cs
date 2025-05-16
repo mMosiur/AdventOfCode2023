@@ -1,11 +1,11 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 using AdventOfCode.Common.Geometry;
 using AdventOfCode.Year2023.Day16.Puzzle;
 using AdventOfCode.Year2023.Day16.Puzzle.Cave;
 
 namespace AdventOfCode.Year2023.Day16;
 
-public sealed class Day16Solver : DaySolver
+public sealed class Day16Solver : DaySolver<Day16SolverOptions>
 {
 	public override int Year => 2023;
 	public override int Day => 16;
@@ -20,13 +20,9 @@ public sealed class Day16Solver : DaySolver
 	}
 
 	public Day16Solver(Action<Day16SolverOptions> configure)
-		: this(DaySolverOptions.FromConfigureAction(configure))
-	{
-	}
+		: this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-	public Day16Solver() : this(new Day16SolverOptions())
-	{
-	}
+	public Day16Solver() : this(new Day16SolverOptions()) { }
 
 	public override string SolvePart1()
 	{

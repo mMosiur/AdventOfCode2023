@@ -1,10 +1,10 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 using AdventOfCode.Common.EnumerableExtensions;
 using AdventOfCode.Year2023.Day04.Puzzle;
 
 namespace AdventOfCode.Year2023.Day04;
 
-public sealed class Day04Solver : DaySolver
+public sealed class Day04Solver : DaySolver<Day04SolverOptions>
 {
 	public override int Year => 2023;
 	public override int Day => 4;
@@ -21,13 +21,9 @@ public sealed class Day04Solver : DaySolver
 	}
 
 	public Day04Solver(Action<Day04SolverOptions> configure)
-		: this(DaySolverOptions.FromConfigureAction(configure))
-	{
-	}
+		: this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-	public Day04Solver() : this(new Day04SolverOptions())
-	{
-	}
+	public Day04Solver() : this(new Day04SolverOptions()) { }
 
 	private static int CountMyWinningNumbers(Scratchcard scratchcard)
 	{
@@ -63,6 +59,7 @@ public sealed class Day04Solver : DaySolver
 				Scratchcards[index + i + 1].Copies += scratchcard.Copies;
 			}
 		}
+
 		int sum = Scratchcards.Sum(sc => sc.Copies);
 		return sum.ToString();
 	}

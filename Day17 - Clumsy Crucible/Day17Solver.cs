@@ -1,9 +1,9 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day17.Puzzle;
 
 namespace AdventOfCode.Year2023.Day17;
 
-public sealed class Day17Solver : DaySolver
+public sealed class Day17Solver : DaySolver<Day17SolverOptions>
 {
 	public override int Year => 2023;
 	public override int Day => 17;

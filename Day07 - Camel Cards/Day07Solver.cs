@@ -1,10 +1,10 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day07.Puzzle.Hand;
 using AdventOfCode.Year2023.Day07.Puzzle.Input;
 
 namespace AdventOfCode.Year2023.Day07;
 
-public sealed class Day07Solver : DaySolver
+public sealed class Day07Solver : DaySolver<Day07SolverOptions>
 {
 	public override int Year => 2023;
 	public override int Day => 7;
@@ -19,13 +19,9 @@ public sealed class Day07Solver : DaySolver
 	}
 
 	public Day07Solver(Action<Day07SolverOptions> configure)
-		: this(DaySolverOptions.FromConfigureAction(configure))
-	{
-	}
+		: this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-	public Day07Solver() : this(new Day07SolverOptions())
-	{
-	}
+	public Day07Solver() : this(new Day07SolverOptions()) { }
 
 	private List<Hand> BuildHands(bool treatJackAsJoker = false)
 	{
@@ -40,6 +36,7 @@ public sealed class Day07Solver : DaySolver
 				.Build();
 			hands.Add(hand);
 		}
+
 		return hands;
 	}
 

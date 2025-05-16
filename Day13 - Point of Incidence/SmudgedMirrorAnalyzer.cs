@@ -1,3 +1,5 @@
+using AdventOfCode.Common;
+
 namespace AdventOfCode.Year2023.Day13;
 
 internal sealed class SmudgedMirrorAnalyzer
@@ -24,7 +26,6 @@ internal sealed class SmudgedMirrorAnalyzer
 
 		foreach (int col in FindPotentialVerticalReflections(mirror))
 		{
-
 			if (CheckVerticalReflection(mirror, col))
 			{
 				// Return early as each mirror can only have one reflection
@@ -46,6 +47,7 @@ internal sealed class SmudgedMirrorAnalyzer
 			{
 				yield return row;
 			}
+
 			prevRowHash = rowHash;
 		}
 	}
@@ -97,6 +99,7 @@ internal sealed class SmudgedMirrorAnalyzer
 			{
 				yield return col;
 			}
+
 			prevColHash = colHash;
 		}
 	}

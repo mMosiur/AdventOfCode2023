@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using AdventOfCode;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day05;
 
 try
@@ -13,10 +13,7 @@ try
 		)
 	};
 
-	Day05Solver solver = new(options =>
-	{
-		options.InputFilepath = filepath ?? options.InputFilepath;
-	});
+	Day05Solver solver = new(options => { options.InputFilepath = filepath ?? options.InputFilepath; });
 
 	Console.WriteLine($"--- Day {solver.Day}: {solver.Title} ---");
 

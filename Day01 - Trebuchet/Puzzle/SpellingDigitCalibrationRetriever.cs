@@ -1,3 +1,5 @@
+using AdventOfCode.Common;
+
 namespace AdventOfCode.Year2023.Day01.Puzzle;
 
 internal sealed class SpellingDigitCalibrationRetriever : ICalibrationRetriever

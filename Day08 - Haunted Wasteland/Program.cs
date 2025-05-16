@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using AdventOfCode;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day08;
 
 try

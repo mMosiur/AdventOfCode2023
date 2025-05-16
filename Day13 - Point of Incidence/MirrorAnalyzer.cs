@@ -1,3 +1,5 @@
+using AdventOfCode.Common;
+
 namespace AdventOfCode.Year2023.Day13;
 
 internal sealed class MirrorAnalyzer
@@ -24,7 +26,6 @@ internal sealed class MirrorAnalyzer
 
 		foreach (int col in FindPotentialVerticalReflections(mirror))
 		{
-
 			if (CheckVerticalReflection(mirror, col))
 			{
 				// Return early as each mirror can only have one reflection
@@ -45,6 +46,7 @@ internal sealed class MirrorAnalyzer
 			{
 				yield return row;
 			}
+
 			prevRowHash = rowHash;
 		}
 	}
@@ -78,6 +80,7 @@ internal sealed class MirrorAnalyzer
 			{
 				yield return col;
 			}
+
 			prevColHash = colHash;
 		}
 	}
