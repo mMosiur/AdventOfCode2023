@@ -41,7 +41,7 @@ if ($UseCache) {
                     continue
                 }
                 $destinationDirectoryName = $destinationDirectory.Name
-                Copy-Item "$cacheDayDirectory/*" $destinationDirectory
+                Copy-Item "$cacheDayDirectory/*" $destinationDirectory -Force
                 Write-Information "  Cached input '$cacheDayDirectoryName' copied to day directory '$destinationDirectoryName'"
             }
             catch {
@@ -68,7 +68,7 @@ foreach ($dayDirectory in $dayDirectories) {
         $dayNumber = [int]$dayNumberString
         $currentDayIndex++
         $percentComplete = ($currentDayIndex / $totalDaysCount) * 100
-        Write-Progress -Activity "Restoring input files" -Status "Day $dayNumberString" -PercentComplete $percentComplete
+        Write-Progress -Activity "Restoring input files" -Status "Day $dayNumberString ($currentDayIndex/$totalDaysCount)" -PercentComplete $percentComplete
         Write-Information "Restoring Day $dayNumber input"
 
         if (Test-Path $inputFilename) {
@@ -97,7 +97,7 @@ foreach ($dayDirectory in $dayDirectories) {
             # If directory existed, copy back potential example input files in them
             $exampleInputFiles = Get-ChildItem -Path $testsInputDirectoryPath -Filter "example-input*.txt"
             foreach ($exampleInputFile in $exampleInputFiles) {
-                Set-ItemProperty $exampleInputFile -Name IsReadOnly -Value $true
+                Set-ItemProperty -Path $exampleInputFile -Name IsReadOnly -Value $true
                 $newExampleInputFileName = $exampleInputFile.Name -replace "^example-input-?", "example"
                 Copy-Item -Path $exampleInputFile.FullName -Destination $newExampleInputFileName -Force
                 Set-ItemProperty -Path $newExampleInputFileName -Name IsReadOnly -Value $true
@@ -113,7 +113,7 @@ foreach ($dayDirectory in $dayDirectories) {
             }
         }
         else {
-            Copy-Item -Path $inputFilename -Destination $testsInputPath
+            Copy-Item -Path $inputFilename -Destination $testsInputPath -Force
             Set-ItemProperty -Path $testsInputPath -Name IsReadOnly -Value $true
             Write-Information "  Copied day input file to test inputs directory"
         }
@@ -127,7 +127,7 @@ foreach ($dayDirectory in $dayDirectories) {
                 $cacheDayRelativePath = Resolve-Path -Path $cacheDayCreatedDirectory -Relative -RelativeBasePath $originalDirectory
                 Write-Information "  Cache directory not found, created at $cacheDayRelativePath"
             }
-            Copy-Item $inputFilename $cacheDayDirectory
+            Copy-Item $inputFilename $cacheDayDirectory -Force
             Write-Information "  Copied day input file back to cache directory"
         }
         else {
