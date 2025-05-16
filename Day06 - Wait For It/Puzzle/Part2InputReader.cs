@@ -4,39 +4,41 @@ namespace AdventOfCode.Year2023.Day06.Puzzle;
 
 internal sealed class Part2InputReader
 {
-	private static readonly Regex InputRegex = new(@"^\s*Time:\s*([\d ]+)\s*\r?\nDistance:\s*([\d ]+)\s*$");
+    private static readonly Regex InputRegex = new(@"^\s*Time:\s*([\d ]+)\s*\r?\nDistance:\s*([\d ]+)\s*$");
 
-	private static long GetNumberFromSpanIgnoringSpaces(ReadOnlySpan<char> span)
-	{
-		Span<char> joinedNumberSpan = stackalloc char[span.Length];
-		int digitCount = 0;
-		foreach (char c in span)
-		{
-			if (c is ' ') continue;
-			if (!char.IsDigit(c))
-			{
-				throw new FormatException($"Unexpected character '{c}' in '{span}'.");
-			}
-			joinedNumberSpan[digitCount] = c;
-			digitCount++;
-		}
-		return long.Parse(joinedNumberSpan[..digitCount]);
-	}
+    private static long GetNumberFromSpanIgnoringSpaces(ReadOnlySpan<char> span)
+    {
+        Span<char> joinedNumberSpan = stackalloc char[span.Length];
+        int digitCount = 0;
+        foreach (char c in span)
+        {
+            if (c is ' ') continue;
+            if (!char.IsDigit(c))
+            {
+                throw new FormatException($"Unexpected character '{c}' in '{span}'.");
+            }
 
-	public BoatRecord ReadRecord(string input)
-	{
-		var match = InputRegex.Match(input);
-		if (!match.Success)
-		{
-			throw new FormatException("Input is not in the expected format.");
-		}
+            joinedNumberSpan[digitCount] = c;
+            digitCount++;
+        }
 
-		var separatedTimeValuesSpan = match.Groups[1].ValueSpan;
-		long timeValue = GetNumberFromSpanIgnoringSpaces(separatedTimeValuesSpan);
+        return long.Parse(joinedNumberSpan[..digitCount]);
+    }
 
-		var separatedDistanceValuesSpan = match.Groups[2].ValueSpan;
-		long distanceValue = GetNumberFromSpanIgnoringSpaces(separatedDistanceValuesSpan);
+    public BoatRecord ReadRecord(string input)
+    {
+        var match = InputRegex.Match(input);
+        if (!match.Success)
+        {
+            throw new FormatException("Input is not in the expected format.");
+        }
 
-		return new BoatRecord(timeValue, distanceValue);
-	}
+        var separatedTimeValuesSpan = match.Groups[1].ValueSpan;
+        long timeValue = GetNumberFromSpanIgnoringSpaces(separatedTimeValuesSpan);
+
+        var separatedDistanceValuesSpan = match.Groups[2].ValueSpan;
+        long distanceValue = GetNumberFromSpanIgnoringSpaces(separatedDistanceValuesSpan);
+
+        return new BoatRecord(timeValue, distanceValue);
+    }
 }

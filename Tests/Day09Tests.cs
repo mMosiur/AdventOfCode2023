@@ -7,19 +7,19 @@ namespace AdventOfCode.Year2023.Tests;
 [Trait("Day", "9")]
 public sealed class Day09Tests : BaseDayTests<Day09Solver, Day09SolverOptions>
 {
-	protected override string DayInputsDirectory => "Day09";
+    protected override string DayInputsDirectory => "Day09";
 
-	protected override Day09Solver CreateSolver(Day09SolverOptions options) => new(options);
+    protected override Day09Solver CreateSolver(Day09SolverOptions options) => new(options);
 
-	[Theory]
-	[InlineData("example-input.txt", "114")]
-	[InlineData("my-input.txt", "1969958987")]
-	public void TestPart1(string inputFilename, string expectedResult)
-		=> BaseTestPart1(inputFilename, expectedResult);
+    [Theory]
+    [InlineData("example-input.txt", "114")]
+    [InlineData("my-input.txt", "1969958987")]
+    public void TestPart1(string inputFilename, string expectedResult)
+        => BaseTestPart1(inputFilename, expectedResult);
 
-	[Theory]
-	[InlineData("example-input.txt", "2")]
-	[InlineData("my-input.txt", "1068")]
-	public void TestPart2(string inputFilename, string expectedResult)
-		=> BaseTestPart2(inputFilename, expectedResult);
+    [Theory]
+    [InlineData("example-input.txt", "2")]
+    [InlineData("my-input.txt", "1068")]
+    public void TestPart2(string inputFilename, string expectedResult)
+        => BaseTestPart2(inputFilename, expectedResult);
 }

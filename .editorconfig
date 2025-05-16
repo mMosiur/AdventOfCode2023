@@ -10,7 +10,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [*.cs]
-indent_style = tab
+indent_style = space
 indent_size = 4
 
 # Config for md, json and csproj files
@@ -20,20 +20,3 @@ indent_size = 2
 
 [*.{md,txt}]
 trim_trailing_whitespace = false
-
-# Config for dotnet analyzer rules
-[*.{cs,vb}]
-dotnet_diagnostic.SYSLIB1045.severity = none
-dotnet_diagnostic.CA1845.severity = suggestion
-dotnet_diagnostic.CA2201.severity = suggestion
-dotnet_diagnostic.CA2231.severity = suggestion
-dotnet_diagnostic.IDE0001.severity = suggestion
-dotnet_diagnostic.IDE0008.severity = suggestion
-dotnet_diagnostic.IDE0018.severity = suggestion
-dotnet_diagnostic.IDE0026.severity = suggestion
-dotnet_diagnostic.IDE0048.severity = suggestion
-dotnet_diagnostic.IDE0055.severity = suggestion
-dotnet_diagnostic.IDE0078.severity = suggestion
-dotnet_diagnostic.IDE0090.severity = suggestion
-dotnet_diagnostic.IDE0130.severity = suggestion
-csharp_style_var_for_built_in_types = false:suggestion
