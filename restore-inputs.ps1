@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param (
-    [Parameter()]
+    [Parameter(HelpMessage = "Use cached input files when available")]
     [switch]$UseCache
 )
 
@@ -59,11 +59,16 @@ if ($UseCache) {
 
 $dayDirectories = Get-ChildItem -Directory | Where-Object { $_.Name -match "Day\d{2}" }
 
+$totalDaysCount = $dayDirectories.Count
+$currentDayIndex = 0
 foreach ($dayDirectory in $dayDirectories) {
     try {
         Set-Location $dayDirectory
         $dayNumberString = $dayDirectory.Name -replace "Day(\d\d).*", '$1'
         $dayNumber = [int]$dayNumberString
+        $currentDayIndex++
+        $percentComplete = ($currentDayIndex / $totalDaysCount) * 100
+        Write-Progress -Activity "Restoring input files" -Status "Day $dayNumberString" -PercentComplete $percentComplete
         Write-Information "Restoring Day $dayNumber input"
 
         if (Test-Path $inputFilename) {
@@ -77,6 +82,7 @@ foreach ($dayDirectory in $dayDirectories) {
                 "Cookie" = "session=$sessionToken"
                 "User-Agent" = "Mozilla/5.0 ($scriptWebAddress by $author)"
             }
+            Set-ItemProperty -Path $inputFilename -Name IsReadOnly -Value $true
             $fileHash = (Get-FileHash $inputFilename -Algorithm MD5).Hash
             Write-Information "  Input file downloaded, hash: $fileHash"
         }
@@ -91,8 +97,10 @@ foreach ($dayDirectory in $dayDirectories) {
             # If directory existed, copy back potential example input files in them
             $exampleInputFiles = Get-ChildItem -Path $testsInputDirectoryPath -Filter "example-input*.txt"
             foreach ($exampleInputFile in $exampleInputFiles) {
+                Set-ItemProperty $exampleInputFile -Name IsReadOnly -Value $true
                 $newExampleInputFileName = $exampleInputFile.Name -replace "^example-input-?", "example"
-                Copy-Item -Path $exampleInputFile.FullName -Destination $newExampleInputFileName
+                Copy-Item -Path $exampleInputFile.FullName -Destination $newExampleInputFileName -Force
+                Set-ItemProperty -Path $newExampleInputFileName -Name IsReadOnly -Value $true
             }
         }
         $testsInputPath = Join-Path $testsInputDirectoryPath $testInputFilename
@@ -105,12 +113,14 @@ foreach ($dayDirectory in $dayDirectories) {
             }
         }
         else {
-            Copy-Item $inputFilename $testsInputPath
+            Copy-Item -Path $inputFilename -Destination $testsInputPath
+            Set-ItemProperty -Path $testsInputPath -Name IsReadOnly -Value $true
             Write-Information "  Copied day input file to test inputs directory"
         }
 
         # Copy back to cache directory as some missing inputs may have been downloaded
-        if ($useCache) {
+        if ($UseCache)
+        {
             $cacheDayDirectory = Join-Path ".." $inputCacheDirName "day$dayNumberString"
             if (-not (Test-Path $cacheDayDirectory)) {
                 $cacheDayCreatedDirectory = New-Item -ItemType Directory -Path $cacheDayDirectory
