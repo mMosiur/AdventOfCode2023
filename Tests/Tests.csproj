@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="mMosiur.AdventOfCode.Common" Version="0.3.1"/>
+    <PackageReference Include="mMosiur.AdventOfCode.Common" Version="0.3.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="xunit" Version="2.7.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
@@ -46,7 +46,7 @@
     <ProjectReference Include="..\Day14 - Parabolic Reflector Dish\Day14.csproj" />
     <ProjectReference Include="..\Day15 - Lens Library\Day15.csproj" />
     <ProjectReference Include="..\Day16 - The Floor Will Be Lava\Day16.csproj" />
-    <ProjectReference Include="..\Day17 - Clumsy Crucible\Day17.csproj"/>
+    <ProjectReference Include="..\Day17 - Clumsy Crucible\Day17.csproj" />
   </ItemGroup>
 
 </Project>
