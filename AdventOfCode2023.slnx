@@ -28,5 +28,6 @@
     <Project Path="Day16 - The Floor Will Be Lava/Day16.csproj" />
     <Project Path="Day17 - Clumsy Crucible/Day17.csproj" />
   </Folder>
+    <Project Path="Day18 - Lavaduct Lagoon/Day18.csproj"/>
   <Project Path="Tests/Tests.csproj" />
 </Solution>
