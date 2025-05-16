@@ -45,7 +45,7 @@ else
     dotnet new aocday --year $year -o "$day" --title "$dayTitle"
     $folderName = "$day - $dayTitle"
     Rename-Item "$day" "$folderName"
-    dotnet sln add ".\$folderName\"
+    dotnet sln add ".\$folderName\" --in-root
     cd Tests
     dotnet add reference "..\$folderName"
     cd ..
