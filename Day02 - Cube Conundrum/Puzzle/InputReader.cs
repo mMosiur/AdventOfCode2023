@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using AdventOfCode.Common;
 
 namespace AdventOfCode.Year2023.Day02.Puzzle;
 
@@ -42,6 +43,7 @@ internal static class InputReader
 			{
 				throw new InputException($"Cube color '{cubeString}' is not in the expected format.");
 			}
+
 			int count = int.Parse(match.Groups[1].ValueSpan);
 			var color = match.Groups[2].ValueSpan;
 			switch (color)

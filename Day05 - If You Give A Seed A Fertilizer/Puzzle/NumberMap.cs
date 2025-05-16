@@ -16,10 +16,10 @@ internal sealed class NumberMap(NumberCategory sourceCategory, NumberCategory de
 			{
 				if (!range.Overlaps(line.SourceRange)) continue;
 				var intersection = range.IntersectedWith(line.SourceRange);
-				if (intersection.HasValue)
+				if (!intersection.IsEmpty)
 				{
-					destinationRanges.Add(intersection.Value.MovedBy(line.DestinationOffset));
-					unmappedRanges.Remove(intersection.Value);
+					destinationRanges.Add(intersection.MovedBy(line.DestinationOffset));
+					unmappedRanges.Remove(intersection);
 				}
 			}
 		}

@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using AdventOfCode.Common;
 using AdventOfCode.Common.SpanExtensions;
 
 namespace AdventOfCode.Year2023.Day12;
@@ -64,12 +65,13 @@ internal sealed class InputReader
 	{
 		int count = springGroupSizes.Count(',');
 		var result = new List<int>(count + 1);
-		foreach (var part in springGroupSizes.Split(','))
+		foreach (var part in springGroupSizes.SplitAsSpans(','))
 		{
 			if (!int.TryParse(part, out int size))
 			{
 				throw new InputException($"Invalid spring group size ('{part}')");
 			}
+
 			result.Add(size);
 		}
 

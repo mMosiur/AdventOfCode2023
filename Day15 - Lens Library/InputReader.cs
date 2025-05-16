@@ -12,7 +12,7 @@ internal sealed class InputReader(Day15SolverOptions options)
 	public List<string> ReadInitializationSequence(string input)
 	{
 		var sequence = new List<string>(input.AsSpan().Count(_sequenceSeparator) + 1);
-		foreach (var sequenceSpan in input.AsSpan().Trim().Split(_sequenceSeparator))
+		foreach (var sequenceSpan in input.AsSpan().Trim().SplitAsSpans(_sequenceSeparator))
 		{
 			sequence.Add(sequenceSpan.Trim().ToString());
 		}

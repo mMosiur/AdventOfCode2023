@@ -11,17 +11,19 @@ internal sealed class InputReader
 	{
 		int cardNumber = int.Parse(match.Groups[1].Value);
 		List<int> winningNumbers = new(10);
-		foreach (var split in match.Groups[2].ValueSpan.Split(' '))
+		foreach (var split in match.Groups[2].ValueSpan.SplitAsSpans(' '))
 		{
 			if (split.IsEmpty) continue;
 			winningNumbers.Add(int.Parse(split));
 		}
+
 		List<int> myNumbers = new(25);
-		foreach (var split in match.Groups[3].ValueSpan.Split(' '))
+		foreach (var split in match.Groups[3].ValueSpan.SplitAsSpans(' '))
 		{
 			if (split.IsWhiteSpace()) continue;
 			myNumbers.Add(int.Parse(split));
 		}
+
 		return new Scratchcard
 		{
 			Id = cardNumber,

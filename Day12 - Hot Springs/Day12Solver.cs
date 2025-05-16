@@ -1,8 +1,8 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 
 namespace AdventOfCode.Year2023.Day12;
 
-public sealed class Day12Solver : DaySolver
+public sealed class Day12Solver : DaySolver<Day12SolverOptions>
 {
 	public override int Year => 2023;
 	public override int Day => 12;
@@ -19,13 +19,9 @@ public sealed class Day12Solver : DaySolver
 	}
 
 	public Day12Solver(Action<Day12SolverOptions> configure)
-		: this(DaySolverOptions.FromConfigureAction(configure))
-	{
-	}
+		: this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-	public Day12Solver() : this(new Day12SolverOptions())
-	{
-	}
+	public Day12Solver() : this(new Day12SolverOptions()) { }
 
 	public override string SolvePart1()
 	{

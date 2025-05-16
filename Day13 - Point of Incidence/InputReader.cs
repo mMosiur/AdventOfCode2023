@@ -1,3 +1,4 @@
+using AdventOfCode.Common;
 using AdventOfCode.Common.SpanExtensions;
 
 namespace AdventOfCode.Year2023.Day13;
@@ -8,14 +9,14 @@ internal static class InputReader
 	{
 		int mirrorIndex = 0;
 		var mirrors = new List<Mirror>(2);
-		foreach (var mirrorSpan in input.AsSpan().Trim().Split("\n\n"))
+		foreach (var mirrorSpan in input.AsSpan().Trim().SplitAsSpans("\n\n"))
 		{
 			int mirrorWidth = mirrorSpan.IndexOf('\n');
 			int mirrorHeight = mirrorSpan.Count('\n') + 1;
 			var mirrorTerrain = new Terrain[mirrorHeight, mirrorWidth];
 
 			int y = 0;
-			foreach (var mirrorLine in mirrorSpan.Split('\n'))
+			foreach (var mirrorLine in mirrorSpan.SplitAsSpans('\n'))
 			{
 				if (mirrorLine.Length != mirrorWidth)
 				{

@@ -1,3 +1,5 @@
+using AdventOfCode.Common;
+
 namespace AdventOfCode.Year2023.Day14;
 
 internal static class InputReader
@@ -10,6 +12,7 @@ internal static class InputReader
 		{
 			throw new InputException("Input was empty");
 		}
+
 		int columnCount = sourceList[0].Length;
 		if (sourceList.Any(l => l.Length != columnCount))
 		{

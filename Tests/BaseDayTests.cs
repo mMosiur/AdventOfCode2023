@@ -1,15 +1,15 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 
 namespace AdventOfCode.Year2023.Tests;
 
 /// <summary>
 /// The base day tests. Allows subclasses to simply implement few needed methods and call the <c>BaseTestPart1</c> or <c>BaseTestPart2</c> methods
-/// to universally test general part solving of the <see cref="DaySolver"/>.
+/// to universally test general part solving of the <see cref="DaySolver{TDaySolverOptions}"/>.
 /// </summary>
 /// <typeparam name="TDaySolver">The solver class for given day</typeparam>
 /// <typeparam name="TDaySolverOptions">The solver options class that is being used by the given day</typeparam>
 public abstract class BaseDayTests<TDaySolver, TDaySolverOptions>
-	where TDaySolver : DaySolver
+	where TDaySolver : DaySolver<TDaySolverOptions>
 	where TDaySolverOptions : DaySolverOptions, new()
 {
 	/// <summary>
@@ -67,7 +67,7 @@ public abstract class BaseDayTests<TDaySolver, TDaySolverOptions>
 	/// </summary>
 	/// <remarks>
 	/// Creates a <typeparamref name="TDaySolver"/> day solver using given <paramref name="options"/> (or default if not specified).
-	/// Then calls <see cref="DaySolver.SolvePart1"/> method of created solver and asserts that the result is equal to the <paramref name="expectedResult"/>.
+	/// Then calls <see cref="DaySolver{TDaySolverOptions}.SolvePart1"/> method of created solver and asserts that the result is equal to the <paramref name="expectedResult"/>.
 	/// </remarks>
 	/// <param name="inputFilename">The filename of the input file use during test</param>
 	/// <param name="expectedResult">The expected return value for given test file</param>
@@ -86,7 +86,7 @@ public abstract class BaseDayTests<TDaySolver, TDaySolverOptions>
 	/// </summary>
 	/// <remarks>
 	/// Creates a <typeparamref name="TDaySolver"/> day solver using given <paramref name="options"/> (or default if not specified).
-	/// Then calls <see cref="DaySolver.SolvePart2"/> method of created solver and asserts that the result is equal to the <paramref name="expectedResult"/>.
+	/// Then calls <see cref="DaySolver{TDaySolverOptions}.SolvePart2"/> method of created solver and asserts that the result is equal to the <paramref name="expectedResult"/>.
 	/// </remarks>
 	/// <param name="inputFilename">The filename of the input file use during test</param>
 	/// <param name="expectedResult">The expected return value for given test file</param>

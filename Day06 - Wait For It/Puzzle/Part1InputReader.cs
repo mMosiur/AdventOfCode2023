@@ -31,7 +31,7 @@ internal sealed class Part1InputReader
 	private List<int> GetListOfNumbersInSpan(ReadOnlySpan<char> span)
 	{
 		var numbers = new List<int>(DefaultCapacity);
-		foreach (var numberSpan in span.Split(' '))
+		foreach (var numberSpan in span.SplitAsSpans(' '))
 		{
 			if (numberSpan.IsEmpty) continue;
 			if (!int.TryParse(numberSpan, out int number))
@@ -41,6 +41,7 @@ internal sealed class Part1InputReader
 
 			numbers.Add(number);
 		}
+
 		return numbers;
 	}
 }

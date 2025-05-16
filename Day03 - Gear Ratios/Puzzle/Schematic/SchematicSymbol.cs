@@ -1,3 +1,5 @@
+using AdventOfCode.Common;
+
 namespace AdventOfCode.Year2023.Day03.Puzzle.Schematic;
 
 internal sealed class SchematicSymbol

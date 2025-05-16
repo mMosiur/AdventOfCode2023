@@ -1,10 +1,10 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day10.Puzzle;
 using AdventOfCode.Year2023.Day10.Puzzle.Pipes;
 
 namespace AdventOfCode.Year2023.Day10;
 
-public sealed class Day10Solver : DaySolver
+public sealed class Day10Solver : DaySolver<Day10SolverOptions>
 {
 	private readonly PipeMap _pipeMap;
 
@@ -15,13 +15,9 @@ public sealed class Day10Solver : DaySolver
 	}
 
 	public Day10Solver(Action<Day10SolverOptions> configure)
-		: this(DaySolverOptions.FromConfigureAction(configure))
-	{
-	}
+		: this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-	public Day10Solver() : this(new Day10SolverOptions())
-	{
-	}
+	public Day10Solver() : this(new Day10SolverOptions()) { }
 
 	public override int Year => 2023;
 	public override int Day => 10;

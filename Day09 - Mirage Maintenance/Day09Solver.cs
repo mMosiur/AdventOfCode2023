@@ -1,9 +1,9 @@
-using AdventOfCode.Abstractions;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day09.Puzzle.Oasis;
 
 namespace AdventOfCode.Year2023.Day09;
 
-public sealed class Day09Solver : DaySolver
+public sealed class Day09Solver : DaySolver<Day09SolverOptions>
 {
 	public override int Year => 2023;
 	public override int Day => 9;
@@ -18,13 +18,9 @@ public sealed class Day09Solver : DaySolver
 	}
 
 	public Day09Solver(Action<Day09SolverOptions> configure)
-		: this(DaySolverOptions.FromConfigureAction(configure))
-	{
-	}
+		: this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-	public Day09Solver() : this(new Day09SolverOptions())
-	{
-	}
+	public Day09Solver() : this(new Day09SolverOptions()) { }
 
 	public override string SolvePart1()
 	{

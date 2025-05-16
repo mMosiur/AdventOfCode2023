@@ -1,3 +1,5 @@
+using AdventOfCode.Common;
+
 namespace AdventOfCode.Year2023.Day12;
 
 internal sealed class SpringArrangementCounter
@@ -122,7 +124,7 @@ internal sealed class SpringArrangementCounter
 		// previous damage group (currentGroupIndex - 1) ending with its full group size (row.DamagedGroupSizes[j - 1]) or considering
 		// current damage group (currentGroupIndex) ending with empty group size (0)
 		return _memo[currentSpringIndex - 1, currentGroupIndex - 1, row.DamagedGroupSizes[currentGroupIndex - 1]]
-			 + _memo[currentSpringIndex - 1, currentGroupIndex, 0];
+		     + _memo[currentSpringIndex - 1, currentGroupIndex, 0];
 	}
 
 	/// <summary>

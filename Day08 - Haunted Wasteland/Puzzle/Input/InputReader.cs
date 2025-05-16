@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day08.Puzzle.Map;
 
 namespace AdventOfCode.Year2023.Day08.Puzzle.Input;
@@ -19,9 +20,7 @@ internal static class InputReader
 
 			var instructions = ReadInstructions(enumerator.Current);
 
-			while (enumerator.MoveNext() && string.IsNullOrWhiteSpace(enumerator.Current))
-			{
-			}
+			while (enumerator.MoveNext() && string.IsNullOrWhiteSpace(enumerator.Current)) { }
 
 			if (string.IsNullOrWhiteSpace(enumerator.Current))
 			{
