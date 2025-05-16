@@ -97,7 +97,7 @@ foreach ($dayDirectory in $dayDirectories) {
             # If directory existed, copy back potential example input files in them
             $exampleInputFiles = Get-ChildItem -Path $testsInputDirectoryPath -Filter "example-input*.txt"
             foreach ($exampleInputFile in $exampleInputFiles) {
-                Set-ItemProperty $exampleInputFile -Name IsReadOnly -Value $true
+                Set-ItemProperty -Path $exampleInputFile -Name IsReadOnly -Value $true
                 $newExampleInputFileName = $exampleInputFile.Name -replace "^example-input-?", "example"
                 Copy-Item -Path $exampleInputFile.FullName -Destination $newExampleInputFileName -Force
                 Set-ItemProperty -Path $newExampleInputFileName -Name IsReadOnly -Value $true
