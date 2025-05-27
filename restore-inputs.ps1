@@ -138,3 +138,6 @@ foreach ($dayDirectory in $dayDirectories) {
         Set-Location $originalDirectory
     }
 }
+
+Write-Progress -Activity "Restoring input files" -Completed -Status "All days processed"
+Write-Information "All input files restored successfully."
