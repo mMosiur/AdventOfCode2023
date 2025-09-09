@@ -1,4 +1,5 @@
 using AdventOfCode.Common;
+using AdventOfCode.Year2023.Day18.Puzzle;
 
 namespace AdventOfCode.Year2023.Day18;
 
@@ -8,12 +9,11 @@ public sealed class Day18Solver : DaySolver<Day18SolverOptions>
     public override int Day => 18;
     public override string Title => "Lavaduct Lagoon";
 
+    private readonly DigPlan _digPlan;
+
     public Day18Solver(Day18SolverOptions options) : base(options)
     {
-        // Initialize Day18 solver here.
-        // Property `Options` contains options passed to this constructor that were forwarded to the base constructor.
-        // Property `Input` contains the raw input text.
-        // Property `InputLines` enumerates lines in the input text.
+        _digPlan = InputReader.Read(Input);
     }
 
     public Day18Solver(Action<Day18SolverOptions> configure) : this(DaySolverOptions.FromConfigureAction(configure)) { }
@@ -22,7 +22,12 @@ public sealed class Day18Solver : DaySolver<Day18SolverOptions>
 
     public override string SolvePart1()
     {
-        return "UNSOLVED";
+        var digSite = new DigSite(_digPlan);
+        var (edges, interiorPoints) = digSite.DigOut(startingPoint: Point.Origin);
+
+        int surfaceArea = edges.Count + interiorPoints.Count;
+
+        return surfaceArea.ToString();
     }
 
     public override string SolvePart2()
