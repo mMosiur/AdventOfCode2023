@@ -22,12 +22,11 @@ public sealed class Day18Solver : DaySolver<Day18SolverOptions>
 
     public override string SolvePart1()
     {
-        var digSite = new DigSite(_digPlan);
-        var (edges, interiorPoints) = digSite.DigOut(startingPoint: Point.Origin);
+        var digInstructions = _digPlan.GetPlainInstructions();
+        var digger = new Digger(digInstructions);
+        int digSize = digger.CalculateDigSize(startingPoint: Point.Origin);
 
-        int surfaceArea = edges.Count + interiorPoints.Count;
-
-        return surfaceArea.ToString();
+        return digSize.ToString();
     }
 
     public override string SolvePart2()

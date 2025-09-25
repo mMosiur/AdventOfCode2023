@@ -14,7 +14,7 @@ internal static partial class InputReader
         );
     }
 
-    [GeneratedRegex(@"^([UDLR]) (\d+) \((\#[0-9a-f]{6})\)$", RegexOptions.Compiled | RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"^([UDLR]) (\d+) \(\#([0-9a-f]{6})\)$", RegexOptions.Compiled | RegexOptions.IgnoreCase)]
     private static partial Regex RowRegex { get; }
 
     private static DigPlanRow ParseRow(string row)
@@ -28,7 +28,7 @@ internal static partial class InputReader
         return new(
             Direction: DirectionHelpers.Parse(match.Groups[1].ValueSpan),
             Distance: int.Parse(match.Groups[2].ValueSpan),
-            Color: Color.FromHex(match.Groups[3].ValueSpan)
+            ColorCode: match.Groups[3].Value
         );
     }
 }
