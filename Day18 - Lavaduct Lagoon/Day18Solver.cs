@@ -24,13 +24,17 @@ public sealed class Day18Solver : DaySolver<Day18SolverOptions>
     {
         var digInstructions = _digPlan.GetPlainInstructions();
         var digger = new Digger(digInstructions);
-        int digSize = digger.CalculateDigSize(startingPoint: Point.Origin);
+        long digSize = digger.CalculateDigSize(startingPoint: Point.Origin);
 
         return digSize.ToString();
     }
 
     public override string SolvePart2()
     {
-        return "UNSOLVED";
+        var digInstructions = _digPlan.GetUnswappedColorInstructions();
+        var digger = new Digger(digInstructions);
+        long digSize = digger.CalculateDigSize(startingPoint: Point.Origin);
+
+        return digSize.ToString();
     }
 }

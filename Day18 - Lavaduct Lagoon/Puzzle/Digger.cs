@@ -4,16 +4,16 @@ internal sealed class Digger(IReadOnlyList<DigInstruction> digPlanInstructions)
 {
     private readonly IReadOnlyList<DigInstruction> _digPlanInstructions = digPlanInstructions;
 
-    public int CalculateDigSize(Point startingPoint)
+    public long CalculateDigSize(Point startingPoint)
     {
         var prevPoint = startingPoint;
-        int edgeLength = 0;
-        int sum = 0;
+        long edgeLength = 0;
+        long sum = 0;
         foreach (var instruction in _digPlanInstructions)
         {
             edgeLength += instruction.Distance;
             var nextPoint = prevPoint + instruction.DigVector;
-            sum += prevPoint.X * nextPoint.Y - nextPoint.X * prevPoint.Y;
+            sum += (long)prevPoint.X * (long)nextPoint.Y - (long)nextPoint.X * (long)prevPoint.Y;
             prevPoint = nextPoint;
         }
 
@@ -22,8 +22,8 @@ internal sealed class Digger(IReadOnlyList<DigInstruction> digPlanInstructions)
             throw new InvalidOperationException("The dig plan does not return to the starting point.");
         }
 
-        int digSize = Math.Abs(sum) / 2;
-        int edgeSizeCorrection = edgeLength / 2 + 1;
+        long digSize = Math.Abs(sum) / 2;
+        long edgeSizeCorrection = edgeLength / 2 + 1;
 
         return digSize + edgeSizeCorrection;
     }
