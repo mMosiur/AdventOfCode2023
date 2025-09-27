@@ -29,5 +29,6 @@
     <Project Path="Day17 - Clumsy Crucible/Day17.csproj" />
     <Project Path="Day18 - Lavaduct Lagoon/Day18.csproj" />
   </Folder>
+    <Project Path="Day19 - Aplenty/Day19.csproj"/>
   <Project Path="Tests/Tests.csproj" />
 </Solution>
