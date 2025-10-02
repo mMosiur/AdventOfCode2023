@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using AdventOfCode.Common;
 using AdventOfCode.Common.EnumeratorExtensions;
 using AdventOfCode.Common.StringExtensions;
 
@@ -17,6 +18,18 @@ internal static partial class InputReader
 
     public static PuzzleInput Read(string input)
     {
+        try
+        {
+            return InternalRead(input);
+        }
+        catch (Exception ex)
+        {
+            throw new InputException("Failed to parse puzzle input.", ex);
+        }
+    }
+
+    private static PuzzleInput InternalRead(string input)
+    {
         using var it = input.EnumerateLines().GetEnumerator();
         it.EnsureMoveToNextNonEmptyLine("Expected non-empty line for number of workflows.");
 
@@ -29,7 +42,7 @@ internal static partial class InputReader
 
         it.EnsureMoveToNextNonEmptyLine();
 
-        var parts = new List<Part>();
+        var parts = new List<PartRatings>();
         while (!string.IsNullOrWhiteSpace(it.Current))
         {
             parts.Add(ParsePart(it.Current));
@@ -67,20 +80,8 @@ internal static partial class InputReader
         {
             rules[i] = new ConditionalRule
             {
-                Category = match.Groups["category"].Captures[i].ValueSpan switch
-                {
-                    "x" => Category.X,
-                    "m" => Category.M,
-                    "a" => Category.A,
-                    "s" => Category.S,
-                    _ => throw new FormatException("Invalid category.")
-                },
-                Comparison = match.Groups["operator"].Captures[i].ValueSpan switch
-                {
-                    "<" => Operator.LessThan,
-                    ">" => Operator.GreateThan,
-                    _ => throw new FormatException("Invalid operator.")
-                },
+                Category = ParseCategory(match.Groups["category"].Captures[i].ValueSpan),
+                Comparison = ParseOperator(match.Groups["operator"].Captures[i].ValueSpan),
                 Value = int.Parse(match.Groups["value"].Captures[i].ValueSpan),
                 Destination = match.Groups["destination"].Captures[i].Value
             };
@@ -94,7 +95,25 @@ internal static partial class InputReader
         return rules;
     }
 
-    private static Part ParsePart(string s)
+    private static RatingCategory ParseCategory(ReadOnlySpan<char> s)
+        => s switch
+        {
+            "x" => RatingCategory.X,
+            "m" => RatingCategory.M,
+            "a" => RatingCategory.A,
+            "s" => RatingCategory.S,
+            _ => throw new ArgumentException($"Invalid category '{s}'.", nameof(s))
+        };
+
+    private static Operator ParseOperator(ReadOnlySpan<char> s)
+        => s switch
+        {
+            "<" => Operator.LessThan,
+            ">" => Operator.GreateThan,
+            _ => throw new ArgumentException($"Invalid operator '{s}'.", nameof(s))
+        };
+
+    private static PartRatings ParsePart(string s)
     {
         var match = PartRegex().Match(s);
         if (!match.Success) throw new FormatException($"Invalid part format: {s}");
@@ -109,83 +128,9 @@ internal static partial class InputReader
     }
 }
 
-public sealed class PuzzleInput
+internal sealed class PuzzleInput
 {
     public required IReadOnlyList<Workflow> Workflows { get; init; }
-    public required IReadOnlyList<Part> Parts { get; init; }
+    public required IReadOnlyList<PartRatings> Parts { get; init; }
 }
 
-public sealed class Workflow
-{
-    public required string Name { get; init; }
-    public required IReadOnlyList<Rule> Rules { get; init; }
-
-    public static Workflow FinalWorkflow(string name) => new()
-    {
-        Name = name,
-        Rules = [],
-    };
-
-    public override string ToString()
-    {
-        return $"{Name}{{{string.Join(", ", Rules)}}}";
-    }
-}
-
-public abstract class Rule
-{
-    public required string Destination { get; init; }
-}
-
-public sealed class ConditionalRule : Rule
-{
-    public required Category Category { get; init; }
-    public required Operator Comparison { get; init; }
-    public required int Value { get; init; }
-
-    public override string ToString()
-    {
-        var comparisonSymbol = Comparison switch
-        {
-            Operator.LessThan => "<",
-            Operator.GreateThan => ">",
-            _ => throw new InvalidOperationException()
-        };
-        return $"{Category} {comparisonSymbol} {Value} = {Destination}";
-    }
-}
-
-public sealed class TerminatingRule : Rule
-{
-    public override string ToString()
-    {
-        return $"{Destination}";
-    }
-}
-
-public sealed class Part
-{
-    public required int X { get; init; }
-    public required int M { get; init; }
-    public required int A { get; init; }
-    public required int S { get; init; }
-
-    public override string ToString()
-    {
-        return $"{{x={X},m={M},a={A},s={S}}}";
-    }
-}
-
-public enum Operator
-{
-    LessThan = 1,
-    GreateThan = 2,
-}
-
-public enum Category
-{
-    X = 1,
-    M = 2,
-    A = 3,
-    S = 4,
-}
