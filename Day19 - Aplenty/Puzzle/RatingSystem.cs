@@ -61,7 +61,7 @@ internal sealed class RatingSystem
         return conditionalRule.Comparison switch
         {
             Operator.LessThan => categoryValue < conditionalRule.Value,
-            Operator.GreateThan => categoryValue > conditionalRule.Value,
+            Operator.GreaterThan => categoryValue > conditionalRule.Value,
             _ => throw new InvalidOperationException()
         };
     }

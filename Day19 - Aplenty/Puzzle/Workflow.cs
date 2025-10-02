@@ -29,7 +29,7 @@ internal sealed class TerminatingRule : Rule;
 internal enum Operator
 {
     LessThan = 1,
-    GreateThan = 2,
+    GreaterThan = 2,
 }
 
 internal enum RatingCategory

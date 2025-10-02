@@ -109,7 +109,7 @@ internal static partial class InputReader
         => s switch
         {
             "<" => Operator.LessThan,
-            ">" => Operator.GreateThan,
+            ">" => Operator.GreaterThan,
             _ => throw new ArgumentException($"Invalid operator '{s}'.", nameof(s))
         };
 
