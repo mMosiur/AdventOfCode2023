@@ -2,17 +2,17 @@
 
 internal sealed class RatingSystem
 {
-    private readonly Dictionary<string, Workflow> _workflows;
-    private readonly string _startingWorkflowName;
-    private readonly string _acceptWorkflowName;
-    private readonly string _rejectWorkflowName;
+    public IReadOnlyDictionary<string, Workflow> Workflows { get; }
+    public string StartingWorkflowName { get; }
+    public string AcceptWorkflowName { get; }
+    public string RejectWorkflowName { get; }
 
     private RatingSystem(Dictionary<string, Workflow> workflows, string startingWorkflowName, string acceptWorkflowName, string rejectWorkflowName)
     {
-        _workflows = workflows;
-        _startingWorkflowName = startingWorkflowName;
-        _acceptWorkflowName = acceptWorkflowName;
-        _rejectWorkflowName = rejectWorkflowName;
+        Workflows = workflows;
+        StartingWorkflowName = startingWorkflowName;
+        AcceptWorkflowName = acceptWorkflowName;
+        RejectWorkflowName = rejectWorkflowName;
     }
 
     public static RatingSystem BuildFromWorkflows(IEnumerable<Workflow> workflows, string startingWorkflowName, string acceptWorkflowName, string rejectWorkflowName)
@@ -28,21 +28,21 @@ internal sealed class RatingSystem
 
     public bool IsPartAccepted(PartRatings partRatings)
     {
-        var currentWorkflow = _workflows[_startingWorkflowName];
-        while (currentWorkflow.Name != _acceptWorkflowName && currentWorkflow.Name != _rejectWorkflowName)
+        var currentWorkflow = Workflows[StartingWorkflowName];
+        while (currentWorkflow.Name != AcceptWorkflowName && currentWorkflow.Name != RejectWorkflowName)
         {
             foreach (var rule in currentWorkflow.Rules)
             {
                 var doesRuleMatch = IsMatch(rule, partRatings);
                 if (!doesRuleMatch) continue; // try next rule
                 // found matching rule, go to its destination
-                currentWorkflow = _workflows[rule.Destination];
+                currentWorkflow = Workflows[rule.Destination];
                 break;
             }
         }
 
-        if (currentWorkflow.Name == _acceptWorkflowName) return true;
-        if (currentWorkflow.Name == _rejectWorkflowName) return false;
+        if (currentWorkflow.Name == AcceptWorkflowName) return true;
+        if (currentWorkflow.Name == RejectWorkflowName) return false;
         throw new InvalidOperationException("Reached an unexpected workflow state.");
     }
 

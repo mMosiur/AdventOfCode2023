@@ -10,10 +10,16 @@ public sealed class Day19Solver : DaySolver<Day19SolverOptions>
     public override string Title => "Aplenty";
 
     private readonly PuzzleInput _puzzleInput;
+    private readonly RatingSystem _ratingSystem;
 
     public Day19Solver(Day19SolverOptions options) : base(options)
     {
         _puzzleInput = InputReader.Read(Input);
+        _ratingSystem = RatingSystem.BuildFromWorkflows(
+            _puzzleInput.Workflows,
+            startingWorkflowName: Options.StartingWorkflowName,
+            acceptWorkflowName: Options.AcceptWorkflowName,
+            rejectWorkflowName: Options.RejectWorkflowName);
     }
 
     public Day19Solver(Action<Day19SolverOptions> configure) : this(DaySolverOptions.FromConfigureAction(configure)) { }
@@ -22,22 +28,19 @@ public sealed class Day19Solver : DaySolver<Day19SolverOptions>
 
     public override string SolvePart1()
     {
-        var ratingSystem = RatingSystem.BuildFromWorkflows(
-            _puzzleInput.Workflows,
-            startingWorkflowName: Options.StartingWorkflowName,
-            acceptWorkflowName: Options.AcceptWorkflowName,
-            rejectWorkflowName: Options.RejectWorkflowName);
-
-        var result = _puzzleInput.Parts
-            .Where(ratingSystem.IsPartAccepted)
+        return _puzzleInput.Parts
+            .Where(_ratingSystem.IsPartAccepted)
             .Select(p => p.X + p.M + p.A + p.S)
-            .Sum();
-
-        return result.ToString();
+            .Sum()
+            .ToString();
     }
 
     public override string SolvePart2()
     {
-        return "UNSOLVED";
+        var analyzer = new RatingSystemAnalyzer(_ratingSystem);
+        var fullRangeCombinations = RatingSystemCombinations.FullRange(Options.MinimumRatingValue, Options.MaximumRatingValue);
+        var result = analyzer.AnalyzeCombinations(fullRangeCombinations);
+        var acceptCombinationsCount = result.CountAcceptCombinations();
+        return acceptCombinationsCount.ToString();
     }
 }

@@ -17,8 +17,8 @@ public sealed class Day19Tests : BaseDayTests<Day19Solver, Day19SolverOptions>
         => BaseTestPart1(inputFilename, expectedResult);
 
     [Theory]
-    [InlineData("example-input.txt", "", Skip = "Unsolved yet")]
-    [InlineData("my-input.txt", "", Skip = "Unsolved yet")]
+    [InlineData("example-input.txt", "167409079868000")]
+    [InlineData("my-input.txt", "125355665599537")]
     public void TestPart2(string inputFilename, string expectedResult)
         => BaseTestPart2(inputFilename, expectedResult);
 }

@@ -10,6 +10,8 @@ internal sealed class Workflow
         Name = name,
         Rules = [],
     };
+
+    public override string ToString() => $"{Name}{{{string.Join(", ", Rules)}}}";
 }
 
 internal abstract class Rule
@@ -22,9 +24,23 @@ internal sealed class ConditionalRule : Rule
     public required RatingCategory Category { get; init; }
     public required Operator Comparison { get; init; }
     public required int Value { get; init; }
+
+    public override string ToString()
+    {
+        char op = Comparison switch
+        {
+            Operator.LessThan => '<',
+            Operator.GreaterThan => '>',
+            _ => '?',
+        };
+        return $"{Category}{op}{Value}:{Destination}";
+    }
 }
 
-internal sealed class TerminatingRule : Rule;
+internal sealed class TerminatingRule : Rule
+{
+    public override string ToString() => $"{Destination}";
+}
 
 internal enum Operator
 {
