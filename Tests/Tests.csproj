@@ -47,14 +47,9 @@
     <ProjectReference Include="..\Day15 - Lens Library\Day15.csproj" />
     <ProjectReference Include="..\Day16 - The Floor Will Be Lava\Day16.csproj" />
     <ProjectReference Include="..\Day17 - Clumsy Crucible\Day17.csproj" />
-    <ProjectReference Include="..\Day18 - Lavaduct Lagoon\Day18.csproj"/>
-    <ProjectReference Include="..\Day19 - Aplenty\Day19.csproj"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Inputs\Day19\example-input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\Day18 - Lavaduct Lagoon\Day18.csproj" />
+    <ProjectReference Include="..\Day19 - Aplenty\Day19.csproj" />
+    <ProjectReference Include="..\Day20 - Pulse Propagation\Day20.csproj" />
   </ItemGroup>
 
 </Project>

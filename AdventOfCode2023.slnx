@@ -30,5 +30,6 @@
     <Project Path="Day18 - Lavaduct Lagoon/Day18.csproj" />
     <Project Path="Day19 - Aplenty/Day19.csproj" />
   </Folder>
+  <Project Path="Day20 - Pulse Propagation/Day20.csproj" />
   <Project Path="Tests/Tests.csproj" />
 </Solution>
