@@ -11,11 +11,11 @@ public sealed class Day20Solver : DaySolver<Day20SolverOptions>
     public override int Day => 20;
     public override string Title => "Pulse Propagation";
 
-    private readonly ModuleCollection _modules;
+    private readonly MachineModules _modules;
 
     public Day20Solver(Day20SolverOptions options) : base(options)
     {
-        _modules = InputReader.Read(Input);
+        _modules = InputReader.Read(Input, options.ModuleConnectedToButtonName);
     }
 
     public Day20Solver(Action<Day20SolverOptions> configure) : this(DaySolverOptions.FromConfigureAction(configure))
@@ -29,7 +29,7 @@ public sealed class Day20Solver : DaySolver<Day20SolverOptions>
     public override string SolvePart1()
     {
         var counter = new PulseCounter(_modules);
-        var pulses = counter.CountPulses(Options.ModuleConnectedToButtonName, Options.ButtonPushes, buttonPulse: Pulse.Low);
+        var pulses = counter.CountPulses(Options.ButtonPushes, buttonPulse: Pulse.Low);
         var result = pulses.LowPulseCount * pulses.HighPulseCount;
         return result.ToString();
     }

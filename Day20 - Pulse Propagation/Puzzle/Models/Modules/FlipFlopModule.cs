@@ -1,6 +1,7 @@
-﻿namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
+namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
 
-internal sealed class FlipFlopModule : CommunicationModule
+internal sealed class FlipFlopModule(string name)
+    : CommunicationModule(name)
 {
     private const bool InitialState = false;
 
@@ -11,11 +12,6 @@ internal sealed class FlipFlopModule : CommunicationModule
     public override void Reset()
     {
         _state = InitialState;
-    }
-
-    public override void AddInput(string input)
-    {
-        // Info about input is not needed for flip-flops
     }
 
     public override Pulse Process(string sourceName, Pulse input)

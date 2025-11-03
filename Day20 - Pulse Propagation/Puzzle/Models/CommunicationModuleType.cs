@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Year2023.Day20.Puzzle.Models;
+namespace AdventOfCode.Year2023.Day20.Puzzle.Models;
 
 internal enum CommunicationModuleType
 {

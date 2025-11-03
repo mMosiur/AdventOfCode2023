@@ -1,12 +1,22 @@
-﻿namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
+namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
 
-internal abstract class CommunicationModule
+internal abstract class CommunicationModule(string name)
 {
-    public required string Name { get; init; }
-    public required IReadOnlyList<string> Destinations { get; init; }
+    private readonly Dictionary<string, CommunicationModule> _inputs = new();
+    private readonly Dictionary<string, CommunicationModule> _destinations = new();
+
+    public string Name { get; } = name;
     public abstract CommunicationModuleType Type { get; }
+    public IReadOnlyDictionary<string, CommunicationModule> Inputs => _inputs;
+    public IReadOnlyDictionary<string, CommunicationModule> DestinationsModules => _destinations;
+
+    public virtual void ConnectInput(CommunicationModule inputModule)
+    {
+        _inputs.Add(inputModule.Name, inputModule);
+        inputModule._destinations.Add(Name, this);
+    }
 
     public abstract void Reset();
-    public abstract void AddInput(string input);
+
     public abstract Pulse Process(string sourceName, Pulse input);
 }

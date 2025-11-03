@@ -1,6 +1,7 @@
-﻿namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
+namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
 
-internal sealed class ConjunctionModule : CommunicationModule
+internal sealed class ConjunctionModule(string name)
+    : CommunicationModule(name)
 {
     private const Pulse InitialState = Pulse.Low;
 
@@ -16,9 +17,10 @@ internal sealed class ConjunctionModule : CommunicationModule
         }
     }
 
-    public override void AddInput(string input)
+    public override void ConnectInput(CommunicationModule inputModule)
     {
-        _mostRecentInputs.Add(input, InitialState);
+        base.ConnectInput(inputModule);
+        _mostRecentInputs.Add(inputModule.Name, InitialState);
     }
 
     public override Pulse Process(string sourceName, Pulse input)
