@@ -17,7 +17,7 @@ internal sealed class PulseCounter(MachineModules modules)
 
         for (int i = 0; i < buttonPushes; i++)
         {
-            PropagatePulse(queue, _modules.ButtonModule, buttonPulse);
+            queue.Enqueue(new(string.Empty, _modules.EntryModule, buttonPulse));
 
             while (queue.TryDequeue(out var pulsePath))
             {
@@ -25,20 +25,20 @@ internal sealed class PulseCounter(MachineModules modules)
                 else if (pulsePath.Pulse is Pulse.Low) ++lowPulseCount;
 
                 var outputPulse = Process(pulsePath);
-                PropagatePulse(queue, pulsePath.DestinationModule, outputPulse);
+                PropagatePulses(queue, pulsePath.DestinationModule, outputPulse);
             }
         }
 
         return (lowPulseCount, highPulseCount);
     }
 
-    private static int PropagatePulse(Queue<PulsePath> queue, CommunicationModule sourceModule, Pulse pulse)
+    private static int PropagatePulses(Queue<PulsePath> queue, CommunicationModule sourceModule, Pulse pulse)
     {
         if (pulse is Pulse.None) return 0;
 
         foreach (var destination in sourceModule.DestinationsModules)
         {
-            queue.Enqueue(new(sourceModule, destination.Value, pulse));
+            queue.Enqueue(new(sourceModule.Name, destination.Value, pulse));
         }
 
         return sourceModule.DestinationsModules.Count;
@@ -46,8 +46,8 @@ internal sealed class PulseCounter(MachineModules modules)
 
     private static Pulse Process(PulsePath pulsePath)
     {
-        return pulsePath.DestinationModule.Process(pulsePath.SourceModule.Name, pulsePath.Pulse);
+        return pulsePath.DestinationModule.Process(pulsePath.SourceModuleName, pulsePath.Pulse);
     }
 
-    private readonly record struct PulsePath(CommunicationModule SourceModule, CommunicationModule DestinationModule, Pulse Pulse);
+    private readonly record struct PulsePath(string SourceModuleName, CommunicationModule DestinationModule, Pulse Pulse);
 }
