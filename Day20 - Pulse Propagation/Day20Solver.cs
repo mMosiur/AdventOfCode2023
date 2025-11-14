@@ -18,13 +18,9 @@ public sealed class Day20Solver : DaySolver<Day20SolverOptions>
         _modules = InputReader.Read(Input, options.ModuleConnectedToButtonName);
     }
 
-    public Day20Solver(Action<Day20SolverOptions> configure) : this(DaySolverOptions.FromConfigureAction(configure))
-    {
-    }
+    public Day20Solver(Action<Day20SolverOptions> configure) : this(DaySolverOptions.FromConfigureAction(configure)) { }
 
-    public Day20Solver() : this(new Day20SolverOptions())
-    {
-    }
+    public Day20Solver() : this(new Day20SolverOptions()) { }
 
     public override string SolvePart1()
     {
@@ -36,6 +32,17 @@ public sealed class Day20Solver : DaySolver<Day20SolverOptions>
 
     public override string SolvePart2()
     {
-        return "UNSOLVED";
+        try
+        {
+            var modulesGrouper = new ModulesGrouper(_modules);
+            var moduleGroups = modulesGrouper.GenerateModuleGroups(Options.PartTwoFinalModuleName);
+            var analyzer = new ModuleGroupAnalyzer(_modules);
+            var result = analyzer.Analyze(moduleGroups, buttonPulse: Pulse.Low);
+            return "OK";
+        }
+        catch (DaySolverException ex)
+        {
+            return $"Failed ({ex.Message})";
+        }
     }
 }

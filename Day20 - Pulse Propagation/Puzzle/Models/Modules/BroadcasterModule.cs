@@ -10,7 +10,7 @@ internal sealed class BroadcasterModule(string name)
         // No state to reset for broadcasters
     }
 
-    public override Pulse Process(string sourceName, Pulse input)
+    public override Pulse Process(CommunicationModule source, Pulse input)
     {
         return input;
     }

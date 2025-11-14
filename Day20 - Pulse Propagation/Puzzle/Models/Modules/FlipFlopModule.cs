@@ -14,7 +14,7 @@ internal sealed class FlipFlopModule(string name)
         _state = InitialState;
     }
 
-    public override Pulse Process(string sourceName, Pulse input)
+    public override Pulse Process(CommunicationModule source, Pulse input)
     {
         if (input is not Pulse.Low) return Pulse.None;
         _state = !_state;

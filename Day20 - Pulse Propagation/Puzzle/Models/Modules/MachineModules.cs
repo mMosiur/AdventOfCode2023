@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
 
 internal sealed class MachineModules
@@ -15,6 +17,11 @@ internal sealed class MachineModules
         }
 
         EntryModule = entryModule;
+    }
+
+    public bool TryGetModule(string moduleName, [NotNullWhen(true)] out CommunicationModule? module)
+    {
+        return _modules.TryGetValue(moduleName, out module);
     }
 
     public void Reset()

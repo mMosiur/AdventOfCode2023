@@ -11,43 +11,23 @@ internal sealed class PulseCounter(MachineModules modules)
     {
         _modules.Reset();
 
-        int lowPulseCount = 0;
-        int highPulseCount = 0;
-        Queue<PulsePath> queue = new();
+        int totalLowPulses = 0;
+        int totalHighPulses = 0;
 
+        var queue = new PulseQueue(_modules, buttonPulse);
         for (int i = 0; i < buttonPushes; i++)
         {
-            queue.Enqueue(new(string.Empty, _modules.EntryModule, buttonPulse));
-
-            while (queue.TryDequeue(out var pulsePath))
+            int lowPulses = 0;
+            int highPulses = 0;
+            queue.PushButtonAndProcessPulses(pulsePath =>
             {
-                if (pulsePath.Pulse is Pulse.High) ++highPulseCount;
-                else if (pulsePath.Pulse is Pulse.Low) ++lowPulseCount;
-
-                var outputPulse = Process(pulsePath);
-                PropagatePulses(queue, pulsePath.DestinationModule, outputPulse);
-            }
+                if (pulsePath.Pulse is Pulse.Low) ++lowPulses;
+                else if (pulsePath.Pulse is Pulse.High) ++highPulses;
+            });
+            totalLowPulses += lowPulses;
+            totalHighPulses += highPulses;
         }
 
-        return (lowPulseCount, highPulseCount);
+        return (totalLowPulses, totalHighPulses);
     }
-
-    private static int PropagatePulses(Queue<PulsePath> queue, CommunicationModule sourceModule, Pulse pulse)
-    {
-        if (pulse is Pulse.None) return 0;
-
-        foreach (var destination in sourceModule.DestinationsModules)
-        {
-            queue.Enqueue(new(sourceModule.Name, destination.Value, pulse));
-        }
-
-        return sourceModule.DestinationsModules.Count;
-    }
-
-    private static Pulse Process(PulsePath pulsePath)
-    {
-        return pulsePath.DestinationModule.Process(pulsePath.SourceModuleName, pulsePath.Pulse);
-    }
-
-    private readonly record struct PulsePath(string SourceModuleName, CommunicationModule DestinationModule, Pulse Pulse);
 }

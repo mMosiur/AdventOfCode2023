@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
 
+[DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
 internal abstract class CommunicationModule(string name)
 {
     private readonly Dictionary<string, CommunicationModule> _inputs = new();
@@ -8,7 +11,7 @@ internal abstract class CommunicationModule(string name)
     public string Name { get; } = name;
     public abstract CommunicationModuleType Type { get; }
     public IReadOnlyDictionary<string, CommunicationModule> Inputs => _inputs;
-    public IReadOnlyDictionary<string, CommunicationModule> DestinationsModules => _destinations;
+    public IReadOnlyDictionary<string, CommunicationModule> Destinations => _destinations;
 
     public virtual void ConnectInput(CommunicationModule inputModule)
     {
@@ -18,5 +21,7 @@ internal abstract class CommunicationModule(string name)
 
     public abstract void Reset();
 
-    public abstract Pulse Process(string sourceName, Pulse input);
+    public abstract Pulse Process(CommunicationModule source, Pulse input);
+
+    private string GetDebuggerDisplay() => $"{Name} (in {_inputs.Count}, out {_destinations.Count})";
 }
