@@ -1,4 +1,5 @@
-﻿using AdventOfCode.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using AdventOfCode.Common;
 using AdventOfCode.Year2023.Day20.Puzzle.Models;
 using AdventOfCode.Year2023.Day20.Puzzle.Models.Modules;
 
@@ -8,19 +9,28 @@ internal sealed class ModulesGrouper(MachineModules modules)
 {
     private readonly MachineModules _modules = modules;
 
-    public ModuleGroupStructureInfo GenerateModuleGroups(string finalModuleName)
+    public bool TryGenerateModuleGroups(string finalModuleName, [NotNullWhen(true)] out ModuleGroupStructureInfo? groupStructureInfo)
     {
-        var finalModule = GetFinalModule(finalModuleName);
-        var groupAggregatorModule = GetGroupAggregatorModule(finalModule);
-        var groupStartModules = GetGroupStartModules(groupAggregatorModule);
-        var groups = BuildModuleGroups(groupStartModules, groupAggregatorModule);
-        AssertGroupsDontOverlap(groups);
-
-        return new()
+        try
         {
-            ModuleGroups = groups,
-            GroupAggregatorModule = groupAggregatorModule,
-        };
+            var finalModule = GetFinalModule(finalModuleName);
+            var groupAggregatorModule = GetGroupAggregatorModule(finalModule);
+            var groupStartModules = GetGroupStartModules(groupAggregatorModule);
+            var groups = BuildModuleGroups(groupStartModules, groupAggregatorModule);
+            AssertGroupsDontOverlap(groups);
+
+            groupStructureInfo = new()
+            {
+                ModuleGroups = groups,
+                GroupAggregatorModule = groupAggregatorModule,
+            };
+            return true;
+        }
+        catch (DaySolverException e)
+        {
+            groupStructureInfo = null;
+            return false;
+        }
     }
 
     private CommunicationModule GetFinalModule(string finalModuleName)
@@ -34,13 +44,20 @@ internal sealed class ModulesGrouper(MachineModules modules)
         return finalModule;
     }
 
-    private static CommunicationModule GetGroupAggregatorModule(CommunicationModule finalModule)
+    private static ConjunctionModule GetGroupAggregatorModule(CommunicationModule finalModule)
     {
-        return finalModule.Inputs.Values.SingleOrDefault()
-            ?? throw new DaySolverException("Final module is supposed to have exactly one input.");
+        try
+        {
+            return finalModule.Inputs.Values.Single() as ConjunctionModule
+                ?? throw new DaySolverException("Group aggregator module is not a conjunction module.");
+        }
+        catch (InvalidOperationException e)
+        {
+            throw new DaySolverException("Final module is supposed to have exactly one input.", e);
+        }
     }
 
-    private List<CommunicationModule> GetGroupStartModules(CommunicationModule groupAggregatorModule)
+    private List<CommunicationModule> GetGroupStartModules(ConjunctionModule groupAggregatorModule)
     {
         var groupStartModules = _modules.EntryModule.Destinations.Values.ToList();
         var groupFinalModules = groupAggregatorModule.Inputs.Values.ToList();
@@ -50,7 +67,7 @@ internal sealed class ModulesGrouper(MachineModules modules)
         return groupStartModules;
     }
 
-    private static List<ModuleGroupInfo> BuildModuleGroups(List<CommunicationModule> groupStartModules, CommunicationModule groupAggregatorModule)
+    private static List<ModuleGroupInfo> BuildModuleGroups(List<CommunicationModule> groupStartModules, ConjunctionModule groupAggregatorModule)
     {
         return groupStartModules
             .Select(gsm => GenerateModuleGroup(gsm, groupAggregatorModule))
@@ -71,7 +88,7 @@ internal sealed class ModulesGrouper(MachineModules modules)
         }
     }
 
-    private static ModuleGroupInfo GenerateModuleGroup(CommunicationModule groupStartModule, CommunicationModule groupAggregatorModule)
+    private static ModuleGroupInfo GenerateModuleGroup(CommunicationModule groupStartModule, ConjunctionModule groupAggregatorModule)
     {
         var groupModules = new HashSet<CommunicationModule>();
 

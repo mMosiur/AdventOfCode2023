@@ -32,17 +32,16 @@ public sealed class Day20Solver : DaySolver<Day20SolverOptions>
 
     public override string SolvePart2()
     {
-        try
-        {
             var modulesGrouper = new ModulesGrouper(_modules);
-            var moduleGroups = modulesGrouper.GenerateModuleGroups(Options.PartTwoFinalModuleName);
+            if (!modulesGrouper.TryGenerateModuleGroups(Options.PartTwoFinalModuleName, out var moduleGroups))
+            {
+                return "Could not generate module groups.";
+            }
+
             var analyzer = new ModuleGroupAnalyzer(_modules);
-            var result = analyzer.Analyze(moduleGroups, buttonPulse: Pulse.Low);
-            return "OK";
-        }
-        catch (DaySolverException ex)
-        {
-            return $"Failed ({ex.Message})";
-        }
+            var periods = analyzer.Analyze(moduleGroups, buttonPulse: Pulse.Low);
+            var result = MathExtended.LeastCommonMultiple(periods.Values.Select(p => (long)p));
+            return result.ToString();
+
     }
 }

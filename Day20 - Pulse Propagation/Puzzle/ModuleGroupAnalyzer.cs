@@ -20,9 +20,9 @@ internal sealed class ModuleGroupAnalyzer(MachineModules modules)
             int currentButtonPress = totalButtonPresses;
             queue.PushButtonAndProcessPulses(pulsePath =>
             {
-                if (pulsePath.DestinationModule != structureInfo.GroupAggregatorModule) return;
-                var group = structureInfo
-                                .ModuleGroups
+                if (pulsePath.Pulse is Pulse.Low || pulsePath.DestinationModule != structureInfo.GroupAggregatorModule)
+                    return;
+                var group = structureInfo.ModuleGroups
                                 .FirstOrDefault(m => m.GroupOutputModule == pulsePath.SourceModule)
                          ?? throw new InvalidOperationException("Received pulse from unexpected module to group aggregator.");
                 if (groupPeriods[group] == 0)
@@ -35,12 +35,5 @@ internal sealed class ModuleGroupAnalyzer(MachineModules modules)
         }
 
         return groupPeriods;
-    }
-
-    private int AnalyzeGroupPeriod(ModuleGroupInfo moduleGroup, CommunicationModule groupAggregatorModule)
-    {
-        moduleGroup.Reset();
-
-        throw new NotImplementedException();
     }
 }
