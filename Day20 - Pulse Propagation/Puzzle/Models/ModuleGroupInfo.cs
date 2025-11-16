@@ -7,12 +7,4 @@ internal sealed class ModuleGroupInfo
     public required CommunicationModule GroupStartModule { get; init; }
     public required IReadOnlySet<CommunicationModule> GroupModules { get; init; }
     public required CommunicationModule GroupOutputModule { get; init; }
-
-    public void Reset()
-    {
-        foreach (var module in GroupModules)
-        {
-            module.Reset();
-        }
-    }
 }

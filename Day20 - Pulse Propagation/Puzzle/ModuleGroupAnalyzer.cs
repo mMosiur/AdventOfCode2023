@@ -7,7 +7,7 @@ internal sealed class ModuleGroupAnalyzer(MachineModules modules)
 {
     private readonly MachineModules _modules = modules;
 
-    public Dictionary<ModuleGroupInfo, int> Analyze(ModuleGroupStructureInfo structureInfo, Pulse buttonPulse)
+    public Dictionary<ModuleGroupInfo, int> RetrieveGroupPeriods(ModuleGroupStructureInfo structureInfo, Pulse buttonPulse)
     {
         _modules.Reset();
 

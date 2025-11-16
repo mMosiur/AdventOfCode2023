@@ -39,7 +39,7 @@ public sealed class Day20Solver : DaySolver<Day20SolverOptions>
             }
 
             var analyzer = new ModuleGroupAnalyzer(_modules);
-            var periods = analyzer.Analyze(moduleGroups, buttonPulse: Pulse.Low);
+            var periods = analyzer.RetrieveGroupPeriods(moduleGroups, buttonPulse: Pulse.Low);
             var result = MathExtended.LeastCommonMultiple(periods.Values.Select(p => (long)p));
             return result.ToString();
 
