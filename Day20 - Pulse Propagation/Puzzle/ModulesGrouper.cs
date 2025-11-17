@@ -26,7 +26,7 @@ internal sealed class ModulesGrouper(MachineModules modules)
             };
             return true;
         }
-        catch (DaySolverException e)
+        catch (DaySolverException)
         {
             groupStructureInfo = null;
             return false;
